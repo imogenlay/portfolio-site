@@ -14,13 +14,13 @@
 }
 
 @mixin main_column_width($column) {
-  width: calc(100% - 100px);
+  width: calc(100% - 4rem);
 
   @include q.desktop {
     @if $column == 0 {
       width: 20rem;
     } @else {
-      width: min(500px, 40vw);
+      width: min(32rem, 40vw);
     }
   }
 }

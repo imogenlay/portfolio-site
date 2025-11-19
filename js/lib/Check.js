@@ -12,6 +12,9 @@ export function isNull(a) {
 	return value === null || value === undefined;
 }
 
+export function isArrayWithItems(a) {
+	return Array.isArray(a) && a.length > 0;
+}
 // Assertions.
 
 export function error(report) {

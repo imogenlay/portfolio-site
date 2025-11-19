@@ -28,8 +28,8 @@
   font-style: normal;
   font-synthesis: none;
   font-size: 1rem;
-  color: #a2e1ef;
-  line-height: 1.25;
+  color: #e8e4ff;
+  line-height: 1.5;
   text-decoration: none;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -62,25 +62,25 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: stretch;
   align-items: center;
   gap: 0;
+  min-height: 100%;
   padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 @media screen and (min-width: 768px) {
   body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
     padding-top: 4rem;
   }
 }
 
 header {
-  width: calc(100% - 100px);
+  width: calc(100% - 4rem);
 }
 @media screen and (min-width: 768px) {
   header {
@@ -88,32 +88,47 @@ header {
   }
 }
 
-main {
-  width: calc(100% - 100px);
-}
-@media screen and (min-width: 768px) {
-  main {
-    width: min(500px, 40vw);
-  }
-}
-main {
-  display: block;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  align-items: stretch;
-  gap: 0;
-}
-
 #gap {
   width: 1rem;
   height: 2rem;
-  border: 1px solid gray;
+  flex-shrink: 0;
 }
 @media screen and (min-width: 768px) {
   #gap {
     width: min(7vw, 5rem);
   }
+}
+
+main {
+  width: calc(100% - 4rem);
+}
+@media screen and (min-width: 768px) {
+  main {
+    width: min(32rem, 40vw);
+  }
+}
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0;
+  flex-grow: 1;
+}
+@media screen and (min-width: 768px) {
+  main {
+    flex-grow: 0;
+  }
+}
+
+section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0;
+  padding-bottom: 4rem;
 }
 
 hr {
@@ -123,12 +138,86 @@ hr {
   margin-top: 1rem;
 }
 
-hr.title {
-  border-color: #009aff;
-}
-
 img .flipped {
   transform: scale(-1, 1); /* Flip SVG horizontally */
+}
+
+label {
+  user-select: none;
+}
+
+form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0.25rem;
+}
+form fieldset {
+  width: 100%;
+  padding-left: 6rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0;
+}
+form fieldset label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+form div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+form div:has(textarea) {
+  flex-grow: 1;
+}
+form div label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0;
+  flex-shrink: 0;
+  color: #d9faf8;
+  width: 5rem;
+}
+form div input,
+form div select,
+form div textarea {
+  flex-grow: 1;
+  min-width: 0;
+  width: auto;
+  margin: 0.25rem;
+  padding: 0.25rem;
+  background: none;
+  border: 1px solid #d9faf8;
+  color: #e8e4ff;
+  transition: background-color calc(var(--default-animation-speed) * 100ms) linear;
+}
+form div input:hover,
+form div select:hover,
+form div textarea:hover {
+  box-shadow: 0px 0px 6px 0px #d9faf8;
+}
+form div input[type=text]:focus,
+form div input[type=email]:focus,
+form div textarea:focus {
+  background-color: rgba(237, 244, 255, 0.1568627451);
+}
+form div textarea {
+  min-height: 12rem;
+  resize: none;
 }
 
 nav {
@@ -144,20 +233,24 @@ nav button {
   user-select: none;
   width: 100%;
   text-align: left;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   transition: all calc(var(--default-animation-speed) * 250ms) ease-in-out;
+  font-weight: 300;
   background-color: transparent;
   color: #d9faf8;
-  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 1.5rem;
 }
 nav button:hover, nav button.active {
-  background-color: rgba(236, 201, 255, 0.2509803922);
-  color: #d9faf8;
+  background-color: rgba(237, 244, 255, 0.1568627451);
   font-weight: 600;
-  padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 3rem;
 }
-nav button:hover:not(.active) {
-  text-shadow: 0 0 4px white;
+nav button:hover {
+  background-color: rgba(229, 227, 255, 0.2039215686);
+}
+
+hr.title {
+  border-color: #009aff;
 }
 
 h1,
@@ -169,19 +262,22 @@ h6 {
   overflow: hidden;
   color: #d9faf8;
   font-weight: 200;
+  text-wrap: nowrap;
+  line-height: 1.25;
 }
 
 h1 {
-  font-size: 4rem;
-}
-@media screen and (min-width: 768px) {
-  h1 {
-    text-align: center;
-  }
+  font-size: clamp(2rem, 15vw, 4rem);
+  text-align: center;
 }
 
 p {
   padding-bottom: 1rem;
+}
+
+b {
+  font-weight: 600;
+  color: #d9faf8;
 }
 
 /*# sourceMappingURL=style.css.map */

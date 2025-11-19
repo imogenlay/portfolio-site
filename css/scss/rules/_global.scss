@@ -1,11 +1,12 @@
 @use "./media-queries" as q;
 
 $clr-white: #d9faf8;
-$clr-off-white: #a2e1ef;
+$clr-off-white: #e8e4ff;
 $clr-dark-grey: #27282b;
 $clr-background-a: #2d0860;
 $clr-background-b: #01002c;
-$clr-nav-button-background: #ecc9ff40;
+$clr-nav-button-background: #edf4ff28;
+$clr-nav-button-background-lighter: #e5e3ff34;
 
 $clr-accent-bright: #5bceff;
 $clr-accent-light: #009aff;
@@ -31,7 +32,7 @@ $font: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
   font-size: 1rem;
 
   color: $clr-off-white;
-  line-height: 1.25;
+  line-height: 1.5;
   text-decoration: none;
 
   overflow-x: hidden;

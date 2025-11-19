@@ -11,15 +11,20 @@ h6 {
   overflow: hidden;
   color: g.$clr-white;
   font-weight: 200;
+  text-wrap: nowrap;
+  line-height: 1.25;
 }
 
 h1 {
-  font-size: 4rem;
-  @include q.desktop {
-    text-align: center;
-  }
+  font-size: clamp(2rem, 15vw, 4rem);
+  text-align: center;
 }
 
 p {
   padding-bottom: 1rem;
+}
+
+b {
+  font-weight: 600;
+  color: g.$clr-white;
 }
