@@ -1,0 +1,35 @@
+@use "./rules/media-queries" as q;
+@use "./rules/global" as g;
+@use "./rules/mixins";
+
+nav {
+  margin-top: 1rem;
+  @include mixins.flex(column, flex-start, center, 0);
+
+  button {
+    cursor: pointer;
+
+    user-select: none;
+
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    transition: all calc(var(--default-animation-speed) * 250ms) ease-in-out;
+
+    background-color: transparent;
+    color: g.$clr-white;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+
+    &:hover,
+    &.active {
+      background-color: g.$clr-nav-button-background;
+      color: g.$clr-white;
+      font-weight: 600;
+      padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+    }
+
+    &:hover:not(.active) {
+      text-shadow: 0 0 4px white;
+    }
+  }
+}

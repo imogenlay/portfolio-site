@@ -1,0 +1,49 @@
+@use "./media-queries" as q;
+
+$clr-white: #d9faf8;
+$clr-off-white: #a2e1ef;
+$clr-dark-grey: #27282b;
+$clr-background-a: #2d0860;
+$clr-background-b: #01002c;
+$clr-nav-button-background: #ecc9ff40;
+
+$clr-accent-bright: #5bceff;
+$clr-accent-light: #009aff;
+$clr-accent-default: #005dff;
+$clr-accent-dark: #3f43c3;
+
+$font: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
+
+* {
+  /* UI Debug Border
+  box-shadow: inset 0px 0px 0px 1px red;
+  */
+
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  font-family: $font;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-size: 1rem;
+
+  color: $clr-off-white;
+  line-height: 1.25;
+  text-decoration: none;
+
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --default-animation-speed: 1;
+  --standard-gap: 2.25rem;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
