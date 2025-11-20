@@ -45,9 +45,15 @@ $font: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
 }
 
 button {
+  cursor: pointer;
   border: none;
   background-color: #ffffff44;
   &:hover {
     background-color: #ffffff66;
   }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid $clr-white;
 }

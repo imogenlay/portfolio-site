@@ -7,15 +7,13 @@ nav {
   @include mixins.flex(column, flex-start, center, 0);
 
   button {
-    cursor: pointer;
-
     user-select: none;
 
     width: 100%;
     text-align: left;
     font-size: 1.25rem;
-    transition: all calc(var(--default-animation-speed) * 250ms) ease-in-out;
-    font-weight: 300;
+    transition: all calc(var(--default-animation-speed) * 200ms) ease-in-out;
+    font-weight: 400;
 
     background-color: transparent;
     color: g.$clr-white;
@@ -32,8 +30,30 @@ nav {
       background-color: g.$clr-nav-button-background-lighter;
     }
   }
+
+  .nav-divider {
+    @include mixins.flex(row, flex-start, center, 0.5rem);
+    width: 100%;
+    margin: 0.25rem;
+
+    p {
+      //    box-shadow: inset 0px 0px 0px 1px orange;
+      flex-shrink: 0;
+      padding: 0;
+      color: g.$clr-white;
+      user-select: none;
+    }
+
+    hr {
+      border-top: 1px solid g.$clr-off-white;
+      margin: 0;
+      width: 100%;
+    }
+  }
 }
 
 hr.title {
-  border-color: g.$clr-accent-light;
+  border-top: 2px solid g.$clr-accent-light;
+  width: 100%;
+  margin-top: 1rem;
 }

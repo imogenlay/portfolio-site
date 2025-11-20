@@ -12,13 +12,13 @@ export class PageBuilder {
 	// ================================== CONSTANTS ===================================
 	CURRENT_PAGE_KEY = "currentPage";
 
-	// ================================= CONSTRUCTION =================================
+	// ================================= CONSTRUCTOR ==================================
 	constructor(_header, _main) {
 		this.header = _header;
 		this.main = _main;
 	}
 
-	// ============================= INITIALISE FUNCTIONS =============================
+	// =========================== INITIALISATION FUNCTIONS ===========================
 	initialise() {
 		this.appendTitleElementsAndCreateNavbar();
 		this.createAndAppendNavbarElementsArray();
@@ -44,6 +44,9 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "About"),
 			ElementG.createSpecific("button", "nav-button", "Skills"),
 			ElementG.createSpecific("button", "nav-button", "Contact"),
+			this.createNavbarDivider("Projects"),
+			ElementG.createSpecific("button", "nav-button", "Project A"),
+			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
 		];
 
@@ -58,6 +61,7 @@ export class PageBuilder {
 			this.generateAboutPage(),
 			ElementG.createSpecific("section", "", "Skills"),
 			this.generateContactPage(),
+			ElementG.createSpecific("section", "", "Projects"),
 			this.generateSubHeadingGenerator(),
 		];
 
@@ -100,6 +104,7 @@ export class PageBuilder {
 
 	generateAboutPage() {
 		const section = document.createElement("section");
+		section.append(ElementG.createSpecific("p", "", "about me"))
 		return section;
 	}
 
@@ -108,7 +113,7 @@ export class PageBuilder {
 		const section = document.createElement("section");
 		const input = document.createElement("input");
 		const p = document.createElement("p");
-		const button = ElementG.createSpecific("button", "", "COPY");
+		const button = ElementG.createSpecific("button", "heading-generator", "Convert to sub-heading");
 
 		button.onclick = () => {
 
@@ -137,7 +142,7 @@ export class PageBuilder {
 		};
 
 
-		section.append(button, input, p);
+		section.append(input, button, p);
 		return section;
 	}
 
@@ -194,7 +199,7 @@ export class PageBuilder {
 		return section;
 	}
 
-	// ============================= NAVIGATION FUNCTIONS =============================
+	// =============================== OTHER FUNCTIONS ================================
 
 	switchToPage(pageIndex) {
 
@@ -204,7 +209,27 @@ export class PageBuilder {
 		// Save selected page to local memory.
 		localStorage.setItem(this.CURRENT_PAGE_KEY, pageIndex);
 
-		this.navbarElements.forEach(b => b.classList.remove('active'));
-		this.navbarElements[pageIndex].classList.add('active');
+		let j = 0;
+		console.log("start");
+		for (let i = 0; i < this.navbarElements.length; i++) {
+			const element = this.navbarElements[i];
+			element.classList.remove('active');
+
+			if (ElementG.isTag(element, "button")) {
+				if (j === pageIndex)
+					element.classList.add('active');
+				++j;
+			}
+		}
+	}
+
+	createNavbarDivider(text) {
+		const div = ElementG.createSpecific("div", "nav-divider", "");
+		const hrA = document.createElement("hr");
+		const title = ElementG.createSpecific("p", "", text);
+		const hrB = document.createElement("hr");
+
+		div.append(hrA, title, hrB);
+		return div;
 	}
 }
