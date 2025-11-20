@@ -42,7 +42,10 @@
 
 button {
   border: none;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.2666666667);
+}
+button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 html,
@@ -144,6 +147,12 @@ img .flipped {
 
 label {
   user-select: none;
+}
+
+input {
+  margin: 0.25rem;
+  padding: 0.25rem;
+  background: none;
 }
 
 form {
@@ -278,6 +287,11 @@ p {
 b {
   font-weight: 600;
   color: #d9faf8;
+}
+
+pre {
+  font-family: monospace;
+  overflow: auto;
 }
 
 /*# sourceMappingURL=style.css.map */

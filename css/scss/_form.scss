@@ -6,6 +6,12 @@ label {
   user-select: none;
 }
 
+input {
+  margin: 0.25rem; // Outside the box.
+  padding: 0.25rem; // Inside the box.
+  background: none;
+}
+
 form {
   flex-grow: 1;
 

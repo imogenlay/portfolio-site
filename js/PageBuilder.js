@@ -4,26 +4,25 @@ import * as MathG from './lib/MathG.js';
 
 export class PageBuilder {
 
-	// ================================= FIELDS ================================================= 
+	// ==================================== FIELDS ==================================== 
 	header; main; navbar;
 	navbarElements;
 	pageElements;
 
-
-	// ========================================= CONSTANTS ========================================= 
+	// ================================== CONSTANTS ===================================
 	CURRENT_PAGE_KEY = "currentPage";
 
-	// =============================== CONSTRUCTOR =================================================== 
+	// ================================= CONSTRUCTION =================================
 	constructor(_header, _main) {
 		this.header = _header;
 		this.main = _main;
 	}
 
-	// ================================= FUNCTIONS ================================================= 
+	// ============================= INITIALISE FUNCTIONS =============================
 	initialise() {
 		this.appendTitleElementsAndCreateNavbar();
 		this.createAndAppendNavbarElementsArray();
-		this.somethinf();
+		this.createAndConnectPageElementsArray();
 	}
 
 	appendTitleElementsAndCreateNavbar() {
@@ -45,21 +44,21 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "About"),
 			ElementG.createSpecific("button", "nav-button", "Skills"),
 			ElementG.createSpecific("button", "nav-button", "Contact"),
+			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
 		];
 
 		for (let i = 0; i < this.navbarElements.length; i++)
 			this.navbar.append(this.navbarElements[i]);
 	}
 
-	somethinf() {
-
-
+	createAndConnectPageElementsArray() {
 		// Create pages: Have to be in same order as nab buttons. 
 		this.pageElements = [
 			this.generateHomePage(),
-			ElementG.createSpecific("section", "", "About"),
+			this.generateAboutPage(),
 			ElementG.createSpecific("section", "", "Skills"),
 			this.generateContactPage(),
+			this.generateSubHeadingGenerator(),
 		];
 
 		// Append nav buttons and add click funtionality.
@@ -67,7 +66,9 @@ export class PageBuilder {
 		for (let i = 0; i < this.navbarElements.length; i++) {
 
 			if (ElementG.isTag(this.navbarElements[i], "button")) {
+				// This variable must be passed by value to a new variable to save it.
 				let j = currentPageIndex;
+
 				this.navbarElements[i].addEventListener('click', () => this.switchToPage(j));
 				++currentPageIndex;
 			}
@@ -79,17 +80,7 @@ export class PageBuilder {
 		this.switchToPage(lastPage)
 	}
 
-	switchToPage(pageIndex) {
-
-		main.innerHTML = "";
-		main.append(this.pageElements[pageIndex]);
-
-		// Save selected page to local memory.
-		localStorage.setItem(this.CURRENT_PAGE_KEY, pageIndex);
-
-		this.navbarElements.forEach(b => b.classList.remove('active'));
-		this.navbarElements[pageIndex].classList.add('active');
-	}
+	// =========================== PAGE GENERATOR FUNCTIONS ===========================
 
 	generateHomePage() {
 		const section = document.createElement("section");
@@ -107,13 +98,51 @@ export class PageBuilder {
 		return section;
 	}
 
-	generateContactPage() {
-		const section = ElementG.createSpecific("section", "", "");
-		section.append(this.createContactForm());
+	generateAboutPage() {
+		const section = document.createElement("section");
 		return section;
 	}
 
-	createContactForm() {
+	generateSubHeadingGenerator() {
+
+		const section = document.createElement("section");
+		const input = document.createElement("input");
+		const p = document.createElement("p");
+		const button = ElementG.createSpecific("button", "", "COPY");
+
+		button.onclick = () => {
+
+			const MAX_CHARACTERS = 80;
+			let text = input.value.toUpperCase().trim();
+			let output = "// ";
+			let charactersRemaining = MAX_CHARACTERS;
+			charactersRemaining -= text.length + 2;
+			let firstSpanLength = 0;
+			let lastSpanLength = 0;
+
+			if (charactersRemaining % 2 == 0) {
+				firstSpanLength = charactersRemaining / 2;
+				lastSpanLength = firstSpanLength;
+			} else {
+				firstSpanLength = MathG.floor(charactersRemaining / 2);
+				lastSpanLength = firstSpanLength + 1;
+			}
+
+			output += "=".repeat(firstSpanLength);
+			output += " " + text + " ";
+			output += "=".repeat(lastSpanLength);
+
+			p.textContent = output;
+			navigator.clipboard.writeText(output);
+		};
+
+
+		section.append(button, input, p);
+		return section;
+	}
+
+	generateContactPage() {
+		const section = ElementG.createSpecific("section", "", "");
 		const form = ElementG.createSpecific("form", "", "");
 		form.action = "./sent.html";
 
@@ -161,6 +190,21 @@ export class PageBuilder {
 			value: "Send",
 		}));
 
-		return form;
+		section.append(form);
+		return section;
+	}
+
+	// ============================= NAVIGATION FUNCTIONS =============================
+
+	switchToPage(pageIndex) {
+
+		main.innerHTML = "";
+		main.append(this.pageElements[pageIndex]);
+
+		// Save selected page to local memory.
+		localStorage.setItem(this.CURRENT_PAGE_KEY, pageIndex);
+
+		this.navbarElements.forEach(b => b.classList.remove('active'));
+		this.navbarElements[pageIndex].classList.add('active');
 	}
 }

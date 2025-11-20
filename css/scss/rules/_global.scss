@@ -46,5 +46,8 @@ $font: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
 
 button {
   border: none;
-  background-color: transparent;
+  background-color: #ffffff44;
+  &:hover {
+    background-color: #ffffff66;
+  }
 }
