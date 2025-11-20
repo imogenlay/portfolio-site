@@ -2,6 +2,12 @@
 @use "./rules/global" as g;
 @use "./rules/mixins";
 
+hr.title {
+  border-top: 2px solid g.$clr-accent-light;
+  width: 100%;
+  margin-top: 1rem;
+}
+
 nav {
   margin-top: 1rem;
   @include mixins.flex(column, flex-start, center, 0);
@@ -50,10 +56,4 @@ nav {
       width: 100%;
     }
   }
-}
-
-hr.title {
-  border-top: 2px solid g.$clr-accent-light;
-  width: 100%;
-  margin-top: 1rem;
 }
