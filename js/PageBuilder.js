@@ -1,5 +1,6 @@
 import { ProjectBox } from './elements/ProjectBox.js';
 import * as ElementG from './lib/ElementG.js';
+import * as Const from './constants/Const.js';
 import * as MathG from './lib/MathG.js';
 
 export class PageBuilder {
@@ -8,10 +9,6 @@ export class PageBuilder {
 	header; main; navbar;
 	navbarElements;
 	pageElements;
-
-	// ================================== CONSTANTS ===================================
-	CURRENT_PAGE_KEY = "currentPage";
-	TITLE_CU_CARTA = "Cú Cárta";
 
 	// ================================= CONSTRUCTOR ==================================
 	constructor(_header, _main) {
@@ -82,7 +79,7 @@ export class PageBuilder {
 		}
 
 		// Lookup the last page visited but just go to home if there is none.
-		let lastPage = localStorage.getItem(this.CURRENT_PAGE_KEY);
+		let lastPage = localStorage.getItem(Const.CURRENT_PAGE_KEY);
 		lastPage = MathG.clamp(MathG.floorToInt(lastPage), 0, this.pageElements.length - 1);
 		this.switchToPage(lastPage)
 	}
@@ -235,7 +232,7 @@ export class PageBuilder {
 		main.append(this.pageElements[pageIndex]);
 
 		// Save selected page to local memory.
-		localStorage.setItem(this.CURRENT_PAGE_KEY, pageIndex);
+		localStorage.setItem(Const.CURRENT_PAGE_KEY, pageIndex);
 
 		let j = 0;
 		for (let i = 0; i < this.navbarElements.length; i++) {
