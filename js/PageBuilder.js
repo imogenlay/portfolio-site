@@ -11,6 +11,7 @@ export class PageBuilder {
 
 	// ================================== CONSTANTS ===================================
 	CURRENT_PAGE_KEY = "currentPage";
+	TITLE_CU_CARTA = "Cú Cárta";
 
 	// ================================= CONSTRUCTOR ==================================
 	constructor(_header, _main) {
@@ -22,8 +23,8 @@ export class PageBuilder {
 
 	initialise() {
 		this.appendTitleElementsAndCreateNavbar();
-		this.createAndAppendNavbarElementsArray();
-		this.createAndConnectPageElementsArray();
+		this.createNavbarElementsAndPageElementsArrays();
+		this.appendNavbarAndPageElementsArray();
 	}
 
 	appendTitleElementsAndCreateNavbar() {
@@ -38,33 +39,34 @@ export class PageBuilder {
 		this.header.append(this.navbar);
 	}
 
-	createAndAppendNavbarElementsArray() {
-		// Create nav bar buttons and subtitles.
+	createNavbarElementsAndPageElementsArrays() {
+		// Create nav bar buttons and section titles.
 		this.navbarElements = [
-			ElementG.createSpecific("button", "nav-button", "Home"),
 			ElementG.createSpecific("button", "nav-button", "About"),
 			ElementG.createSpecific("button", "nav-button", "Skills"),
 			ElementG.createSpecific("button", "nav-button", "Contact"),
 			this.createNavbarDivider("Projects"),
 			ElementG.createSpecific("button", "nav-button", "Project A"),
+			ElementG.createSpecific("button", "nav-button", "Project B"),
 			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
 		];
 
-		for (let i = 0; i < this.navbarElements.length; i++)
-			this.navbar.append(this.navbarElements[i]);
-	}
-
-	createAndConnectPageElementsArray() {
 		// Create pages: Have to be in same order as nab buttons. 
 		this.pageElements = [
-			this.generateHomePage(),
 			this.generateAboutPage(),
-			ElementG.createSpecific("section", "", "Skills"),
+			this.generateSkillPage(),
 			this.generateContactPage(),
-			ElementG.createSpecific("section", "", "Projects"),
+			this.generateProjectA(),
+			this.generateProjectB(),
 			this.generateSubHeadingGenerator(),
 		];
+	}
+
+	appendNavbarAndPageElementsArray() {
+
+		for (let i = 0; i < this.navbarElements.length; i++)
+			this.navbar.append(this.navbarElements[i]);
 
 		// Append nav buttons and add click funtionality.
 		let currentPageIndex = 0;
@@ -87,8 +89,9 @@ export class PageBuilder {
 
 	// =========================== PAGE GENERATOR FUNCTIONS ===========================
 
-	generateHomePage() {
+	generateAboutPage() {
 		const section = document.createElement("section");
+		const title = ElementG.createSpecific("h2", "", "About Me");
 		const textA = ElementG.createParagraph([
 			"A detail-oriented ",
 			"Software Developer",
@@ -99,58 +102,36 @@ export class PageBuilder {
 			" code to maximise usability and manoeuvrability for teams during development."
 		]);
 
-		section.appendChild(textA);
+		const textB = ElementG.createParagraph([
+			"Demonstrated adaptability across ",
+			"multiple frameworks and languages,",
+			" consistently delivering robust applications. Thrives both as an ",
+			"independent contributor",
+			" and ",
+			"team player,",
+			" bringing a proven track record of elevating project outcomes through meticulous attention to detail."
+
+
+		])
+
+		section.append(title, textA, textB);
 		return section;
 	}
 
-	generateAboutPage() {
+	generateSkillPage() {
 		const section = document.createElement("section");
-		section.append(ElementG.createSpecific("p", "", "about me"));
+		section.append(ElementG.createSpecific("h2", "", "Skills"));
 		const projectBox = new ProjectBox();
 		section.append(projectBox);
 		return section;
 	}
 
-	generateSubHeadingGenerator() {
-
-		const section = document.createElement("section");
-		const input = document.createElement("input");
-		const p = document.createElement("p");
-		const button = ElementG.createSpecific("button", "heading-generator", "Convert to sub-heading");
-
-		button.onclick = () => {
-
-			const MAX_CHARACTERS = 80;
-			let text = input.value.toUpperCase().trim();
-			let output = "// ";
-			let charactersRemaining = MAX_CHARACTERS;
-			charactersRemaining -= text.length + 2;
-			let firstSpanLength = 0;
-			let lastSpanLength = 0;
-
-			if (charactersRemaining % 2 == 0) {
-				firstSpanLength = charactersRemaining / 2;
-				lastSpanLength = firstSpanLength;
-			} else {
-				firstSpanLength = MathG.floor(charactersRemaining / 2);
-				lastSpanLength = firstSpanLength + 1;
-			}
-
-			output += "=".repeat(firstSpanLength);
-			output += " " + text + " ";
-			output += "=".repeat(lastSpanLength);
-
-			p.textContent = output;
-			navigator.clipboard.writeText(output);
-		};
-
-		section.append(input, button, p);
-		return section;
-	}
-
 	generateContactPage() {
-		const section = ElementG.createSpecific("section", "", "");
-		const form = ElementG.createSpecific("form", "", "");
+		const section = document.createElement("section");
+		const form = document.createElement("form");
+		section.append(ElementG.createSpecific("h2", "", "Contact"));
+		section.append(document.createElement("p"));
+
 		form.action = "./sent.html";
 
 		// Name
@@ -198,6 +179,51 @@ export class PageBuilder {
 		}));
 
 		section.append(form);
+		return section;
+	}
+
+	generateProjectA() {
+		return ElementG.createSpecific("section", "", "Project A");
+	}
+
+	generateProjectB() {
+		return ElementG.createSpecific("section", "", "Project B");
+	}
+
+	generateSubHeadingGenerator() {
+
+		const section = document.createElement("section");
+		const input = document.createElement("input");
+		const p = document.createElement("p");
+		const button = ElementG.createSpecific("button", "heading-generator", "Convert to sub-heading");
+
+		button.onclick = () => {
+
+			const MAX_CHARACTERS = 80;
+			let text = input.value.toUpperCase().trim();
+			let output = "// ";
+			let charactersRemaining = MAX_CHARACTERS;
+			charactersRemaining -= text.length + 2;
+			let firstSpanLength = 0;
+			let lastSpanLength = 0;
+
+			if (charactersRemaining % 2 == 0) {
+				firstSpanLength = charactersRemaining / 2;
+				lastSpanLength = firstSpanLength;
+			} else {
+				firstSpanLength = MathG.floor(charactersRemaining / 2);
+				lastSpanLength = firstSpanLength + 1;
+			}
+
+			output += "=".repeat(firstSpanLength);
+			output += " " + text + " ";
+			output += "=".repeat(lastSpanLength);
+
+			p.textContent = output;
+			navigator.clipboard.writeText(output);
+		};
+
+		section.append(input, button, p);
 		return section;
 	}
 

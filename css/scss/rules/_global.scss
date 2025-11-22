@@ -11,8 +11,6 @@ $clr-accent: #009aff;
 //$clr-accent-default: #005dff;
 //$clr-accent-dark: #3f43c3;
 
-$font: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
-
 * {
   /* UI Debug Border
   box-shadow: inset 0px 0px 0px 1px red;
@@ -22,7 +20,7 @@ $font: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
   margin: 0;
   box-sizing: border-box;
 
-  font-family: $font;
+  font-family: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;

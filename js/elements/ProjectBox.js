@@ -6,7 +6,7 @@ export class ProjectBox extends HTMLElement {
     // ==================================== FIELDS ==================================== 
     pinElementsArray;
 
-    // ================================== CONSTANTS ===================================
+    // ========================== STATIC FIELDS & CONSTANTS ===========================
 
     static pinsArray = null;
 
@@ -36,6 +36,7 @@ export class ProjectBox extends HTMLElement {
     static PHOTOSHOP = "PhotoShop";
     static PHP = "PHP";
     static REACT = "React";
+    static SASS = "SASS";
     static TYPESCRIPT = "TypeScript";
     static UNITY = "Unity";
     static VISUAL_STUDIO_CODE = "Visual Studio Code";
@@ -80,6 +81,7 @@ export class ProjectBox extends HTMLElement {
             this.createPin(ProjectBox.PHOTOSHOP),
             this.createPin(ProjectBox.PHP),
             this.createPin(ProjectBox.REACT),
+            this.createPin(ProjectBox.SASS),
             this.createPin(ProjectBox.TYPESCRIPT),
             this.createPin(ProjectBox.UNITY),
             this.createPin(ProjectBox.VISUAL_STUDIO_CODE),
@@ -256,8 +258,8 @@ export class ProjectBox extends HTMLElement {
                 {
                     name: ProjectBox.JAVA,
                     img: "java",
-                    hue: 180,
-                    sat: 40,
+                    hue: 190,
+                    sat: 50,
                     light: 30,
                 },
                 {
@@ -314,6 +316,13 @@ export class ProjectBox extends HTMLElement {
                     img: "react",
                     hue: 200,
                     sat: 100,
+                    light: -1,
+                },
+                {
+                    name: ProjectBox.SASS,
+                    img: "sass",
+                    hue: 300,
+                    sat: 40,
                     light: -1,
                 },
                 {

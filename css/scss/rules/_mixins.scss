@@ -9,13 +9,13 @@
 }
 
 @mixin main_column_width($column) {
-  width: clamp(100% - 8vw, 100% - 4rem, 100%);
+  width: clamp(100% - 12vw, 100% - 4rem, 100%);
 
   @include q.desktop {
     @if $column == 0 {
       width: 20rem;
     } @else {
-      width: min(32rem, 40vw);
+      width: min(32rem, 44vw);
     }
   }
 }
