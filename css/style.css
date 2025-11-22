@@ -1,20 +1,3 @@
-/*@mixin phone {
-  @media screen and (max-width: 576px) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media screen and (min-width: 577px) and (max-width: 992px) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media screen and (min-width: 993px) {
-    @content;
-  }
-}*/
 * {
   /* UI Debug Border
   box-shadow: inset 0px 0px 0px 1px red;
@@ -28,7 +11,7 @@
   font-style: normal;
   font-synthesis: none;
   font-size: 1rem;
-  color: #e8e4ff;
+  color: #d8d2fb;
   line-height: 1.5;
   text-decoration: none;
   overflow-x: hidden;
@@ -37,7 +20,6 @@
 
 :root {
   --default-animation-speed: 1;
-  --standard-gap: 2.25rem;
 }
 
 button {
@@ -51,21 +33,59 @@ button:hover {
 
 hr {
   border: none;
-  border-top: 1px solid #d9faf8;
+  border-top: 1px solid #edfffe;
 }
 
+@property --clr-animated-main-bg-gradient {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: black;
+}
+html {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  /* prettier-ignore */
+  background: linear-gradient(125deg, #2d0860 5%, #040117 95%);
+}
+
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  width: max(100vh, 100vw);
+  height: max(100vh, 100vw);
+  /* prettier-ignore */
+  animation: mainBackgroundGradient calc(var(--default-animation-speed) * 14s) ease-in-out infinite;
+  transition: --clr-animated-main-bg-gradient 2s linear;
+  /* prettier-ignore */
+  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, #040117 110%);
+}
+
+@keyframes mainBackgroundGradient {
+  /* prettier-ignore */
+  0% {
+    --clr-animated-main-bg-gradient: #280451;
+  }
+  /* prettier-ignore */
+  33% {
+    --clr-animated-main-bg-gradient: #2e0c5f;
+  }
+  /* prettier-ignore */
+  66% {
+    --clr-animated-main-bg-gradient: #001259;
+  }
+  /* prettier-ignore */
+  100% {
+    --clr-animated-main-bg-gradient: #280451;
+  }
+}
 html,
 body {
   width: 100%;
   box-shadow: inset 0px 0px 0px 0px transparent;
-}
-
-html {
-  height: 100%;
-  background: linear-gradient(125deg, #2d0860 5%, #01002c 95%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
 }
 
 body {
@@ -89,7 +109,7 @@ body {
 }
 
 header {
-  width: calc(100% - 4rem);
+  width: clamp(100% - 8vw, 100% - 4rem, 100%);
 }
 @media screen and (min-width: 768px) {
   header {
@@ -104,12 +124,12 @@ header {
 }
 @media screen and (min-width: 768px) {
   #gap {
-    width: min(7vw, 5rem);
+    width: min(9vw, 7rem);
   }
 }
 
 main {
-  width: calc(100% - 4rem);
+  width: clamp(100% - 8vw, 100% - 4rem, 100%);
 }
 @media screen and (min-width: 768px) {
   main {
@@ -183,6 +203,7 @@ form fieldset label {
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
+  accent-color: #009aff;
 }
 form div {
   width: 100%;
@@ -196,32 +217,34 @@ form div:has(textarea) {
   flex-grow: 1;
 }
 form div label {
+  accent-color: #009aff;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0;
   flex-shrink: 0;
-  color: #d9faf8;
+  color: #edfffe;
   width: 5rem;
 }
 form div input,
 form div select,
 form div textarea {
+  accent-color: #009aff;
   flex-grow: 1;
   min-width: 0;
   width: auto;
   margin: 0.25rem;
   padding: 0.25rem;
   background: none;
-  border: 1px solid #d9faf8;
-  color: #e8e4ff;
+  border: 1px solid #edfffe;
+  color: #d8d2fb;
   transition: background-color calc(var(--default-animation-speed) * 100ms) linear;
 }
 form div input:hover,
 form div select:hover,
 form div textarea:hover {
-  box-shadow: 0px 0px 6px 0px #d9faf8;
+  box-shadow: 0px 0px 6px 0px #edfffe;
 }
 form div input[type=text]:focus,
 form div input[type=email]:focus,
@@ -231,6 +254,12 @@ form div textarea:focus {
 form div textarea {
   min-height: 12rem;
   resize: none;
+}
+
+hr.title {
+  border-top: 2px solid #009aff;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 nav {
@@ -249,13 +278,13 @@ nav button {
   transition: all calc(var(--default-animation-speed) * 200ms) ease-in-out;
   font-weight: 400;
   background-color: transparent;
-  color: #d9faf8;
-  padding: 0.25rem 0.25rem 0.25rem 1.5rem;
+  color: #edfffe;
+  padding: 0.25rem 0.25rem 0.25rem 1.25rem;
 }
 nav button:hover, nav button.active {
   background-color: rgba(237, 244, 255, 0.1568627451);
   font-weight: 600;
-  padding: 0.25rem 0.25rem 0.25rem 3rem;
+  padding: 0.25rem 0.25rem 0.25rem 2.5rem;
 }
 nav button:hover {
   background-color: rgba(229, 227, 255, 0.2039215686);
@@ -272,19 +301,47 @@ nav .nav-divider {
 nav .nav-divider p {
   flex-shrink: 0;
   padding: 0;
-  color: #d9faf8;
+  color: #edfffe;
   user-select: none;
 }
 nav .nav-divider hr {
-  border-top: 1px solid #e8e4ff;
+  border-top: 1px solid #d8d2fb;
   margin: 0;
   width: 100%;
 }
 
-hr.title {
-  border-top: 2px solid #009aff;
-  width: 100%;
-  margin-top: 1rem;
+project-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+project-box div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  /*background-color: #1f7e88;*/
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+project-box div img {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  filter: drop-shadow(2px 2px 6px #27282b);
+}
+project-box div p {
+  filter: drop-shadow(2px 2px 6px #27282b);
+  color: #edfffe;
+  white-space: nowrap;
+  overflow: visible;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 h1,
@@ -294,7 +351,7 @@ h4,
 h5,
 h6 {
   overflow: hidden;
-  color: #d9faf8;
+  color: #edfffe;
   font-weight: 200;
   text-wrap: nowrap;
   line-height: 1.25;
@@ -311,7 +368,7 @@ p {
 
 b {
   font-weight: 600;
-  color: #d9faf8;
+  color: #edfffe;
 }
 
 pre {

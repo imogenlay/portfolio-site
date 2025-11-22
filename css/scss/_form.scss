@@ -25,6 +25,7 @@ form {
 
     label {
       @include mixins.flex(row, flex-start, center, 0.5rem);
+      accent-color: g.$clr-accent;
     }
   }
 
@@ -37,6 +38,7 @@ form {
     }
 
     label {
+      accent-color: g.$clr-accent;
       @include mixins.flex(row, flex-start, flex-start, 0);
 
       flex-shrink: 0;
@@ -47,6 +49,7 @@ form {
     input,
     select,
     textarea {
+      accent-color: g.$clr-accent;
       flex-grow: 1;
       min-width: 0;
       width: auto;

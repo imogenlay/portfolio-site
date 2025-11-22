@@ -3,7 +3,7 @@
 @use "./rules/mixins";
 
 hr.title {
-  border-top: 2px solid g.$clr-accent-light;
+  border-top: 2px solid g.$clr-accent;
   width: 100%;
   margin-top: 1rem;
 }
@@ -23,13 +23,13 @@ nav {
 
     background-color: transparent;
     color: g.$clr-white;
-    padding: 0.25rem 0.25rem 0.25rem 1.5rem;
+    padding: 0.25rem 0.25rem 0.25rem 1.25rem;
 
     &:hover,
     &.active {
       background-color: g.$clr-nav-button-background;
       font-weight: 600;
-      padding: 0.25rem 0.25rem 0.25rem 3rem;
+      padding: 0.25rem 0.25rem 0.25rem 2.5rem;
     }
 
     &:hover {

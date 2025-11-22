@@ -1,0 +1,53 @@
+@use "./rules/media-queries" as q;
+@use "./rules/global" as g;
+@use "./rules/mixins";
+
+$clr-background-static-a: #2d0860;
+$clr-background-static-b: #040117;
+
+@property --clr-animated-main-bg-gradient {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: black;
+}
+
+html {
+  // This is a static background.
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  /* prettier-ignore */
+  background: linear-gradient(125deg, $clr-background-static-a 5%, $clr-background-static-b 95%);
+}
+
+#background {
+  // This is the animated background.
+  // Fixed positioning.
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+
+  // Size.
+  width: max(100vh, 100vw);
+  height: max(100vh, 100vw);
+
+  // Animation/Background.
+  /* prettier-ignore */
+  animation: mainBackgroundGradient calc(var(--default-animation-speed) * 14s) ease-in-out infinite;
+  transition: --clr-animated-main-bg-gradient 2s linear;
+  /* prettier-ignore */
+  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, $clr-background-static-b 110%);
+}
+
+@keyframes mainBackgroundGradient {
+  /* prettier-ignore */
+  0%   { --clr-animated-main-bg-gradient: #280451; }
+  /* prettier-ignore */
+  33%  { --clr-animated-main-bg-gradient: #2e0c5f; }
+  /* prettier-ignore */
+  66%  { --clr-animated-main-bg-gradient: #001259; }
+  /* prettier-ignore */
+  100% { --clr-animated-main-bg-gradient: #280451; }
+}

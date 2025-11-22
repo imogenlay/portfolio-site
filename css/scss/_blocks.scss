@@ -8,19 +8,6 @@ body {
   box-shadow: inset 0px 0px 0px 0px transparent;
 }
 
-html {
-  height: 100%;
-  background: linear-gradient(
-    125deg,
-    g.$clr-background-a 5%,
-    g.$clr-background-b 95%
-  );
-
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-}
-
 body {
   @include mixins.flex(column, stretch, center, 0);
 
@@ -43,7 +30,7 @@ header {
   flex-shrink: 0;
 
   @include q.desktop {
-    width: min(7vw, 5rem);
+    width: min(9vw, 7rem);
   }
 }
 

@@ -1,4 +1,4 @@
-import * as Check from './lib/Check.js';
+import { ProjectBox } from './elements/ProjectBox.js';
 import * as ElementG from './lib/ElementG.js';
 import * as MathG from './lib/MathG.js';
 
@@ -19,6 +19,7 @@ export class PageBuilder {
 	}
 
 	// =========================== INITIALISATION FUNCTIONS ===========================
+
 	initialise() {
 		this.appendTitleElementsAndCreateNavbar();
 		this.createAndAppendNavbarElementsArray();
@@ -104,7 +105,9 @@ export class PageBuilder {
 
 	generateAboutPage() {
 		const section = document.createElement("section");
-		section.append(ElementG.createSpecific("p", "", "about me"))
+		section.append(ElementG.createSpecific("p", "", "about me"));
+		const projectBox = new ProjectBox();
+		section.append(projectBox);
 		return section;
 	}
 
@@ -141,7 +144,6 @@ export class PageBuilder {
 			navigator.clipboard.writeText(output);
 		};
 
-
 		section.append(input, button, p);
 		return section;
 	}
@@ -171,13 +173,13 @@ export class PageBuilder {
 
 		const fieldSet = document.createElement("fieldset");
 		form.append(fieldSet);
-		fieldSet.append(ElementG.createInput2("Option A", {
+		fieldSet.append(ElementG.createInputAlternate("Option A", {
 			type: "radio",
 			name: "category",
 			value: "option-a",
 			checked: true
 		}));
-		fieldSet.append(ElementG.createInput2("Option B", {
+		fieldSet.append(ElementG.createInputAlternate("Option B", {
 			type: "radio",
 			name: "category",
 			value: "option-b"
@@ -210,7 +212,6 @@ export class PageBuilder {
 		localStorage.setItem(this.CURRENT_PAGE_KEY, pageIndex);
 
 		let j = 0;
-		console.log("start");
 		for (let i = 0; i < this.navbarElements.length; i++) {
 			const element = this.navbarElements[i];
 			element.classList.remove('active');

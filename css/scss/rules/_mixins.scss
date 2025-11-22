@@ -8,13 +8,8 @@
   gap: $gap;
 }
 
-@mixin subheading($size) {
-  font-size: $size;
-  font-weight: 700;
-}
-
 @mixin main_column_width($column) {
-  width: calc(100% - 4rem);
+  width: clamp(100% - 8vw, 100% - 4rem, 100%);
 
   @include q.desktop {
     @if $column == 0 {

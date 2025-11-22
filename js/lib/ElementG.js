@@ -59,6 +59,13 @@ export function createParagraph(textComponents) {
 	return p;
 }
 
+export function createImg(src, alt) {
+	const img = document.createElement('img');
+	img.src = src;
+	img.alt = alt;
+	return img;
+}
+
 function genericCreateFormField(fieldTag, labelText, attributes) {
 	const div = document.createElement("div");
 	const label = document.createElement("label");
@@ -77,7 +84,7 @@ export function createInput(labelText, attributes) {
 	return genericCreateFormField("input", labelText, attributes)
 }
 
-export function createInput2(labelText, attributes) {
+export function createInputAlternate(labelText, attributes) {
 	const label = document.createElement("label");
 	const input = document.createElement("input");
 
