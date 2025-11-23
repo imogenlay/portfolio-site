@@ -13,11 +13,16 @@ project-box {
     flex-grow: 1;
     flex-shrink: 0;
 
+    figure,
     img {
       width: 2rem;
       height: 2rem;
       flex-shrink: 0;
       filter: drop-shadow(2px 2px 6px g.$clr-dark-grey);
+    }
+
+    figure {
+      box-shadow: inset 0px 0px 0px 1px g.$clr-nav-button-background-b;
     }
 
     p {

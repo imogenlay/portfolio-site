@@ -192,15 +192,13 @@ export class PageBuilder {
 			Const.OPEN_GL,
 			Const.GLSL,
 			Const.VISUAL_STUDIO,
-			Const.VISUAL_STUDIO_CODE);
-		const otherBox = new ProjectBox();
-		otherBox.addPins(
+			Const.VISUAL_STUDIO_CODE,
 			Const.ASEPRITE,
 			Const.BLENDER,
 			Const.GIT,
 			Const.GITHUB);
 
-		section.append(codeBox, otherBox);
+		section.append(codeBox);
 		return section;
 	}
 
@@ -213,16 +211,14 @@ export class PageBuilder {
 			Const.GDSCRIPT,
 			Const.GODOT,
 			Const.WYSCI,
-			Const.VISUAL_STUDIO);
-		const otherBox = new ProjectBox();
-		otherBox.addPins(
+			Const.VISUAL_STUDIO,
 			Const.ASEPRITE,
 			Const.KRITA,
 			Const.BLENDER,
 			Const.GIT,
 			Const.GITHUB);
 
-		section.append(codeBox, otherBox);
+		section.append(codeBox);
 		return section;
 	}
 
@@ -241,7 +237,6 @@ export class PageBuilder {
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB,
-			"Fake Language"
 		);
 
 		section.append(otherBox);

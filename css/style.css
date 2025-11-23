@@ -329,11 +329,15 @@ project-box div {
   flex-grow: 1;
   flex-shrink: 0;
 }
+project-box div figure,
 project-box div img {
   width: 2rem;
   height: 2rem;
   flex-shrink: 0;
   filter: drop-shadow(2px 2px 6px #27282b);
+}
+project-box div figure {
+  box-shadow: inset 0px 0px 0px 1px rgba(229, 227, 255, 0.2039215686);
 }
 project-box div p {
   filter: drop-shadow(2px 2px 6px #27282b);
