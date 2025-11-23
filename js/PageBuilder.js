@@ -49,10 +49,10 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
 		];
 
-		// Create pages: Have to be in same order as nab buttons. 
+		// Create pages: Have to be in same order as nav buttons. 
 		this.pageElements = [
 			this.generateAboutPage(),
-			this.generateSkillPage(),
+			this.generateSkillsPage(),
 			this.generateContactPage(),
 			this.generateProjectA(),
 			this.generateProjectB(),
@@ -115,7 +115,7 @@ export class PageBuilder {
 		return section;
 	}
 
-	generateSkillPage() {
+	generateSkillsPage() {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Skills"));
 		const projectBox = new ProjectBox();
