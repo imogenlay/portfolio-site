@@ -82,6 +82,10 @@ html {
     --clr-animated-main-bg-gradient: #280451;
   }
 }
+html {
+  overflow-y: scroll;
+}
+
 html,
 body {
   width: 100%;
@@ -317,7 +321,7 @@ project-box {
   align-items: stretch;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
 }
 project-box div {
   display: flex;

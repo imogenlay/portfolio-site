@@ -2,6 +2,10 @@
 @use "./rules/global" as g;
 @use "./rules/mixins";
 
+html {
+  overflow-y: scroll;
+}
+
 html,
 body {
   width: 100%;

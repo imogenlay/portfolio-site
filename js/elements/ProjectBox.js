@@ -40,6 +40,8 @@ export class ProjectBox extends HTMLElement {
 			img = ElementG.createImg("./public/svg/" + pinData.img + ".svg", pinData.img);
 		else
 			img = document.createElement("figure");
+		img.style.width = "2rem";
+		img.style.height = "2rem";
 
 		const p = ElementG.createSpecific("p", "", pinData.name);
 

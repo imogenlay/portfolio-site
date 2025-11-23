@@ -49,6 +49,7 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "Portfolio"),
 			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
+			this.createNavbarDivider("Ver " + Const.VERSION),
 		];
 
 		// Create pages: Have to be in same order as nav buttons. 
@@ -198,6 +199,10 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB);
 
+		section.append(ElementG.createImg("./public/img/mineshaft_00.png", "mineshaft_00"));
+		section.append(ElementG.createImg("./public/img/mineshaft_01.png", "mineshaft_01"));
+		section.append(ElementG.createImg("./public/img/mineshaft_02.png", "mineshaft_02"));
+		section.append(ElementG.createImg("./public/img/mineshaft_03.png", "mineshaft_03"));
 		section.append(codeBox);
 		return section;
 	}
@@ -218,6 +223,10 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB);
 
+		section.append(ElementG.createImg("./public/img/cu_carta_00.png", "cu_carta_00"));
+		section.append(ElementG.createImg("./public/img/cu_carta_01.png", "cu_carta_01"));
+		section.append(ElementG.createImg("./public/img/cu_carta_02.png", "cu_carta_02"));
+		section.append(ElementG.createImg("./public/img/cu_carta_03.png", "cu_carta_03"));
 		section.append(codeBox);
 		return section;
 	}
@@ -226,6 +235,8 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Portfolio Site"));
+		section.append(ElementG.createSpecific("p", "", "You're looking at it"));
+
 
 		const otherBox = new ProjectBox();
 		otherBox.addPins(

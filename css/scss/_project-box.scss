@@ -5,7 +5,7 @@
 project-box {
   @include mixins.flex(row, stretch, stretch, 0.5rem);
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
 
   div {
     @include mixins.flex(row, center, center, 0.5rem);
