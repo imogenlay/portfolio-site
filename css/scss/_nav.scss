@@ -2,6 +2,10 @@
 @use "./rules/global" as g;
 @use "./rules/mixins";
 
+$clr-nav-button-background-a: #edf4ff28;
+$clr-nav-button-background-b: #e5e3ff34;
+$clr-nav-button-background-c: #dedcff57;
+
 hr.title {
   border-top: 2px solid g.$clr-accent;
   width: 100%;
@@ -27,18 +31,18 @@ nav {
 
     &:hover,
     &.selected {
-      background-color: g.$clr-nav-button-background-a;
+      background-color: $clr-nav-button-background-a;
       font-weight: 600;
       padding: 0.25rem 0.25rem 0.25rem 2.5rem;
     }
 
     &:hover {
-      background-color: g.$clr-nav-button-background-b;
+      background-color: $clr-nav-button-background-b;
     }
 
-    &:active {
-      transition: all 0ms linear;
-      background-color: white;
+    &.recently-selected {
+      transition: all 0s linear;
+      background-color: $clr-nav-button-background-c;
     }
   }
 

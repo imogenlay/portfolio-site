@@ -1,7 +1,7 @@
-import { ProjectBox } from './elements/ProjectBox.js';
-import { Const } from './constants/Const.js';
-import * as ElementG from './lib/ElementG.js';
-import * as MathG from './lib/MathG.js';
+import { ProjectBox } from "./elements/ProjectBox.js";
+import { Const } from "./constants/Const.js";
+import * as ElementG from "./lib/ElementG.js";
+import * as MathG from "./lib/MathG.js";
 
 export class PageBuilder {
 
@@ -76,7 +76,7 @@ export class PageBuilder {
 			if (ElementG.isTag(this.navbarElements[i], "button")) {
 				// This variable must be passed by value to a new variable to save it.
 				let j = currentPageIndex;
-				this.navbarElements[i].addEventListener('click', () => this.switchToPage(j));
+				this.navbarElements[i].addEventListener("click", () => this.switchToPage(j));
 				++currentPageIndex;
 			}
 		}
@@ -248,6 +248,8 @@ export class PageBuilder {
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB,
+			"Unnamed",
+			null,
 		);
 
 		section.append(otherBox);
@@ -281,27 +283,25 @@ export class PageBuilder {
 		let j = 0;
 		for (let i = 0; i < this.navbarElements.length; i++) {
 			const element = this.navbarElements[i];
-			//element.classList.remove('recently-selected');
-			element.classList.remove('selected');
+			element.classList.remove("recently-selected");
+			element.classList.remove("selected");
 
 			if (ElementG.isTag(element, "button")) {
 				if (j === pageIndex)
-					element.classList.add('selected');
+					element.classList.add("recently-selected");
 				++j;
 			}
 		}
+
+		setTimeout(() => this.switchToPageUpdate(), 10);
 	}
 
 	switchToPageUpdate() {
-
 		for (let i = 0; i < this.navbarElements.length; i++) {
 			const element = this.navbarElements[i];
-			element.classList.remove('selected');
-
-			if (ElementG.isTag(element, "button")) {
-				if (j === pageIndex)
-					element.classList.add('selected');
-				++j;
+			if (element.classList.contains("recently-selected")) {
+				element.classList.remove("recently-selected");
+				element.classList.add("selected");
 			}
 		}
 	}

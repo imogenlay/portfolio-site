@@ -60,6 +60,9 @@ export class ProjectBox extends HTMLElement {
 	getPinData(name) {
 		// Get a pin from the existing list.
 		let pin = null;
+		if (!Check.isString(name))
+			name = "not a string";
+
 		for (let i = 0; i < ProjectBox.pinsArray.length; i++)
 			if (ProjectBox.pinsArray[i].name === name)
 				pin = ProjectBox.pinsArray[i];

@@ -232,9 +232,9 @@ nav button:hover, nav button.selected {
 nav button:hover {
   background-color: rgba(229, 227, 255, 0.2039215686);
 }
-nav button:active {
-  transition: all 0ms linear;
-  background-color: white;
+nav button.recently-selected {
+  transition: all 0s linear;
+  background-color: rgba(222, 220, 255, 0.3411764706);
 }
 nav .nav-divider {
   display: flex;
@@ -337,7 +337,7 @@ form div textarea:hover {
 form div input[type=text]:focus,
 form div input[type=email]:focus,
 form div textarea:focus {
-  background-color: rgba(237, 244, 255, 0.1568627451);
+  background-color: rgba(249, 251, 255, 0.1568627451);
 }
 form div textarea {
   min-height: 12rem;
@@ -371,7 +371,7 @@ project-box div img {
   filter: drop-shadow(2px 2px 6px #27282b);
 }
 project-box div figure {
-  box-shadow: inset 0px 0px 0px 1px rgba(229, 227, 255, 0.2039215686);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2039215686);
 }
 project-box div p {
   filter: drop-shadow(2px 2px 6px #27282b);
@@ -382,7 +382,7 @@ project-box div p {
   flex-shrink: 0;
 }
 
-img .flipped {
+img.flipped {
   transform: scale(-1, 1); /* Flip SVG horizontally */
 }
 

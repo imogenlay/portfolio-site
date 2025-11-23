@@ -2,7 +2,7 @@
 @use "./rules/global" as g;
 @use "./rules/mixins";
 
-img .flipped {
+img.flipped {
   transform: scale(-1, 1); /* Flip SVG horizontally */
 }
 
