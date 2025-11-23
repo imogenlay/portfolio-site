@@ -1,6 +1,6 @@
 import * as ElementG from '../lib/ElementG.js';
 import * as MathG from '../lib/MathG.js';
-import * as Const from '../constants/Const.js';
+import { Const } from '../constants/Const.js';
 
 export class ProjectBox extends HTMLElement {
 
@@ -21,10 +21,6 @@ export class ProjectBox extends HTMLElement {
     initialise() {
 
         this.pinElementsArray = [
-
-
-
-
             this.createPin(Const.ANDROID),
             this.createPin(Const.ASEPRITE),
             this.createPin(Const.BLENDER),
@@ -56,17 +52,8 @@ export class ProjectBox extends HTMLElement {
             this.createPin(Const.WYSCI)
         ];
 
-        for (let i = 0; i < this.pinElementsArray.length; i++) {
+        for (let i = 0; i < this.pinElementsArray.length; i++)
             this.append(this.pinElementsArray[i]);
-        }
-    }
-
-    hslToOklab(h, s, l) {
-        return "oklab(from hsl(" + h + " " + s + " " + l + ") l a b)";
-    }
-
-    hslaToOklab(h, s, l, a) {
-        return "oklab(from hsl(" + h + " " + s + " " + l + ") l a b / " + a + ")";
     }
 
     createPin(name) {
@@ -79,8 +66,6 @@ export class ProjectBox extends HTMLElement {
         const s = pinData.sat;
         const l = pinData.light;
         const pinBackgroundColor = "oklab(from hsl(" + h + " " + s + " " + l + ") l a b)";
-        //`oklab(${h} ${s}% ${l} / 1)`
-        //this.hslToOklab(pinData.hue, pinData.saturation, pinData.light);
         pin.style.backgroundColor = pinBackgroundColor;
 
         pin.append(img, p);
@@ -288,7 +273,7 @@ export class ProjectBox extends HTMLElement {
                 {
                     name: Const.SASS,
                     img: "sass",
-                    hue: 300,
+                    hue: 320,
                     sat: 40,
                     light: -1,
                 },

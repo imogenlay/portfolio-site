@@ -26,11 +26,12 @@ export function createSpecific(type, className, textContent) {
 
 	if (!Check.allAreStrings(type, className, textContent)) {
 		// The parameters were wrong, therefore a crappy red box will be returned.
-		Check.error("When creating element, all 3 parameters must be strings.");
+		Check.error(`When creating element, all 3 parameters must be strings. Cannot create: ${type}, ${className}, ${textContent}`);
 		const failureElement = document.createElement("div");
 		failureElement.style.width = "20px";
 		failureElement.style.height = "20px";
-		failureElement.style.backgroundColor = "red";
+		failureElement.style.backgroundColor = "grey";
+		failureElement.style.border = "2px dashed white";
 		return failureElement;
 	}
 

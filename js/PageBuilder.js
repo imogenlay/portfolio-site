@@ -1,6 +1,6 @@
 import { ProjectBox } from './elements/ProjectBox.js';
+import { Const } from './constants/Const.js';
 import * as ElementG from './lib/ElementG.js';
-import * as Const from './constants/Const.js';
 import * as MathG from './lib/MathG.js';
 
 export class PageBuilder {
