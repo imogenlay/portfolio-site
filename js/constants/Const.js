@@ -1,6 +1,6 @@
 export class Const {
 
-    static VERSION = "0.0.0.0";
+    static VERSION = "0.0.0.2";
     static CURRENT_PAGE_KEY = "currentPage";
     static TITLE_CU_CARTA = "Cú Cárta";
 

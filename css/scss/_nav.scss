@@ -26,7 +26,7 @@ nav {
     padding: 0.25rem 0.25rem 0.25rem 1.25rem;
 
     &:hover,
-    &.active {
+    &.selected {
       background-color: g.$clr-nav-button-background-a;
       font-weight: 600;
       padding: 0.25rem 0.25rem 0.25rem 2.5rem;
@@ -34,6 +34,11 @@ nav {
 
     &:hover {
       background-color: g.$clr-nav-button-background-b;
+    }
+
+    &:active {
+      transition: all 0ms linear;
+      background-color: white;
     }
   }
 

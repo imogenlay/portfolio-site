@@ -1,7 +1,8 @@
-@use "./scss/background";
 @use "./scss/blocks";
-@use "./scss/decorations";
-@use "./scss/form";
-@use "./scss/nav";
-@use "./scss/project-box";
+@use "./scss/background";
 @use "./scss/text";
+
+@use "./scss/nav";
+@use "./scss/form";
+@use "./scss/project-box";
+@use "./scss/decorations";

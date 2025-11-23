@@ -2,13 +2,9 @@
 @use "./rules/global" as g;
 @use "./rules/mixins";
 
-html {
-  overflow-y: scroll;
-}
-
 html,
 body {
-  width: 100%;
+  width: 100vw;
   box-shadow: inset 0px 0px 0px 0px transparent;
 }
 

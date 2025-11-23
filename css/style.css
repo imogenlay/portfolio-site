@@ -16,6 +16,7 @@
   text-decoration: none;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 :root {
@@ -36,59 +37,9 @@ hr {
   border-top: 1px solid #edfffe;
 }
 
-@property --clr-animated-main-bg-gradient {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: black;
-}
-html {
-  height: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-  /* prettier-ignore */
-  background: linear-gradient(125deg, #2d0860 5%, #040117 95%);
-}
-
-#background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -10;
-  width: max(100vh, 100vw);
-  height: max(100vh, 100vw);
-  /* prettier-ignore */
-  animation: mainBackgroundGradient calc(var(--default-animation-speed) * 14s) ease-in-out infinite;
-  transition: --clr-animated-main-bg-gradient 2s linear;
-  /* prettier-ignore */
-  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, #040117 110%);
-}
-
-@keyframes mainBackgroundGradient {
-  /* prettier-ignore */
-  0% {
-    --clr-animated-main-bg-gradient: #280451;
-  }
-  /* prettier-ignore */
-  33% {
-    --clr-animated-main-bg-gradient: #2e0c5f;
-  }
-  /* prettier-ignore */
-  66% {
-    --clr-animated-main-bg-gradient: #001259;
-  }
-  /* prettier-ignore */
-  100% {
-    --clr-animated-main-bg-gradient: #280451;
-  }
-}
-html {
-  overflow-y: scroll;
-}
-
 html,
 body {
-  width: 100%;
+  width: 100vw;
   box-shadow: inset 0px 0px 0px 0px transparent;
 }
 
@@ -164,13 +115,146 @@ section {
   padding-bottom: 4rem;
 }
 
-img .flipped {
-  transform: scale(-1, 1); /* Flip SVG horizontally */
+@property --clr-animated-main-bg-gradient {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: black;
+}
+html {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  /* prettier-ignore */
+  background: linear-gradient(125deg, #2d0860 5%, #040117 95%);
 }
 
-.heading-generator {
-  width: 200px;
-  height: 40px;
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  width: max(100vh, 100vw);
+  height: max(100vh, 100vw);
+  /* prettier-ignore */
+  animation: mainBackgroundGradient calc(var(--default-animation-speed) * 14s) ease-in-out infinite;
+  transition: --clr-animated-main-bg-gradient 2s linear;
+  /* prettier-ignore */
+  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, #040117 110%);
+}
+
+@keyframes mainBackgroundGradient {
+  /* prettier-ignore */
+  0% {
+    --clr-animated-main-bg-gradient: #280451;
+  }
+  /* prettier-ignore */
+  33% {
+    --clr-animated-main-bg-gradient: #2e0c5f;
+  }
+  /* prettier-ignore */
+  66% {
+    --clr-animated-main-bg-gradient: #001259;
+  }
+  /* prettier-ignore */
+  100% {
+    --clr-animated-main-bg-gradient: #280451;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow: hidden;
+  color: #edfffe;
+  text-wrap: nowrap;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: clamp(2rem, 15vw, 4rem);
+  text-align: center;
+  font-weight: 200;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 12.5vw, 2rem);
+  padding-bottom: 1rem;
+  font-weight: 300;
+}
+
+p {
+  padding-bottom: 1rem;
+}
+
+b {
+  font-weight: 500;
+  color: #edfffe;
+}
+
+pre {
+  font-family: monospace;
+  overflow: auto;
+}
+
+hr.title {
+  border-top: 2px solid #009aff;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+nav {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+}
+nav button {
+  user-select: none;
+  width: 100%;
+  text-align: left;
+  font-size: 1.25rem;
+  transition: all calc(var(--default-animation-speed) * 200ms) ease-in-out;
+  font-weight: 400;
+  background-color: transparent;
+  color: #edfffe;
+  padding: 0.25rem 0.25rem 0.25rem 1.25rem;
+}
+nav button:hover, nav button.selected {
+  background-color: rgba(237, 244, 255, 0.1568627451);
+  font-weight: 600;
+  padding: 0.25rem 0.25rem 0.25rem 2.5rem;
+}
+nav button:hover {
+  background-color: rgba(229, 227, 255, 0.2039215686);
+}
+nav button:active {
+  transition: all 0ms linear;
+  background-color: white;
+}
+nav .nav-divider {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0.25rem;
+}
+nav .nav-divider p {
+  flex-shrink: 0;
+  padding: 0;
+  color: #edfffe;
+  user-select: none;
+}
+nav .nav-divider hr {
+  border-top: 1px solid #d8d2fb;
+  margin: 0;
+  width: 100%;
 }
 
 label {
@@ -260,60 +344,6 @@ form div textarea {
   resize: none;
 }
 
-hr.title {
-  border-top: 2px solid #009aff;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-nav {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0;
-}
-nav button {
-  user-select: none;
-  width: 100%;
-  text-align: left;
-  font-size: 1.25rem;
-  transition: all calc(var(--default-animation-speed) * 200ms) ease-in-out;
-  font-weight: 400;
-  background-color: transparent;
-  color: #edfffe;
-  padding: 0.25rem 0.25rem 0.25rem 1.25rem;
-}
-nav button:hover, nav button.active {
-  background-color: rgba(237, 244, 255, 0.1568627451);
-  font-weight: 600;
-  padding: 0.25rem 0.25rem 0.25rem 2.5rem;
-}
-nav button:hover {
-  background-color: rgba(229, 227, 255, 0.2039215686);
-}
-nav .nav-divider {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  margin: 0.25rem;
-}
-nav .nav-divider p {
-  flex-shrink: 0;
-  padding: 0;
-  color: #edfffe;
-  user-select: none;
-}
-nav .nav-divider hr {
-  border-top: 1px solid #d8d2fb;
-  margin: 0;
-  width: 100%;
-}
-
 project-box {
   display: flex;
   flex-direction: row;
@@ -352,42 +382,13 @@ project-box div p {
   flex-shrink: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow: hidden;
-  color: #edfffe;
-  text-wrap: nowrap;
-  line-height: 1.25;
+img .flipped {
+  transform: scale(-1, 1); /* Flip SVG horizontally */
 }
 
-h1 {
-  font-size: clamp(2rem, 15vw, 4rem);
-  text-align: center;
-  font-weight: 200;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 12.5vw, 2rem);
-  padding-bottom: 1rem;
-  font-weight: 300;
-}
-
-p {
-  padding-bottom: 1rem;
-}
-
-b {
-  font-weight: 500;
-  color: #edfffe;
-}
-
-pre {
-  font-family: monospace;
-  overflow: auto;
+button.heading-generator {
+  width: 200px;
+  height: 40px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -257,37 +257,14 @@ export class PageBuilder {
 	generateSubHeadingGenerator() {
 
 		const section = document.createElement("section");
+		const title = ElementG.createSpecific("h2", "", "Sub-Heading Generator");
 		const input = document.createElement("input");
-		const p = document.createElement("p");
+		const p = document.createElement("pre");
 		const button = ElementG.createSpecific("button", "heading-generator", "Convert to sub-heading");
 
-		button.onclick = () => {
+		button.onclick = () => this.createSubHeading(input, p);
 
-			const MAX_CHARACTERS = 80;
-			let text = input.value.toUpperCase().trim();
-			let output = "// ";
-			let charactersRemaining = MAX_CHARACTERS;
-			charactersRemaining -= text.length + 2;
-			let firstSpanLength = 0;
-			let lastSpanLength = 0;
-
-			if (charactersRemaining % 2 == 0) {
-				firstSpanLength = charactersRemaining / 2;
-				lastSpanLength = firstSpanLength;
-			} else {
-				firstSpanLength = MathG.floor(charactersRemaining / 2);
-				lastSpanLength = firstSpanLength + 1;
-			}
-
-			output += "=".repeat(firstSpanLength);
-			output += " " + text + " ";
-			output += "=".repeat(lastSpanLength);
-
-			p.textContent = output;
-			navigator.clipboard.writeText(output);
-		};
-
-		section.append(input, button, p);
+		section.append(title, input, button, p);
 		return section;
 	}
 
@@ -304,11 +281,26 @@ export class PageBuilder {
 		let j = 0;
 		for (let i = 0; i < this.navbarElements.length; i++) {
 			const element = this.navbarElements[i];
-			element.classList.remove('active');
+			//element.classList.remove('recently-selected');
+			element.classList.remove('selected');
 
 			if (ElementG.isTag(element, "button")) {
 				if (j === pageIndex)
-					element.classList.add('active');
+					element.classList.add('selected');
+				++j;
+			}
+		}
+	}
+
+	switchToPageUpdate() {
+
+		for (let i = 0; i < this.navbarElements.length; i++) {
+			const element = this.navbarElements[i];
+			element.classList.remove('selected');
+
+			if (ElementG.isTag(element, "button")) {
+				if (j === pageIndex)
+					element.classList.add('selected');
 				++j;
 			}
 		}
@@ -322,5 +314,33 @@ export class PageBuilder {
 
 		div.append(hrA, title, hrB);
 		return div;
+	}
+
+	createSubHeading(input, p) {
+		const MAX_CHARACTERS = 80;
+		let text = input.value.toUpperCase().trim();
+		if (text.length === 0)
+			return;
+
+		let output = "// ";
+		let charactersRemaining = MAX_CHARACTERS;
+		charactersRemaining -= text.length + 2;
+		let firstSpanLength = 0;
+		let lastSpanLength = 0;
+
+		if (charactersRemaining % 2 == 0) {
+			firstSpanLength = charactersRemaining / 2;
+			lastSpanLength = firstSpanLength;
+		} else {
+			firstSpanLength = MathG.floor(charactersRemaining / 2);
+			lastSpanLength = firstSpanLength + 1;
+		}
+
+		output += "=".repeat(firstSpanLength);
+		output += " " + text + " ";
+		output += "=".repeat(lastSpanLength);
+
+		p.textContent = output;
+		navigator.clipboard.writeText(output);
 	}
 }
