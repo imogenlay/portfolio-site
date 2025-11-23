@@ -5,7 +5,8 @@ import * as MathG from './lib/MathG.js';
 
 export class PageBuilder {
 
-	// ==================================== FIELDS ==================================== 
+	// ==================================== FIELDS ====================================
+
 	header; main; navbar;
 	navbarElements;
 	pageElements;
@@ -43,8 +44,9 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "Skills"),
 			ElementG.createSpecific("button", "nav-button", "Contact"),
 			this.createNavbarDivider("Projects"),
-			ElementG.createSpecific("button", "nav-button", "Project A"),
-			ElementG.createSpecific("button", "nav-button", "Project B"),
+			ElementG.createSpecific("button", "nav-button", "Mineshaft"),
+			ElementG.createSpecific("button", "nav-button", Const.TITLE_CU_CARTA),
+			ElementG.createSpecific("button", "nav-button", "Portfolio"),
 			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
 		];
@@ -54,8 +56,9 @@ export class PageBuilder {
 			this.generateAboutPage(),
 			this.generateSkillsPage(),
 			this.generateContactPage(),
-			this.generateProjectA(),
-			this.generateProjectB(),
+			this.generateMineshaftPage(),
+			this.generateCuCartaPage(),
+			this.generatePortfolioPage(),
 			this.generateSubHeadingGenerator(),
 		];
 	}
@@ -72,7 +75,6 @@ export class PageBuilder {
 			if (ElementG.isTag(this.navbarElements[i], "button")) {
 				// This variable must be passed by value to a new variable to save it.
 				let j = currentPageIndex;
-
 				this.navbarElements[i].addEventListener('click', () => this.switchToPage(j));
 				++currentPageIndex;
 			}
@@ -119,6 +121,7 @@ export class PageBuilder {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Skills"));
 		const projectBox = new ProjectBox();
+		projectBox.addAllPins();
 		section.append(projectBox);
 		return section;
 	}
@@ -179,12 +182,70 @@ export class PageBuilder {
 		return section;
 	}
 
-	generateProjectA() {
-		return ElementG.createSpecific("section", "", "Project A");
+	generateMineshaftPage() {
+		const section = document.createElement("section");
+		section.append(ElementG.createSpecific("h2", "", "Mineshaft"));
+		const codeBox = new ProjectBox();
+		codeBox.addPins(
+			Const.CSHARP,
+			Const.BASE_LIFT_ENGINE,
+			Const.OPEN_GL,
+			Const.GLSL,
+			Const.VISUAL_STUDIO,
+			Const.VISUAL_STUDIO_CODE);
+		const otherBox = new ProjectBox();
+		otherBox.addPins(
+			Const.ASEPRITE,
+			Const.BLENDER,
+			Const.GIT,
+			Const.GITHUB);
+
+		section.append(codeBox, otherBox);
+		return section;
 	}
 
-	generateProjectB() {
-		return ElementG.createSpecific("section", "", "Project B");
+	generateCuCartaPage() {
+		const section = document.createElement("section");
+		section.append(ElementG.createSpecific("h2", "", Const.TITLE_CU_CARTA));
+		const codeBox = new ProjectBox();
+		codeBox.addPins(
+			Const.CSHARP,
+			Const.GDSCRIPT,
+			Const.GODOT,
+			Const.WYSCI,
+			Const.VISUAL_STUDIO);
+		const otherBox = new ProjectBox();
+		otherBox.addPins(
+			Const.ASEPRITE,
+			Const.KRITA,
+			Const.BLENDER,
+			Const.GIT,
+			Const.GITHUB);
+
+		section.append(codeBox, otherBox);
+		return section;
+	}
+
+	generatePortfolioPage() {
+
+		const section = document.createElement("section");
+		section.append(ElementG.createSpecific("h2", "", "Portfolio Site"));
+
+		const otherBox = new ProjectBox();
+		otherBox.addPins(
+			Const.HTML,
+			Const.CSS,
+			Const.SASS,
+			Const.JAVASCRIPT,
+			Const.INKSCAPE,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GIT,
+			Const.GITHUB,
+			"Fake Language"
+		);
+
+		section.append(otherBox);
+		return section;
 	}
 
 	generateSubHeadingGenerator() {

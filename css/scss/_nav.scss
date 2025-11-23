@@ -27,13 +27,13 @@ nav {
 
     &:hover,
     &.active {
-      background-color: g.$clr-nav-button-background;
+      background-color: g.$clr-nav-button-background-a;
       font-weight: 600;
       padding: 0.25rem 0.25rem 0.25rem 2.5rem;
     }
 
     &:hover {
-      background-color: g.$clr-nav-button-background-lighter;
+      background-color: g.$clr-nav-button-background-b;
     }
   }
 

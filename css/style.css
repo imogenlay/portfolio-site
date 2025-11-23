@@ -317,6 +317,7 @@ project-box {
   align-items: stretch;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 project-box div {
   display: flex;
@@ -325,7 +326,6 @@ project-box div {
   align-items: center;
   gap: 0.5rem;
   padding: 0.25rem 0.5rem;
-  /*background-color: #1f7e88;*/
   flex-grow: 1;
   flex-shrink: 0;
 }

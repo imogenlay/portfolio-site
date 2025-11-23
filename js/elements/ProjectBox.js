@@ -1,5 +1,6 @@
 import * as ElementG from '../lib/ElementG.js';
 import * as MathG from '../lib/MathG.js';
+import * as Check from '../lib/Check.js';
 import { Const } from '../constants/Const.js';
 
 export class ProjectBox extends HTMLElement {
@@ -7,76 +8,52 @@ export class ProjectBox extends HTMLElement {
     // ==================================== FIELDS ==================================== 
     pinElementsArray;
 
-    // ========================== STATIC   ===========================
-
+    // ================================ STATIC FIELDS =================================
     static pinsArray = null;
+
     // ================================= CONSTRUCTOR ==================================
     constructor() {
         super();
-        this.initialise();
+        // Generate the pins array if it doesn't already exist.
+        this.initaliseStaticPinsArray();
     }
 
     // =========================== INITIALISATION FUNCTIONS ===========================
 
-    initialise() {
+    addPins(...names) {
+        for (let i = 0; i < names.length; i++)
+            this.append(this.createPin(names[i]));
+    }
 
-        this.pinElementsArray = [
-            this.createPin(Const.ANDROID),
-            this.createPin(Const.ASEPRITE),
-            this.createPin(Const.BLENDER),
-            this.createPin(Const.CSHARP),
-            this.createPin(Const.CSS),
-            this.createPin(Const.EXCEL),
-            this.createPin(Const.GDSCRIPT),
-            this.createPin(Const.GIT),
-            this.createPin(Const.GITHUB),
-            this.createPin(Const.GODOT),
-            this.createPin(Const.GLSL),
-            this.createPin(Const.HTML),
-            this.createPin(Const.IMOGEN_LAY),
-            this.createPin(Const.INTELLIJ),
-            this.createPin(Const.JAVA),
-            this.createPin(Const.JAVASCRIPT),
-            this.createPin(Const.KRITA),
-            this.createPin(Const.MINECRAFT),
-            this.createPin(Const.OCULUS),
-            this.createPin(Const.OPEN_GL),
-            this.createPin(Const.PHOTOSHOP),
-            this.createPin(Const.PHP),
-            this.createPin(Const.REACT),
-            this.createPin(Const.SASS),
-            this.createPin(Const.TYPESCRIPT),
-            this.createPin(Const.UNITY),
-            this.createPin(Const.VISUAL_STUDIO_CODE),
-            this.createPin(Const.VISUAL_STUDIO),
-            this.createPin(Const.WYSCI)
-        ];
-
-        for (let i = 0; i < this.pinElementsArray.length; i++)
-            this.append(this.pinElementsArray[i]);
+    addAllPins() {
+        for (let i = 0; i < ProjectBox.pinsArray.length; i++) {
+            const pin = ProjectBox.pinsArray[i].name;
+            this.addPins(pin);
+        }
     }
 
     createPin(name) {
         const pinData = this.getPinData(name);
         const pin = document.createElement("div");
-        const img = ElementG.createImg("./public/svg/" + pinData.img + ".svg", pinData.img);
+        if (Check.isStringWithValue(pinData.img)) {
+            const img = ElementG.createImg("./public/svg/" + pinData.img + ".svg", pinData.img);
+            pin.append(img);
+        }
         const p = ElementG.createSpecific("p", "", pinData.name);
 
         const h = pinData.hue;
         const s = pinData.sat;
         const l = pinData.light;
-        const pinBackgroundColor = "oklab(from hsl(" + h + " " + s + " " + l + ") l a b)";
-        pin.style.backgroundColor = pinBackgroundColor;
+        const g = 5; // Gradient amount;
+        const colorA = "oklab(from hsl(" + h + " " + s + " " + (l + g) + ") l a b)";
+        const colorB = "oklab(from hsl(" + h + " " + s + " " + (l - g) + ") l a b)";
+        pin.style.background = `linear-gradient(170deg, ${colorA} 10%, ${colorB} 80%)`;
 
-        pin.append(img, p);
+        pin.append(p);
         return pin;
     }
 
     getPinData(name) {
-
-        // Generate the pins array if it doesn't already exist.
-        this.initaliseStaticPinsArray()
-
         // Get a pin from the existing list.
         let pin = null;
         for (let i = 0; i < ProjectBox.pinsArray.length; i++)
@@ -122,6 +99,13 @@ export class ProjectBox extends HTMLElement {
                     hue: 355,
                     sat: 10,
                     light: 85,
+                },
+                {
+                    name: Const.BASE_LIFT_ENGINE,
+                    img: "base-lift-engine",
+                    hue: 180,
+                    sat: -1,
+                    light: 40,
                 },
                 {
                     name: Const.BLENDER,
@@ -175,8 +159,8 @@ export class ProjectBox extends HTMLElement {
                 {
                     name: Const.GLSL,
                     img: "glsl",
-                    hue: 210,
-                    sat: 40,
+                    hue: 220,
+                    sat: 100,
                     light: 40,
                 },
                 {
@@ -199,6 +183,13 @@ export class ProjectBox extends HTMLElement {
                     hue: 280,
                     sat: 80,
                     light: 30,
+                },
+                {
+                    name: Const.INKSCAPE,
+                    img: "inkscape",
+                    hue: 0,
+                    sat: 0,
+                    light: -1,
                 },
                 {
                     name: Const.INTELLIJ,
@@ -245,7 +236,7 @@ export class ProjectBox extends HTMLElement {
                 {
                     name: Const.OPEN_GL,
                     img: "open-gl",
-                    hue: 200,
+                    hue: 210,
                     sat: -1,
                     light: 30,
                 },
@@ -273,9 +264,9 @@ export class ProjectBox extends HTMLElement {
                 {
                     name: Const.SASS,
                     img: "sass",
-                    hue: 320,
-                    sat: 40,
-                    light: -1,
+                    hue: 310,
+                    sat: 50,
+                    light: 40,
                 },
                 {
                     name: Const.TYPESCRIPT,

@@ -8,6 +8,7 @@ export class Const {
 
     static ANDROID = "Android";
     static ASEPRITE = "Aseprite";
+    static BASE_LIFT_ENGINE = "Base Lift Engine";
     static BLENDER = "Blender";
     static CSHARP = "C#";
     static CSS = "CSS";
@@ -19,6 +20,7 @@ export class Const {
     static GLSL = "GLSL";
     static HTML = "HTML";
     static IMOGEN_LAY = "Imogen";
+    static INKSCAPE = "Inkscape";
     static INTELLIJ = "IntelliJ IDEA";
     static JAVA = "Java";
     static JAVASCRIPT = "JavaScript";

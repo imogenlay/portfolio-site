@@ -4,6 +4,10 @@ export function isString(a) {
 	return typeof a === "string";
 }
 
+export function isStringWithValue(a) {
+	return typeof a === "string" && a.trim().length > 0;
+}
+
 export function isNumber(a) {
 	return typeof a === "number";
 }

@@ -67,10 +67,11 @@ export function createImg(src, alt) {
 	return img;
 }
 
-function genericCreateFormField(fieldTag, labelText, attributes) {
+function genericCreateFormField(textFieldTag, labelText, attributes) {
+	// Create a label and input of type textFieldTag.
 	const div = document.createElement("div");
 	const label = document.createElement("label");
-	const input = document.createElement(fieldTag);
+	const input = document.createElement(textFieldTag);
 
 	for (const [key, value] of Object.entries(attributes))
 		input.setAttribute(key, value);
