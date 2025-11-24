@@ -260,13 +260,20 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		const title = ElementG.createSpecific("h2", "", "Sub-Heading Generator");
-		const input = document.createElement("input");
+		const inputTextParent = ElementG.createInput("Text");
+		const inputCountParent = ElementG.createInput("Length");
+
+		const inputText = ElementG.findSelfOrFirstOfType(inputTextParent, "input");
+		const inputCount = ElementG.findSelfOrFirstOfType(inputCountParent, "input");
+
+		inputCount.value = "80";
+
 		const p = document.createElement("pre");
 		const button = ElementG.createSpecific("button", "heading-generator", "Convert to sub-heading");
 
-		button.onclick = () => this.createSubHeading(input, p);
+		button.onclick = () => this.createSubHeading(inputText, inputCount, p);
 
-		section.append(title, input, button, p);
+		section.append(title, inputTextParent, inputCountParent, button, p);
 		return section;
 	}
 
@@ -316,14 +323,13 @@ export class PageBuilder {
 		return div;
 	}
 
-	createSubHeading(input, p) {
-		const MAX_CHARACTERS = 80;
-		let text = input.value.toUpperCase().trim();
+	createSubHeading(inputText, inputCount, p) {
+		let text = inputText.value.toUpperCase().trim();
 		if (text.length === 0)
 			return;
 
 		let output = "// ";
-		let charactersRemaining = MAX_CHARACTERS;
+		let charactersRemaining = MathG.floorToInt(inputCount.value);
 		charactersRemaining -= text.length + 2;
 		let firstSpanLength = 0;
 		let lastSpanLength = 0;

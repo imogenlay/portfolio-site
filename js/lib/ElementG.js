@@ -8,7 +8,7 @@ export function getChildOfType(parent, tagName) {
 	return Array.from(parent.children).find(a => isTag(a, tagName)) || null;
 }
 
-function findSelfOrFirstOfType(element, tagName) {
+export function findSelfOrFirstOfType(element, tagName) {
 	if (isTag(element, tagName.toLowerCase()))
 		return element;
 
@@ -68,6 +68,9 @@ export function createImg(src, alt) {
 }
 
 function genericCreateFormField(textFieldTag, labelText, attributes) {
+	if (attributes == null)
+		attributes = [];
+
 	// Create a label and input of type textFieldTag.
 	const div = document.createElement("div");
 	const label = document.createElement("label");
