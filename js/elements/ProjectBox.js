@@ -49,8 +49,11 @@ export class ProjectBox extends HTMLElement {
 		const s = pinData.sat;
 		const l = pinData.light;
 		const g = 5; // Gradient amount;
-		const colorA = "oklab(from hsl(" + h + " " + s + " " + (l + g) + ") l a b)";
-		const colorB = "oklab(from hsl(" + h + " " + s + " " + (l - g) + ") l a b)";
+
+		function oklab(_g) { return "oklab(from hsl(" + h + " " + s + " " + (l + _g) + ") l a b)" }
+
+		const colorA = oklab(+g);
+		const colorB = oklab(-g);
 		pin.style.background = `linear-gradient(170deg, ${colorA} 10%, ${colorB} 80%)`;
 
 		pin.append(img, p);

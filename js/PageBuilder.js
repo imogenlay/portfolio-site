@@ -35,25 +35,51 @@ export class PageBuilder {
 	}
 
 	appendFloatingTitleAndUnderline() {
+
+		// Create title elements.
 		this.floatingTitleSpan = ElementG.createSpecific("span", "", "Imogen Lay");
 		this.floatingTitleUnderlineA = ElementG.createSpecific("div", "underline", "");
 		this.floatingTitleUnderlineB = ElementG.createSpecific("div", "underline", "");
+		this.floatingTitleButton = ElementG.createSpecific("button", "", "Continue");
+
+		// Append elements.
+		this.foreground.append(this.floatingTitleSpan);
+		this.foreground.append(this.floatingTitleButton);
 		this.floatingTitleSpan.append(this.floatingTitleUnderlineA, this.floatingTitleUnderlineB);
 
-		this.foreground.append(this.floatingTitleSpan);
-		this.floatingTitleSpan.append();
-		this.floatingTitleAnimLerp = 0;
+		// Functions for force-showing/hiding elements.
+		function showAll(show, ...array) {
+			for (let i = 0; i < array.length; i++) {
+				const element = array[i];
+				element.style.opacity = show ? 1 : 0;
+				element.style.display = show ? "block" : "none";
+			}
+		}
 
-		this.floatingTitleButton = ElementG.createSpecific("button", "", "Continue");
-		this.floatingTitleButton.style.opacity = 0;
-		this.floatingTitleButton.style.display = "none";
-		this.main.style.opacity = 0;
-		this.main.style.display = "none";
-		this.header.style.opacity = 0;
-		this.header.style.display = "none";
+		// Hide everything.
+		showAll(false,
+			this.floatingTitleSpan, this.floatingTitleButton,
+			this.floatingTitleUnderlineA, this.floatingTitleUnderlineB,
+			this.main, this.header);
 
-		foreground.append(this.floatingTitleButton);
+		// Show some things depending on situation.
+		let lastPageVisitTime = Number(localStorage.getItem(Const.LAST_PAGE_VISIT));
+		const ONE_DAY_IN_MS = 1;//24 * 60 * 60 * 1000;
+		let oneWeekAgo = Date.now() - ONE_DAY_IN_MS;
+		if (lastPageVisitTime < oneWeekAgo) {
+			// This user hasn't visited for a while.
 
+			showAll(true,
+				this.floatingTitleSpan, this.floatingTitleButton,
+				this.floatingTitleUnderlineA, this.floatingTitleUnderlineB);
+		}
+		else {
+			showAll(true, this.main, this.header);
+			this.isFloatingTitleVisible = false;
+		}
+
+
+		// Add floating title click.
 		this.floatingTitleButton.onclick = () => {
 			this.isFloatingTitleVisible = false;
 
@@ -65,6 +91,7 @@ export class PageBuilder {
 			this.beginElementFadeOut(this.floatingTitleButton);
 		};
 
+		// Update title path when resizing window.
 		addEventListener("resize", (event) => this.updateTitlePathLength());
 	}
 
@@ -114,15 +141,13 @@ export class PageBuilder {
 
 		// Append nav buttons and add click funtionality.
 		let currentPageIndex = 0;
-		for (let i = 0; i < this.navbarElements.length; i++) {
-
+		for (let i = 0; i < this.navbarElements.length; i++)
 			if (ElementG.isTag(this.navbarElements[i], "button")) {
 				// This variable must be passed by value to a new variable to save it.
 				let j = currentPageIndex;
 				this.navbarElements[i].addEventListener("click", () => this.switchToPage(j));
 				++currentPageIndex;
 			}
-		}
 
 		// Lookup the last page visited but just go to home if there is none.
 		let lastPage = localStorage.getItem(Const.CURRENT_PAGE_KEY);
@@ -177,11 +202,8 @@ export class PageBuilder {
 		this.floatingTitleUnderlineA.style.setProperty("--underline-full-width", MathG.max(outputWidthA, outputMax) + "px");
 		this.floatingTitleUnderlineB.style.setProperty("--underline-full-width", outputWidthB + "px");
 
-		if (this.floatingTitleAnimLerp > 1.5 &&
-			//Number(this.floatingTitleAnimLerp.opacity) < 0.1 &&
-			this.isFloatingTitleVisible) {
+		if (this.floatingTitleAnimLerp > 1.5 && this.isFloatingTitleVisible)
 			this.beginElementFadeIn(this.floatingTitleButton);
-		}
 	}
 
 	beginElementFadeOut(element) {
@@ -419,6 +441,7 @@ export class PageBuilder {
 
 		// Save selected page to local memory.
 		localStorage.setItem(Const.CURRENT_PAGE_KEY, pageIndex);
+		localStorage.setItem(Const.LAST_PAGE_VISIT, Date.now());
 
 		let j = 0;
 		for (let i = 0; i < this.navbarElements.length; i++) {

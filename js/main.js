@@ -1,17 +1,18 @@
 import { PageBuilder } from './PageBuilder.js';
 import { ProjectBox } from './elements/ProjectBox.js';
 
+// ============================ DEFINE CUSTOM ELEMENTS ============================
+customElements.define('project-box', ProjectBox);
+
 // ================================= GET ELEMENTS =================================
 const header = document.getElementById("header");
+const gap = document.getElementById("gap");
 const main = document.getElementById("main");
 const foreground = document.getElementById("foreground");
 const background = document.getElementById("background");
 
 // ============================= CREATE MAIN CLASSES ==============================
 const pageBuilder = new PageBuilder(header, main, foreground, background);
-
-// ============================ DEFINE CUSTOM ELEMENTS ============================
-customElements.define('project-box', ProjectBox);
 
 // ================================ ANIMATION LOOP ================================
 let lastDeltaTime = performance.now();
@@ -23,8 +24,8 @@ function animLoop(now) {
     let delta = now - lastDeltaTime;
     lastDeltaTime = now;
 
-    if (delta > MS_PER_UPDATE * 4)
-        delta = MS_PER_UPDATE * 4;
+    if (delta > MS_PER_UPDATE * 5)
+        delta = MS_PER_UPDATE * 5;
 
     deltaTimeAccumulator += delta;
 

@@ -105,18 +105,19 @@ html {
 }
 
 @keyframes mainBackgroundGradient {
-  /* prettier-ignore */
-  // 0%   { --clr-animated-main-bg-gradient: #280451; }
   0% {
-    --clr-animated-main-bg-gradient: #001f75;
+    --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
   }
-  /* prettier-ignore */
-  33%  { --clr-animated-main-bg-gradient: #2c006a; }
-  /* prettier-ignore */
-  66%  { --clr-animated-main-bg-gradient: #223280; }
-  /* prettier-ignore */
-  //100% { --clr-animated-main-bg-gradient: #280451; }
+  25% {
+    --clr-animated-main-bg-gradient: oklab(from hsl(220, 100%, 23%) l a b);
+  }
+  50% {
+    --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
+  }
+  75% {
+    --clr-animated-main-bg-gradient: oklab(from hsl(260, 100%, 23%) l a b);
+  }
   100% {
-    --clr-animated-main-bg-gradient: #001f75;
+    --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
   }
 }
