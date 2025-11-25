@@ -12,18 +12,35 @@ h6 {
   color: g.$clr-white;
   text-wrap: nowrap;
   line-height: 1.25;
+  padding-bottom: 1rem;
+  font-size: 1rem;
 }
 
 h1 {
-  font-size: clamp(2rem, 15vw, 4rem);
+  font-size: clamp(2rem, 17vw, 4rem);
+  padding: 0;
   text-align: center;
   font-weight: 200;
 }
 
 h2 {
   font-size: clamp(1.5rem, 12.5vw, 2rem);
-  padding-bottom: 1rem;
   font-weight: 300;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 9.5vw, 1.5rem);
+  font-weight: 400;
+}
+
+h4 {
+  font-size: clamp(1rem, 7.5vw, 1.25rem);
+  font-weight: 400;
+}
+
+h5,
+h6 {
+  font-weight: 700;
 }
 
 p {

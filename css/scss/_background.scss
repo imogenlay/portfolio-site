@@ -17,8 +17,11 @@ html {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;
-  /* prettier-ignore */
-  background: linear-gradient(125deg, $clr-background-static-a 5%, $clr-background-static-b 95%);
+  background: linear-gradient(
+    125deg,
+    $clr-background-static-a 5%,
+    $clr-background-static-b 95%
+  );
 }
 
 #background {
@@ -27,7 +30,7 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -10;
+  z-index: -2;
 
   // Size.
   width: max(100vh, 100vw);
@@ -41,13 +44,79 @@ html {
   background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, $clr-background-static-b 110%);
 }
 
+#foreground {
+  --floating-title-size: clamp(2rem, 17vw, 6rem);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  // Size.
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+
+  span {
+    overflow: visible;
+    user-select: none;
+    text-wrap: nowrap;
+    color: g.$clr-white;
+    font-size: var(--floating-title-size);
+    font-weight: 200;
+
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .underline {
+      position: absolute;
+      top: calc(var(--floating-title-size) * 1.2);
+      z-index: -1;
+      height: clamp(2px, 0.5vw, 3px);
+      box-shadow: 0px 0px 10px 1px g.$clr-accent;
+      background: linear-gradient(
+        to right,
+        g.$clr-accent calc(var(--underline-full-width) - 200px),
+        g.$clr-white calc(var(--underline-full-width))
+      );
+    }
+  }
+
+  button {
+    position: fixed;
+    top: 5rem;
+    left: 50%;
+    top: calc(var(--floating-title-size) + 35%);
+    background-color: #ffffff33;
+
+    transform: translateX(-50%);
+
+    width: 8rem;
+    height: 2rem;
+
+    pointer-events: auto;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 @keyframes mainBackgroundGradient {
   /* prettier-ignore */
-  0%   { --clr-animated-main-bg-gradient: #280451; }
+  // 0%   { --clr-animated-main-bg-gradient: #280451; }
+  0% {
+    --clr-animated-main-bg-gradient: #001f75;
+  }
   /* prettier-ignore */
-  33%  { --clr-animated-main-bg-gradient: #2e0c5f; }
+  33%  { --clr-animated-main-bg-gradient: #2c006a; }
   /* prettier-ignore */
-  66%  { --clr-animated-main-bg-gradient: #001259; }
+  66%  { --clr-animated-main-bg-gradient: #223280; }
   /* prettier-ignore */
-  100% { --clr-animated-main-bg-gradient: #280451; }
+  //100% { --clr-animated-main-bg-gradient: #280451; }
+  100% {
+    --clr-animated-main-bg-gradient: #001f75;
+  }
 }

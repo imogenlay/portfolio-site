@@ -37,6 +37,61 @@ hr {
   border-top: 1px solid #edfffe;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow: hidden;
+  color: #edfffe;
+  text-wrap: nowrap;
+  line-height: 1.25;
+  padding-bottom: 1rem;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: clamp(2rem, 17vw, 4rem);
+  padding: 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 12.5vw, 2rem);
+  font-weight: 300;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 9.5vw, 1.5rem);
+  font-weight: 400;
+}
+
+h4 {
+  font-size: clamp(1rem, 7.5vw, 1.25rem);
+  font-weight: 400;
+}
+
+h5,
+h6 {
+  font-weight: 700;
+}
+
+p {
+  padding-bottom: 1rem;
+}
+
+b {
+  font-weight: 500;
+  color: #edfffe;
+}
+
+pre {
+  font-family: monospace;
+  overflow: auto;
+}
+
 html,
 body {
   width: 100vw;
@@ -125,7 +180,6 @@ html {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;
-  /* prettier-ignore */
   background: linear-gradient(125deg, #2d0860 5%, #040117 95%);
 }
 
@@ -133,7 +187,7 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -10;
+  z-index: -2;
   width: max(100vh, 100vw);
   height: max(100vh, 100vw);
   /* prettier-ignore */
@@ -143,66 +197,73 @@ html {
   background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, #040117 110%);
 }
 
+#foreground {
+  --floating-title-size: clamp(2rem, 17vw, 6rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+#foreground span {
+  overflow: visible;
+  user-select: none;
+  text-wrap: nowrap;
+  color: #edfffe;
+  font-size: var(--floating-title-size);
+  font-weight: 200;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#foreground span .underline {
+  position: absolute;
+  top: calc(var(--floating-title-size) * 1.2);
+  z-index: -1;
+  height: clamp(2px, 0.5vw, 3px);
+  box-shadow: 0px 0px 10px 1px #009aff;
+  background: linear-gradient(to right, #009aff calc(var(--underline-full-width) - 200px), #edfffe calc(var(--underline-full-width)));
+}
+#foreground button {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  top: calc(var(--floating-title-size) + 35%);
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-50%);
+  width: 8rem;
+  height: 2rem;
+  pointer-events: auto;
+}
+#foreground button:hover {
+  text-decoration: underline;
+}
+
 @keyframes mainBackgroundGradient {
   /* prettier-ignore */
   0% {
-    --clr-animated-main-bg-gradient: #280451;
+    --clr-animated-main-bg-gradient: #001f75;
   }
   /* prettier-ignore */
   33% {
-    --clr-animated-main-bg-gradient: #2e0c5f;
+    --clr-animated-main-bg-gradient: #2c006a;
   }
   /* prettier-ignore */
   66% {
-    --clr-animated-main-bg-gradient: #001259;
+    --clr-animated-main-bg-gradient: #223280;
   }
   /* prettier-ignore */
   100% {
-    --clr-animated-main-bg-gradient: #280451;
+    --clr-animated-main-bg-gradient: #001f75;
   }
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow: hidden;
-  color: #edfffe;
-  text-wrap: nowrap;
-  line-height: 1.25;
-}
-
-h1 {
-  font-size: clamp(2rem, 15vw, 4rem);
-  text-align: center;
-  font-weight: 200;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 12.5vw, 2rem);
-  padding-bottom: 1rem;
-  font-weight: 300;
-}
-
-p {
-  padding-bottom: 1rem;
-}
-
-b {
-  font-weight: 500;
-  color: #edfffe;
-}
-
-pre {
-  font-family: monospace;
-  overflow: auto;
-}
-
 hr.title {
   border-top: 2px solid #009aff;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: clamp(0rem, 5vw, 0.5rem);
 }
 
 nav {
@@ -218,13 +279,14 @@ nav button {
   width: 100%;
   text-align: left;
   font-size: 1.25rem;
-  transition: all calc(var(--default-animation-speed) * 200ms) ease-in-out;
+  /* prettier-ignore */
+  transition: background-color calc(var(--default-animation-speed) * 200ms) ease-in-out, font-weight calc(var(--default-animation-speed) * 200ms) ease-in-out, padding calc(var(--default-animation-speed) * 200ms) ease-in-out;
   font-weight: 400;
   background-color: transparent;
   color: #edfffe;
   padding: 0.25rem 0.25rem 0.25rem 1.25rem;
 }
-nav button:hover, nav button.selected {
+nav button:hover, nav button.selected, nav button.recently-selected {
   background-color: rgba(237, 244, 255, 0.1568627451);
   font-weight: 600;
   padding: 0.25rem 0.25rem 0.25rem 2.5rem;
@@ -233,7 +295,8 @@ nav button:hover {
   background-color: rgba(229, 227, 255, 0.2039215686);
 }
 nav button.recently-selected {
-  transition: all 0s linear;
+  transition: background-color 0s ease-in-out, font-weight calc(var(--default-animation-speed) * 200ms) ease-in-out, padding calc(var(--default-animation-speed) * 200ms) ease-in-out;
+  padding: 0.25rem 0.25rem 0.25rem 2.5rem;
   background-color: rgba(222, 220, 255, 0.3411764706);
 }
 nav .nav-divider {

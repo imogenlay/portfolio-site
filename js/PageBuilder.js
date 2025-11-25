@@ -7,22 +7,65 @@ export class PageBuilder {
 
 	// ==================================== FIELDS ====================================
 
-	header; main; navbar;
-	navbarElements;
-	pageElements;
+	header; main; foreground; background;
+	floatingTitleAnimLerp = 0;
+	floatingTitleSpan; floatingTitleUnderlineA; floatingTitleUnderlineB; floatingTitleButton;
+	navbar; navbarElements; pageElements;
+
+	fadeInElements = [];
+	fadeOutElements = [];
+
+	isFloatingTitleVisible = true;
 
 	// ================================= CONSTRUCTOR ==================================
-	constructor(_header, _main) {
+	constructor(_header, _main, _foreground, _background) {
 		this.header = _header;
 		this.main = _main;
+		this.foreground = _foreground;
+		this.background = _background;
 	}
 
 	// =========================== INITIALISATION FUNCTIONS ===========================
 
 	initialise() {
+		this.appendFloatingTitleAndUnderline();
 		this.appendTitleElementsAndCreateNavbar();
 		this.createNavbarElementsAndPageElementsArrays();
 		this.appendNavbarAndPageElementsArray();
+	}
+
+	appendFloatingTitleAndUnderline() {
+		this.floatingTitleSpan = ElementG.createSpecific("span", "", "Imogen Lay");
+		this.floatingTitleUnderlineA = ElementG.createSpecific("div", "underline", "");
+		this.floatingTitleUnderlineB = ElementG.createSpecific("div", "underline", "");
+		this.floatingTitleSpan.append(this.floatingTitleUnderlineA, this.floatingTitleUnderlineB);
+
+		this.foreground.append(this.floatingTitleSpan);
+		this.floatingTitleSpan.append();
+		this.floatingTitleAnimLerp = 0;
+
+		this.floatingTitleButton = ElementG.createSpecific("button", "", "Continue");
+		this.floatingTitleButton.style.opacity = 0;
+		this.floatingTitleButton.style.display = "none";
+		this.main.style.opacity = 0;
+		this.main.style.display = "none";
+		this.header.style.opacity = 0;
+		this.header.style.display = "none";
+
+		foreground.append(this.floatingTitleButton);
+
+		this.floatingTitleButton.onclick = () => {
+			this.isFloatingTitleVisible = false;
+
+			this.beginElementFadeIn(this.header);
+			this.beginElementFadeIn(this.main);
+			this.beginElementFadeOut(this.floatingTitleSpan);
+			this.beginElementFadeOut(this.floatingTitleUnderlineA);
+			this.beginElementFadeOut(this.floatingTitleUnderlineB);
+			this.beginElementFadeOut(this.floatingTitleButton);
+		};
+
+		addEventListener("resize", (event) => this.updateTitlePathLength());
 	}
 
 	appendTitleElementsAndCreateNavbar() {
@@ -48,7 +91,7 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", Const.TITLE_CU_CARTA),
 			ElementG.createSpecific("button", "nav-button", "Portfolio"),
 			this.createNavbarDivider("Other"),
-			ElementG.createSpecific("button", "nav-button", "Sub Heading Generator"),
+			ElementG.createSpecific("button", "nav-button", "Subheading Generator"),
 			this.createNavbarDivider("Ver " + Const.VERSION),
 		];
 
@@ -87,6 +130,95 @@ export class PageBuilder {
 		this.switchToPage(lastPage)
 	}
 
+	// =============================== ANIMATION UPDATE ===============================
+
+	updateFloatingTitleAnimation(delta) {
+		this.floatingTitleAnimLerp += delta;
+		if (this.floatingTitleAnimLerp < 100)
+			this.updateTitlePathLength();
+
+		this.makeElementsFadeInAndOut(delta);
+	}
+
+	updateTitlePathLength() {
+
+		const PATH_A = 0.000;
+		const PATH_B = 0.336;
+		const PATH_C = 0.411;
+		//const PATH_D = 0.939;
+		const PATH_D = 6.0;
+
+		let maxSize = this.floatingTitleSpan.offsetWidth * 1;
+		let animLerp = MathG.max(this.floatingTitleAnimLerp - 0.5, 0) * 2;
+		animLerp = animLerp * animLerp * animLerp;
+
+		const getWidth = (p0, p1) => {
+			let lerp = maxSize * animLerp;
+			let pathStart = maxSize * p0;
+			let pathEnd = maxSize * p1;
+			return MathG.clamp(lerp - pathStart, 0, pathEnd - pathStart);
+		}
+
+		// Max width.
+		let outputMax = getWidth(PATH_A, PATH_D);
+
+		// Underline A width.
+		let outputWidthA = getWidth(PATH_A, PATH_B);
+		this.floatingTitleUnderlineA.style.width = outputWidthA + "px";
+
+		// Underline B offset.
+		let offset = MathG.floor(PATH_C * maxSize);
+		this.floatingTitleUnderlineB.style.left = offset + "px";
+
+		// Underline B width.   
+		let outputWidthB = getWidth(PATH_C, PATH_D);
+		this.floatingTitleUnderlineB.style.width = outputWidthB + "px";
+
+		this.floatingTitleUnderlineA.style.setProperty("--underline-full-width", MathG.max(outputWidthA, outputMax) + "px");
+		this.floatingTitleUnderlineB.style.setProperty("--underline-full-width", outputWidthB + "px");
+
+		if (this.floatingTitleAnimLerp > 1.5 &&
+			//Number(this.floatingTitleAnimLerp.opacity) < 0.1 &&
+			this.isFloatingTitleVisible) {
+			this.beginElementFadeIn(this.floatingTitleButton);
+		}
+	}
+
+	beginElementFadeOut(element) {
+		this.fadeInElements = this.fadeInElements.filter((e) => e !== element);
+		if (!this.fadeOutElements.includes(element))
+			this.fadeOutElements.push(element);
+	}
+
+	beginElementFadeIn(element) {
+		this.fadeOutElements = this.fadeOutElements.filter((e) => e !== element);
+		if (!this.fadeInElements.includes(element))
+			this.fadeInElements.push(element);
+	}
+
+	makeElementsFadeInAndOut(delta) {
+		delta *= 5;
+
+		function genericFadeInOut(array, modifier, removalCallback) {
+			for (let i = 0; i < array.length; i++) {
+				const element = array[i];
+				let newOpacity = Number(element.style.opacity) + delta * modifier;
+				if (isNaN(newOpacity))
+					newOpacity = 0;
+
+				newOpacity = MathG.clamp(newOpacity, 0, 1);
+				element.style.opacity = newOpacity;
+				element.style.display = newOpacity > 0 ? "block" : "none";
+			}
+
+			return array.filter(removalCallback);
+		}
+
+		this.fadeInElements = genericFadeInOut(this.fadeInElements, 1, (e) => Number(e.style.opacity) < 1);
+		this.fadeOutElements = genericFadeInOut(this.fadeOutElements, -1, (e) => Number(e.style.opacity) > 0);
+
+	}
+
 	// =========================== PAGE GENERATOR FUNCTIONS ===========================
 
 	generateAboutPage() {
@@ -110,9 +242,7 @@ export class PageBuilder {
 			" and ",
 			"team player,",
 			" bringing a proven track record of elevating project outcomes through meticulous attention to detail."
-
-
-		])
+		]);
 
 		section.append(title, textA, textB);
 		return section;
@@ -199,11 +329,11 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB);
 
+		section.append(codeBox);
 		section.append(ElementG.createImg("./public/img/mineshaft_00.png", "mineshaft_00"));
 		section.append(ElementG.createImg("./public/img/mineshaft_01.png", "mineshaft_01"));
 		section.append(ElementG.createImg("./public/img/mineshaft_02.png", "mineshaft_02"));
 		section.append(ElementG.createImg("./public/img/mineshaft_03.png", "mineshaft_03"));
-		section.append(codeBox);
 		return section;
 	}
 
@@ -223,11 +353,11 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB);
 
+		section.append(codeBox);
 		section.append(ElementG.createImg("./public/img/cu_carta_00.png", "cu_carta_00"));
 		section.append(ElementG.createImg("./public/img/cu_carta_01.png", "cu_carta_01"));
 		section.append(ElementG.createImg("./public/img/cu_carta_02.png", "cu_carta_02"));
 		section.append(ElementG.createImg("./public/img/cu_carta_03.png", "cu_carta_03"));
-		section.append(codeBox);
 		return section;
 	}
 
@@ -235,8 +365,9 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Portfolio Site"));
-		section.append(ElementG.createSpecific("p", "", "You're looking at it"));
-
+		section.append(ElementG.createSpecific("h3", "", "Heading 3"));
+		section.append(ElementG.createSpecific("h4", "", "Heading 4"));
+		section.append(ElementG.createSpecific("h5", "", "Heading 5"));
 
 		const otherBox = new ProjectBox();
 		otherBox.addPins(
@@ -253,23 +384,25 @@ export class PageBuilder {
 		);
 
 		section.append(otherBox);
+		section.append(ElementG.createSpecific("p", "", "You're looking at it"));
 		return section;
 	}
 
 	generateSubHeadingGenerator() {
 
 		const section = document.createElement("section");
-		const title = ElementG.createSpecific("h2", "", "Sub-Heading Generator");
+		const title = ElementG.createSpecific("h2", "", "Subheading Generator");
 		const inputTextParent = ElementG.createInput("Text");
 		const inputCountParent = ElementG.createInput("Length");
 
 		const inputText = ElementG.findSelfOrFirstOfType(inputTextParent, "input");
 		const inputCount = ElementG.findSelfOrFirstOfType(inputCountParent, "input");
 
+		inputText.value = "Write Subheading Here";
 		inputCount.value = "80";
 
 		const p = document.createElement("pre");
-		const button = ElementG.createSpecific("button", "heading-generator", "Convert to sub-heading");
+		const button = ElementG.createSpecific("button", "heading-generator", "Copy to clipboard");
 
 		button.onclick = () => this.createSubHeading(inputText, inputCount, p);
 
