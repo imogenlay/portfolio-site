@@ -2,6 +2,7 @@ import { ProjectBox } from "./elements/ProjectBox.js";
 import { Const } from "./constants/Const.js";
 import * as ElementG from "./lib/ElementG.js";
 import * as MathG from "./lib/MathG.js";
+import * as CheckG from "./lib/CheckG.js";
 
 export class PageBuilder {
 
@@ -66,7 +67,8 @@ export class PageBuilder {
 		let lastPageVisitTime = Number(localStorage.getItem(Const.LAST_PAGE_VISIT));
 		const ONE_DAY_IN_MS = 1;//24 * 60 * 60 * 1000;
 		let oneWeekAgo = Date.now() - ONE_DAY_IN_MS;
-		if (lastPageVisitTime < oneWeekAgo) {
+
+		if (!CheckG.isSafari() && lastPageVisitTime < oneWeekAgo) {
 			// This user hasn't visited for a while.
 
 			showAll(true,
@@ -108,6 +110,13 @@ export class PageBuilder {
 	}
 
 	createNavbarElementsAndPageElementsArrays() {
+
+		let version = "Ver " + Const.VERSION;
+		if (CheckG.isSafari())
+			version += " (Safari)";
+		else
+			version += " (Not Safari)";
+
 		// Create nav bar buttons and section titles.
 		this.navbarElements = [
 			ElementG.createSpecific("button", "nav-button", "About"),
@@ -119,7 +128,7 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "Portfolio"),
 			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Subheading Generator"),
-			this.createNavbarDivider("Ver " + Const.VERSION),
+			this.createNavbarDivider(version),
 		];
 
 		// Create pages: Have to be in same order as nav buttons. 

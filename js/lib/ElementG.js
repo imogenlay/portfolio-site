@@ -1,4 +1,4 @@
-import * as Check from './Check.js';
+import * as CheckG from './CheckG.js';
 
 export function isTag(a, tagName) {
 	return a.tagName && a.tagName.toLowerCase() === tagName.toLowerCase();
@@ -24,9 +24,9 @@ export function findSelfOrFirstOfType(element, tagName) {
 export function createSpecific(type, className, textContent) {
 	// Create a HTML element of type, with class, and content.
 
-	if (!Check.allAreStrings(type, className, textContent)) {
+	if (!CheckG.allAreStrings(type, className, textContent)) {
 		// The parameters were wrong, therefore a crappy red box will be returned.
-		Check.error(`When creating element, all 3 parameters must be strings. Cannot create: ${type}, ${className}, ${textContent}`);
+		CheckG.error(`When creating element, all 3 parameters must be strings. Cannot create: ${type}, ${className}, ${textContent}`);
 		const failureElement = document.createElement("div");
 		failureElement.style.width = "20px";
 		failureElement.style.height = "20px";
@@ -44,8 +44,8 @@ export function createSpecific(type, className, textContent) {
 }
 
 export function createParagraph(textComponents) {
-	if (!Check.isArrayWithItems(textComponents)) {
-		Check.error("When creating paragraph, text components must be passed via an array.");
+	if (!CheckG.isArrayWithItems(textComponents)) {
+		CheckG.error("When creating paragraph, text components must be passed via an array.");
 		return createSpecific("p", "", "failed paragraph");
 	}
 

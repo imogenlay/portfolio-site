@@ -1,6 +1,6 @@
 import * as ElementG from '../lib/ElementG.js';
 import * as MathG from '../lib/MathG.js';
-import * as Check from '../lib/Check.js';
+import * as CheckG from '../lib/CheckG.js';
 import { Const } from '../constants/Const.js';
 
 export class ProjectBox extends HTMLElement {
@@ -36,7 +36,7 @@ export class ProjectBox extends HTMLElement {
 		const pinData = this.getPinData(name);
 		const pin = document.createElement("div");
 		let img = null;
-		if (Check.isStringWithValue(pinData.img))
+		if (CheckG.isStringWithValue(pinData.img))
 			img = ElementG.createImg("./public/svg/" + pinData.img + ".svg", pinData.img);
 		else
 			img = document.createElement("figure");
@@ -63,7 +63,7 @@ export class ProjectBox extends HTMLElement {
 	getPinData(name) {
 		// Get a pin from the existing list.
 		let pin = null;
-		if (!Check.isString(name))
+		if (!CheckG.isString(name))
 			name = "not a string";
 
 		for (let i = 0; i < ProjectBox.pinsArray.length; i++)
