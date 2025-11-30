@@ -1,0 +1,11 @@
+@use "./rules/media-queries" as q;
+@use "./rules/global" as g;
+@use "./rules/mixins";
+
+disassembly-canvas {
+  border: 1px solid yellowgreen;
+
+  canvas {
+    image-rendering: pixelated;
+  }
+}

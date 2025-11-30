@@ -42,10 +42,13 @@ main {
   @include q.desktop {
     flex-grow: 0;
   }
+
+  padding-bottom: 4rem;
 }
 
 section {
+  min-height: 100%;
   flex-grow: 1;
-  @include mixins.flex(column, stretch, stretch, 0);
-  padding-bottom: 4rem;
+  @include mixins.flex(column, flex-start, stretch, 0);
+  border: 1px solid orange;
 }
