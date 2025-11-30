@@ -68,7 +68,7 @@ export class PageBuilder {
 		const ONE_DAY_IN_MS = 1;//24 * 60 * 60 * 1000;
 		let oneWeekAgo = Date.now() - ONE_DAY_IN_MS;
 
-		if (!CheckG.isSafari() && lastPageVisitTime < oneWeekAgo) {
+		if (lastPageVisitTime < oneWeekAgo) {
 			// This user hasn't visited for a while.
 
 			showAll(true,
