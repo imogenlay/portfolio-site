@@ -19,5 +19,5 @@ export function max(a, b) {
 }
 
 export function floorToInt(a) {
-    return parseInt(floor(Number(a)));
+    return floor(Number(a));
 }
