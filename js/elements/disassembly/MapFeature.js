@@ -3,8 +3,9 @@ import * as MathG from '../../lib/MathG.js';
 
 export class MapFeature extends RenderItem {
 
-    frameCount;
     timer = 0;
+    frameCount;
+    #isDead = false;
 
     constructor(path, _frameCount) {
         _frameCount = MathG.max(1, MathG.forceNumber(_frameCount));
@@ -14,12 +15,17 @@ export class MapFeature extends RenderItem {
 
     update(delta) {
         this.timer += delta;
+
         if (this.timer > 0.1) {
             this.timer -= 0.1;
-            this.frameIndex++;
+            if (this.#isDead) {
+                this.frameIndex++;
+            }
         }
 
-        if (this.frameIndex > this.frameCount + 100)
-            this.frameIndex = MathG.nextFloat() * -100;
+    }
+
+    kill() {
+        this.#isDead = true;
     }
 }

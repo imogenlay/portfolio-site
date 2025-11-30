@@ -10,6 +10,13 @@ export class Cow extends FarmAnimal {
         super(path, index, Cow.COUNT * 2);
         this.homeWidth = Cow.HOME_WIDTH;
         this.homeHeight = Cow.HOME_HEIGHT;
+        this.posX = index * -10;
+        this.posY = 80;
+    }
+
+    restart() {
+        this.speedMultiplier = 1;
+        this.speedBoostTimer = 5 + this.variant;
 
         if (this.variant === 0)
             this.forceToHome(8, 75);
@@ -19,7 +26,12 @@ export class Cow extends FarmAnimal {
             this.forceToHome(12, 84);
         else
             this.forceToHome(27, 83);
-
     }
 
+    kill() {
+        this.speedBoostTimer = 0;
+        this.homeX = -20;
+        this.timer += 10;
+        this.speedMultiplier = 6;
+    }
 }

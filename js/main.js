@@ -26,14 +26,16 @@ function animLoop(now) {
     let delta = now - lastDeltaTime;
     lastDeltaTime = now;
 
-    if (delta > MS_PER_UPDATE * 5)
-        delta = MS_PER_UPDATE * 5;
+    if (!document.hidden) {
+        if (delta > MS_PER_UPDATE * 2)
+            delta = MS_PER_UPDATE * 2;
 
-    deltaTimeAccumulator += delta;
+        deltaTimeAccumulator += delta;
 
-    while (deltaTimeAccumulator >= MS_PER_UPDATE) {
-        update(MS_PER_UPDATE / 1000);
-        deltaTimeAccumulator -= MS_PER_UPDATE;
+        while (deltaTimeAccumulator >= MS_PER_UPDATE) {
+            update(MS_PER_UPDATE / 1000);
+            deltaTimeAccumulator -= MS_PER_UPDATE;
+        }
     }
 
     requestAnimationFrame(animLoop);
