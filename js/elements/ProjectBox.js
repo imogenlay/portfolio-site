@@ -15,7 +15,7 @@ export class ProjectBox extends HTMLElement {
 	constructor() {
 		super();
 		// Generate the pins array if it doesn't already exist.
-		this.initaliseStaticPinsArray();
+		this.initialiseStaticPinsArray();
 	}
 
 	// =========================== INITIALISATION FUNCTIONS ===========================
@@ -93,7 +93,7 @@ export class ProjectBox extends HTMLElement {
 		return pin;
 	}
 
-	initaliseStaticPinsArray() {
+	initialiseStaticPinsArray() {
 		if (ProjectBox.pinsArray === null)
 			ProjectBox.pinsArray = [
 				{

@@ -3,6 +3,7 @@ import { Const } from "./constants/Const.js";
 import * as ElementG from "./lib/ElementG.js";
 import * as MathG from "./lib/MathG.js";
 import * as CheckG from "./lib/CheckG.js";
+import { DisassemblyCanvas } from "./elements/DisassemblyCanvas.js";
 
 export class PageBuilder {
 
@@ -17,6 +18,9 @@ export class PageBuilder {
 	fadeOutElements = [];
 
 	isFloatingTitleVisible = true;
+
+	// disassemblyCanvas
+	disassemblyCanvas;
 
 	// ================================= CONSTRUCTOR ==================================
 	constructor(_header, _main, _foreground, _background) {
@@ -65,7 +69,7 @@ export class PageBuilder {
 
 		// Show some things depending on situation.
 		let lastPageVisitTime = Number(localStorage.getItem(Const.LAST_PAGE_VISIT));
-		const ONE_DAY_IN_MS = 1;//24 * 60 * 60 * 1000;
+		const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 		let oneWeekAgo = Date.now() - ONE_DAY_IN_MS;
 
 		if (lastPageVisitTime < oneWeekAgo) {
@@ -126,6 +130,7 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "Mineshaft"),
 			ElementG.createSpecific("button", "nav-button", Const.TITLE_CU_CARTA),
 			ElementG.createSpecific("button", "nav-button", "Portfolio"),
+			ElementG.createSpecific("button", "nav-button", "Disassembly"),
 			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Subheading Generator"),
 			this.createNavbarDivider(version),
@@ -139,6 +144,7 @@ export class PageBuilder {
 			this.generateMineshaftPage(),
 			this.generateCuCartaPage(),
 			this.generatePortfolioPage(),
+			this.generateDisassemblyPage(),
 			this.generateSubHeadingGenerator(),
 		];
 	}
@@ -166,12 +172,14 @@ export class PageBuilder {
 
 	// =============================== ANIMATION UPDATE ===============================
 
-	updateFloatingTitleAnimation(delta) {
+	update(delta) {
 		this.floatingTitleAnimLerp += delta;
 		if (this.floatingTitleAnimLerp < 100)
 			this.updateTitlePathLength();
 
 		this.makeElementsFadeInAndOut(delta);
+
+		this.disassemblyCanvas.update(delta);
 	}
 
 	updateTitlePathLength() {
@@ -416,6 +424,24 @@ export class PageBuilder {
 
 		section.append(otherBox);
 		section.append(ElementG.createSpecific("p", "", "You're looking at it"));
+		return section;
+	}
+
+	generateDisassemblyPage() {
+		const section = document.createElement("section");
+		section.append(ElementG.createSpecific("h2", "", "Disassembly"));
+
+		this.disassemblyCanvas = new DisassemblyCanvas();
+		const otherBox = new ProjectBox();
+		otherBox.addPins(
+			Const.HTML,
+			Const.JAVASCRIPT,
+			Const.ASEPRITE,
+			Const.VISUAL_STUDIO_CODE,
+		);
+
+		section.append(this.disassemblyCanvas, otherBox);
+
 		return section;
 	}
 

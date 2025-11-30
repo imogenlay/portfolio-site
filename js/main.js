@@ -1,7 +1,9 @@
 import { PageBuilder } from './PageBuilder.js';
+import { DisassemblyCanvas } from './elements/DisassemblyCanvas.js';
 import { ProjectBox } from './elements/ProjectBox.js';
 
 // ============================ DEFINE CUSTOM ELEMENTS ============================
+customElements.define('disassembly-canvas', DisassemblyCanvas);
 customElements.define('project-box', ProjectBox);
 
 // ================================= GET ELEMENTS =================================
@@ -39,7 +41,7 @@ function animLoop(now) {
 
 // ========================== ANIMATION UPDATE FUNCTION ===========================
 function update(delta) {
-    pageBuilder.updateFloatingTitleAnimation(delta);
+    pageBuilder.update(delta);
 }
 
 // ================================ INITIALISATION ================================
