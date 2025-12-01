@@ -3,11 +3,10 @@ import * as MathG from './MathG.js';
 export class RenderItem {
 
     // ==================================== FIELDS ====================================
-    #texture;
-    #isTextureLoaded = false;
 
-    #textureWidth = 0;
-    #textureHeight = 0;
+    #texture; #isTextureLoaded = false;
+
+    #textureWidth = 0; #textureHeight = 0;
     #spriteCountX; #spriteCountY;
 
     visible = true;
@@ -15,9 +14,10 @@ export class RenderItem {
     posX = 0; posY = 0;
 
     // ================================= CONSTRUCTOR ==================================
+
     constructor(path, _spriteCountX, _spriteCountY) {
-        this.#spriteCountX = MathG.max(1, Number(_spriteCountX) || 0);
-        this.#spriteCountY = MathG.max(1, Number(_spriteCountY) || 0);
+        this.#spriteCountX = MathG.max(1, MathG.forceNumber(_spriteCountX));
+        this.#spriteCountY = MathG.max(1, MathG.forceNumber(_spriteCountY));
 
         this.#texture = new Image();
         this.#texture.onload = () => {
@@ -44,13 +44,21 @@ export class RenderItem {
             return;
 
         const f = MathG.clamp(this.frameIndex, 0, this.#spriteCountX * this.#spriteCountY - 1);
-        const spriteWidth = MathG.floor(this.#textureWidth / this.#spriteCountX);
-        const spriteHeight = MathG.floor(this.#textureHeight / this.#spriteCountY);
+        const spriteWidth = this.getSpriteWidth();
+        const spriteHeight = this.getSpriteHeight();
         const frameXOffset = MathG.floor(f % this.#spriteCountX);
         const frameYOffset = MathG.floor(f / this.#spriteCountX);
         const cropX = frameXOffset * spriteWidth;
         const cropY = frameYOffset * spriteHeight;
 
         context.drawImage(this.#texture, cropX, cropY, spriteWidth, spriteHeight, MathG.floor(this.posX), MathG.floor(this.posY), spriteWidth, spriteHeight);
+    }
+
+    getSpriteWidth() {
+        return MathG.floor(this.#textureWidth / this.#spriteCountX);
+    }
+
+    getSpriteHeight() {
+        return MathG.floor(this.#textureHeight / this.#spriteCountY);
     }
 }

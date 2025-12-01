@@ -5,7 +5,7 @@ export class MapFeature extends RenderItem {
 
     timer = 0;
     frameCount;
-    #isDead = false;
+    maxFrame = 0;
 
     constructor(path, _frameCount) {
         _frameCount = MathG.max(1, MathG.forceNumber(_frameCount));
@@ -14,18 +14,14 @@ export class MapFeature extends RenderItem {
     }
 
     update(delta) {
-        this.timer += delta;
-
-        if (this.timer > 0.1) {
-            this.timer -= 0.1;
-            if (this.#isDead) {
-                this.frameIndex++;
-            }
-        }
-
+        this.frameIndex = MathG.moveToward(this.frameIndex, this.maxFrame, delta * 10);
     }
 
     kill() {
-        this.#isDead = true;
+        this.maxFrame = this.frameCount;
+    }
+
+    restart() {
+        this.maxFrame = 0;
     }
 }

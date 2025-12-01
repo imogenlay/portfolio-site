@@ -13,6 +13,8 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 - Add destruction particles to collapsing house
 - Add restart button
 - Add actual game mechanics
+- Chickens run from wolf
+- Water sparkle effects
 
 ### Version Number
 

@@ -1,5 +1,6 @@
 
 import * as MathG from '../lib/MathG.js';
+import { RenderButton } from '../lib/RenderButton.js';
 import { RenderItem } from '../lib/RenderItem.js';
 import { Chicken } from './disassembly/Chicken.js';
 import { Cloud } from './disassembly/Cloud.js';
@@ -12,6 +13,7 @@ import { Sheep } from './disassembly/Sheep.js';
 export class DisassemblyCanvas extends HTMLElement {
 
     // ==================================== FIELDS ====================================
+
     canvas;
     context;
     currentCanvasScale;
@@ -22,17 +24,27 @@ export class DisassemblyCanvas extends HTMLElement {
     sheep = [];
     chickens = [];
     deadChickens = [];
+
     forest; lake; ruins; sunflowers; well; wagon;
+    livingFeatures = [];
 
-    livingFeatures;
+    // Buttons
 
+    mouseX = 0; mouseY = 0;
+    mouseReleased = false;
+    mousePressed = false;
+    buttonRetry;
+
+
+
+    // ================================== CONSTANTS ===================================
+
+    static CANVAS_SIZE = 144;
     static WOLF_HOME_X = 22;
     static WOLF_HOME_Y = 52;
 
-    // ================================== CONSTANTS ===================================
-    static CANVAS_SIZE = 144;
-
     // ================================= CONSTRUCTOR ==================================
+
     constructor() {
         super();
         this.canvas = document.createElement("canvas");
@@ -87,12 +99,21 @@ export class DisassemblyCanvas extends HTMLElement {
         this.house.posX = 29;
         this.house.posY = 58;
 
-        this.canvas.addEventListener("click", e => {
+        this.buttonRetry = new RenderButton("./disassembly/button_retry.png", 3)
+        this.buttonRetry.posX = 115;
+        this.buttonRetry.posY = 112;
+        this.buttonRetry.action = (mouseX, mouseY) => {
+            this.restartGame();
+        };
+
+        this.canvas.addEventListener("mouseup", e => { this.mousePressed = false; })
+        this.canvas.addEventListener("mousedown", e => { this.mousePressed = true; })
+        this.canvas.addEventListener("click", e => { this.mouseReleased = true; });
+        this.canvas.addEventListener("mousemove", e => {
             const rect = this.canvas.getBoundingClientRect();
-            const mouseX = MathG.floor((e.clientX - rect.left) / this.currentCanvasScale);
-            const mouseY = MathG.floor((e.clientY - rect.top) / this.currentCanvasScale);
-            this.click(mouseX, mouseY);
-        });
+            this.mouseX = MathG.floor((e.clientX - rect.left) / this.currentCanvasScale);
+            this.mouseY = MathG.floor((e.clientY - rect.top) / this.currentCanvasScale);
+        })
 
         this.restartGame();
     }
@@ -100,11 +121,22 @@ export class DisassemblyCanvas extends HTMLElement {
     restartGame() {
         let i = 0;
 
+        // Restart features.
         this.livingFeatures = [];
         this.livingFeatures.push(this.forest, this.forest, this.forest);
         this.livingFeatures.push(this.cows, this.sheep, this.chickens);
         this.livingFeatures.push(this.lake, this.ruins, this.sunflowers, this.well, this.wagon, this.barn, this.house);
 
+        this.forest.restart();
+        this.lake.restart();
+        this.ruins.restart();
+        this.sunflowers.restart();
+        this.well.restart();
+        this.wagon.restart();
+        this.barn.restart();
+        this.house.restart();
+
+        // Restart chickens.
         this.wolf.angry = false;
 
         for (i = 0; i < this.deadChickens.length; i++)
@@ -112,15 +144,14 @@ export class DisassemblyCanvas extends HTMLElement {
 
         this.chickens.push(...this.deadChickens);
         this.deadChickens = [];
+        for (i = 0; i < this.chickens.length; i++)
+            this.chickens[i].restart();
 
+        // Restart other animals.
         for (i = 0; i < this.cows.length; i++)
             this.cows[i].restart();
         for (i = 0; i < this.sheep.length; i++)
             this.sheep[i].restart();
-        for (i = 0; i < this.chickens.length; i++) {
-            this.chickens[i].restart();
-        }
-
     }
 
     // ==================================== RESIZE ====================================
@@ -144,6 +175,11 @@ export class DisassemblyCanvas extends HTMLElement {
     update(delta) {
         this.resizeAndClearCanvas();
 
+        if (this.mouseReleased) {
+            this.mouseReleased = false;
+            this.click();
+        }
+
         this.backgroundSky.render(this.context);
         this.renderArray(this.clouds, delta);
         this.backgroundLand.render(this.context);
@@ -163,9 +199,15 @@ export class DisassemblyCanvas extends HTMLElement {
         this.wagon.updateAndRender(delta, this.context);
         this.barn.updateAndRender(delta, this.context);
         this.house.updateAndRender(delta, this.context);
+
+        this.buttonRetry.updateAndRender(delta, this.context, this.mouseX, this.mouseY);
     }
 
-    click(mouseX, mouseY) {
+    click() {
+
+        if (this.buttonRetry.onReleased(this.mouseX, this.mouseY))
+            return;
+
         if (this.livingFeatures.length === 0)
             return;
 
@@ -184,17 +226,16 @@ export class DisassemblyCanvas extends HTMLElement {
         else
             // Everything else.
             item.kill();
-
     }
 
     updateWolf(delta) {
         let wolfTargetX = DisassemblyCanvas.WOLF_HOME_X;
         let wolfTargetY = DisassemblyCanvas.WOLF_HOME_Y;
-        const chickenIndex = MathG.min(5, this.chickens.length - 1);
+        const chickenIndex = MathG.min(3, this.chickens.length - 1);
         const hasChickens = this.chickens.length > 0;
-        const wolfCanKill = this.wolf.angry && hasChickens;
+        const wolfAngry = this.wolf.angry && hasChickens;
 
-        if (wolfCanKill) {
+        if (wolfAngry) {
             wolfTargetX = this.chickens[chickenIndex].posX;
             wolfTargetY = this.chickens[chickenIndex].posY;
         }
@@ -203,7 +244,7 @@ export class DisassemblyCanvas extends HTMLElement {
         this.wolf.posX = MathG.moveToward(this.wolf.posX, wolfTargetX, wolfSpeed);
         this.wolf.posY = MathG.moveToward(this.wolf.posY, wolfTargetY, wolfSpeed * FarmAnimal.VERTICAL_MOVEMENT_MULTIPLIER);
 
-        if (wolfCanKill &&
+        if (wolfAngry &&
             MathG.floor(this.wolf.posX) === MathG.floor(this.chickens[chickenIndex].posX) &&
             MathG.floor(this.wolf.posY) === MathG.floor(this.chickens[chickenIndex].posY)) {
             const deadChicken = this.chickens.splice(chickenIndex, 1)[0];
