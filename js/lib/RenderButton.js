@@ -23,6 +23,9 @@ export class RenderButton extends RenderItem {
     }
 
     onNothing(mouseX, mouseY) {
+        if (!this.visible)
+            return false;
+
         const isHovering = this.isMouseHovering(mouseX, mouseY);
         this.frameCheck(isHovering, false);
 
@@ -30,6 +33,9 @@ export class RenderButton extends RenderItem {
     }
 
     onPressed(mouseX, mouseY) {
+        if (!this.visible)
+            return false;
+
         const isHovering = this.isMouseHovering(mouseX, mouseY);
         this.frameCheck(isHovering, true);
 
@@ -37,6 +43,9 @@ export class RenderButton extends RenderItem {
     }
 
     onClicked(mouseX, mouseY) {
+        if (!this.visible)
+            return false;
+
         const isHovering = this.isMouseHovering(mouseX, mouseY);
         this.frameCheck(isHovering, true);
         if (isHovering)

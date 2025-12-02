@@ -19,6 +19,14 @@ export class DisassemblyCanvas extends HTMLElement {
     currentCanvasScale;
 
     gameOptions;
+    gameOptionsHaveLoaded = false;
+    restartRequested = false;
+    playerGameEnded = false;
+
+    wordAnswer = "";
+    wordLink = "";
+    guessedCharactersSet = new Set();
+    gameArray = [];
 
     // Mouse
     mouseX = 0; mouseY = 0;
@@ -35,8 +43,21 @@ export class DisassemblyCanvas extends HTMLElement {
     forest; lake; ruins; sunflowers; well; wagon;
     livingFeatures = [];
 
-    // Buttons
+    // Display
     wordDisplay;
+    letterDisplays = [];
+    displayLetterLookup = [
+        // Check text.png for order.
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+        "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        "!", "#", "'", "*", "+", "-", ".", "/", ":", "@", "π", " ", " ",
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "_", " ", " "
+    ];
+    youWin;
+
+    // Buttons
     buttonRetry;
     buttonClue;
     buttonNumbers;
@@ -53,6 +74,8 @@ export class DisassemblyCanvas extends HTMLElement {
     static MOUSE_PRESSED = 1;
     static MOUSE_CLICKED = 2;
 
+    static CLUE_CHAR = "♦";
+
     // ================================= CONSTRUCTOR ==================================
 
     constructor() {
@@ -60,14 +83,14 @@ export class DisassemblyCanvas extends HTMLElement {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
         this.append(this.canvas);
-        // Possible characters: !#'*+-./012345678:@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzπ
         const PATH = "./public/disassembly/";
 
         fetch(PATH + "game_options.txt")
             .then(r => r.text())
-            .then(text => { this.gameOptions = text.split(/\r?\n/).filter(Boolean); });
-
-        // const randomLine = lines[MathG.round(MathG.nextFloat() * lines.length)]; 
+            .then(text => {
+                this.gameOptions = text.split(/\r?\n/).filter(Boolean);
+                this.gameOptionsHaveLoaded = true;
+            });
 
         this.backgroundSky = new RenderItem(PATH + "background_0_sky.png");
         this.backgroundLand = new RenderItem(PATH + "background_1_land.png");
@@ -117,34 +140,57 @@ export class DisassemblyCanvas extends HTMLElement {
         this.house.posX = 29;
         this.house.posY = 58;
 
-        // Buttons.
+        // Word display.
+
+        const DISPLAY_BASE_X = 5;
+        const DISPLAY_BASE_Y = 103;
         this.wordDisplay = new RenderItem(PATH + "word_display.png");
-        this.wordDisplay.posX = 5;
-        this.wordDisplay.posY = 103;
+        this.wordDisplay.posX = DISPLAY_BASE_X;
+        this.wordDisplay.posY = DISPLAY_BASE_Y;
+
+        const MAX_DISPLAY_LETTERS = 26;
+        const DISPLAY_LETTER_PX_SIZE = 5;
+        for (let i = 0; i < MAX_DISPLAY_LETTERS; i++) {
+            const displayLetter = new RenderItem(PATH + "text.png", 13, 6);
+
+            displayLetter.posX = DISPLAY_BASE_X + 2 + i * DISPLAY_LETTER_PX_SIZE;
+            displayLetter.posY = DISPLAY_BASE_Y + 1;
+
+            this.letterDisplays.push(displayLetter);
+        }
+
+        this.youWin = new RenderItem(PATH + "you_win.png", 2);
+        this.youWin.posX = 22;
+        this.youWin.posY = 118;
+
+        // Buttons.
 
         this.buttonRetry = new RenderButton(PATH + "button_retry.png", 3);
         this.buttonRetry.posX = 115;
         this.buttonRetry.posY = 112;
         this.buttonRetry.setAllCrop(1);
-        this.buttonRetry.action = (mouseX, mouseY) => { this.restartGame(); };
+        this.buttonRetry.action = (mouseX, mouseY) => { this.restartRequested = true; };
 
         this.buttonClue = new RenderButton(PATH + "button_clue.png", 3);
         this.buttonClue.posX = 44;
         this.buttonClue.posY = 132;
         this.buttonClue.setAllCrop(1);
-        this.buttonClue.action = (mouseX, mouseY) => { };
+        this.buttonClue.action = (mouseX, mouseY) => { this.getClue(); };
+        this.buttonClue.usedCheck = DisassemblyCanvas.CLUE_CHAR;
 
         this.buttonNumbers = new RenderButton(PATH + "button_numbers.png", 3);
         this.buttonNumbers.posX = 64;
         this.buttonNumbers.posY = 132;
         this.buttonNumbers.setAllCrop(1);
-        this.buttonNumbers.action = (mouseX, mouseY) => { };
+        this.buttonNumbers.action = (mouseX, mouseY) => { this.makeGuess("0123456789", false); };
+        this.buttonNumbers.usedCheck = "0";
 
         this.buttonSymbols = new RenderButton(PATH + "button_symbols.png", 3);
         this.buttonSymbols.posX = 84;
         this.buttonSymbols.posY = 132;
         this.buttonSymbols.setAllCrop(1);
-        this.buttonSymbols.action = (mouseX, mouseY) => { };
+        this.buttonSymbols.action = (mouseX, mouseY) => { this.makeGuess("!#'*+-./:@π", false); };
+        this.buttonSymbols.usedCheck = "!";
 
         // Letter buttons.
         const LETTER_COUNT = 26;
@@ -154,10 +200,13 @@ export class DisassemblyCanvas extends HTMLElement {
 
         for (let i = 0; i < LETTER_COUNT; i++) {
             const buttonLetter = new RenderButton(PATH + "button_letters.png", 3, LETTER_COUNT);
+            const guess = String.fromCharCode(97 + i); // 97 = 'a';
+
             buttonLetter.posX = LETTER_BASE_X + (i % 11) * LETTER_PX_SIZE;
             buttonLetter.posY = LETTER_BASE_Y + MathG.floor(i / 11) * LETTER_PX_SIZE;
             buttonLetter.setAllCrop(1);
-            buttonLetter.action = (mouseX, mouseY) => { };
+            buttonLetter.action = (mouseX, mouseY) => { this.makeGuess(guess, false); };
+            buttonLetter.usedCheck = guess;
             buttonLetter.baseFrame = i * 3;
 
             this.buttonLetters.push(buttonLetter);
@@ -178,11 +227,28 @@ export class DisassemblyCanvas extends HTMLElement {
             this.mouseY = 99999;
         });
 
-        this.restartGame();
+        this.restartRequested = true;
     }
 
     restartGame() {
         let i = 0;
+        console.log("Restart Disassembly");
+
+        this.playerGameEnded = false;
+        this.youWin.visible = false;
+
+        // Set word.
+        const selectedGame = (this.gameOptions[MathG.round(MathG.nextFloat() * this.gameOptions.length)]).split("|");
+        this.wordAnswer = selectedGame[0].trim();;
+        this.wordLink = selectedGame[1].trim();
+        this.gameArray = new Array(this.wordAnswer.length).fill("_");
+        this.guessedCharactersSet.clear();
+
+        console.log(this.wordAnswer);
+        console.log(this.wordLink);
+
+        // The player starts with the space character already guessed.
+        this.makeGuess(" ", true);
 
         // Restart features.
         this.livingFeatures = [];
@@ -238,6 +304,15 @@ export class DisassemblyCanvas extends HTMLElement {
     update(delta) {
         this.resizeAndClearCanvas();
 
+        if (!this.gameOptionsHaveLoaded)
+            return;
+
+        if (this.restartRequested) {
+            this.restartRequested = false;
+            this.restartGame();
+        }
+
+        this.setButtonsVisible();
         if (this.mouseState === DisassemblyCanvas.MOUSE_NOTHING)
             this.onMouseNothing();
         else if (this.mouseState === DisassemblyCanvas.MOUSE_PRESSED)
@@ -251,8 +326,7 @@ export class DisassemblyCanvas extends HTMLElement {
         this.renderArray(this.clouds, delta);
         this.backgroundLand.render(this.context);
 
-        this.updateWolf(delta);
-        this.wolf.render(this.context);
+        this.updateAndRenderWolf(delta);
 
         this.renderArray(this.chickens, delta);
         this.renderArray(this.cows, delta);
@@ -268,12 +342,18 @@ export class DisassemblyCanvas extends HTMLElement {
         this.house.updateAndRender(delta, this.context);
 
         this.wordDisplay.updateAndRender(delta, this.context);
+        this.youWin.updateAndRender(delta, this.context);
+        this.updateAndRenderLetterDisplays(delta);
+
         this.buttonRetry.updateAndRender(delta, this.context);
-        this.buttonClue.updateAndRender(delta, this.context);
-        this.buttonNumbers.updateAndRender(delta, this.context);
-        this.buttonSymbols.updateAndRender(delta, this.context);
-        for (let i = 0; i < this.buttonLetters.length; i++)
-            this.buttonLetters[i].updateAndRender(delta, this.context);
+
+        if (!this.playerGameEnded) {
+            this.buttonClue.updateAndRender(delta, this.context);
+            this.buttonNumbers.updateAndRender(delta, this.context);
+            this.buttonSymbols.updateAndRender(delta, this.context);
+            for (let i = 0; i < this.buttonLetters.length; i++)
+                this.buttonLetters[i].updateAndRender(delta, this.context);
+        }
     }
 
     renderArray(renderItemArray, delta) {
@@ -284,7 +364,7 @@ export class DisassemblyCanvas extends HTMLElement {
         }
     }
 
-    updateWolf(delta) {
+    updateAndRenderWolf(delta) {
         let wolfTargetX = DisassemblyCanvas.WOLF_HOME_X;
         let wolfTargetY = DisassemblyCanvas.WOLF_HOME_Y;
         const chickenIndex = MathG.min(3, this.chickens.length - 1);
@@ -306,19 +386,47 @@ export class DisassemblyCanvas extends HTMLElement {
             const deadChicken = this.chickens.splice(chickenIndex, 1)[0];
             this.deadChickens.push(deadChicken);
         }
+
+        this.wolf.render(this.context);
+    }
+
+    updateAndRenderLetterDisplays(delta) {
+        for (let i = 0; i < this.letterDisplays.length; i++) {
+            const letter = this.letterDisplays[i];
+            if (i >= this.gameArray.length) {
+                letter.visible = false;
+                continue;
+            }
+
+            letter.visible = true;
+            letter.frameIndex = this.displayLetterLookup.indexOf(this.gameArray[i]);
+            letter.updateAndRender(delta, this.context);
+        }
     }
 
     // ================================= MOUSE STATE ==================================
 
+    setButtonsVisible() {
+        const setVisibility = (button) => { button.visible = !(this.guessedCharactersSet.has(button.usedCheck)); };
+
+        setVisibility(this.buttonClue);
+        setVisibility(this.buttonNumbers);
+        setVisibility(this.buttonSymbols);
+        for (let i = 0; i < this.buttonLetters.length; i++)
+            setVisibility(this.buttonLetters[i]);
+
+    }
+
     onMouseNothing() {
         this.buttonRetry.onNothing(this.mouseX, this.mouseY);
-        this.buttonClue.onNothing(this.mouseX, this.mouseY);
-        this.buttonNumbers.onNothing(this.mouseX, this.mouseY);
-        this.buttonSymbols.onNothing(this.mouseX, this.mouseY);
-        for (let i = 0; i < this.buttonLetters.length; i++)
-            this.buttonLetters[i].onNothing(this.mouseX, this.mouseY);
 
-
+        if (!this.playerGameEnded) {
+            this.buttonClue.onNothing(this.mouseX, this.mouseY);
+            this.buttonNumbers.onNothing(this.mouseX, this.mouseY);
+            this.buttonSymbols.onNothing(this.mouseX, this.mouseY);
+            for (let i = 0; i < this.buttonLetters.length; i++)
+                this.buttonLetters[i].onNothing(this.mouseX, this.mouseY);
+        }
     }
 
     onMousePressed() {
@@ -335,26 +443,94 @@ export class DisassemblyCanvas extends HTMLElement {
         };
 
         press(this.buttonRetry);
-        press(this.buttonClue);
-        press(this.buttonNumbers);
-        press(this.buttonSymbols);
-        for (let i = 0; i < this.buttonLetters.length; i++)
-            press(this.buttonLetters[i]);
+
+        if (!this.playerGameEnded) {
+            press(this.buttonClue);
+            press(this.buttonNumbers);
+            press(this.buttonSymbols);
+            for (let i = 0; i < this.buttonLetters.length; i++)
+                press(this.buttonLetters[i]);
+        }
     }
 
     onMouseClicked() {
         if (this.buttonRetry.onClicked(this.mouseX, this.mouseY))
             return;
-        if (this.buttonClue.onClicked(this.mouseX, this.mouseY))
-            return;
-        if (this.buttonNumbers.onClicked(this.mouseX, this.mouseY))
-            return;
-        if (this.buttonSymbols.onClicked(this.mouseX, this.mouseY))
-            return;
-        for (let i = 0; i < this.buttonLetters.length; i++)
-            if (this.buttonLetters[i].onClicked(this.mouseX, this.mouseY))
-                return;
 
+        if (!this.playerGameEnded) {
+            if (this.buttonClue.onClicked(this.mouseX, this.mouseY))
+                return;
+            if (this.buttonNumbers.onClicked(this.mouseX, this.mouseY))
+                return;
+            if (this.buttonSymbols.onClicked(this.mouseX, this.mouseY))
+                return;
+            for (let i = 0; i < this.buttonLetters.length; i++)
+                if (this.buttonLetters[i].onClicked(this.mouseX, this.mouseY))
+                    return;
+        }
+    }
+
+    // ================================== GAME LOGIC ==================================
+
+    getClue() {
+        let clue = "";
+        for (let i = 0; i < this.gameArray.length; i++)
+            if (this.gameArray[i] === "_") {
+                clue = this.wordAnswer[i];
+                break;
+            }
+
+        this.makeGuess(DisassemblyCanvas.CLUE_CHAR + clue, true);
+    };
+
+    makeGuess(guesses, correctGuess) {
+        // Add the uppercase and lowercase version just in case one of those was missed.
+        guesses += guesses.toUpperCase() + guesses.toLowerCase();
+        const allGuessLetters = guesses.split("");
+
+        if (!correctGuess) {
+            // Sometimes the guess is always correct, and we don't need to scan for a match.
+            // The guess is always correct is the guess is the clue or " ".
+            for (let i = 0; i < allGuessLetters.length; i++)
+                if (this.wordAnswer.includes(allGuessLetters[i])) {
+                    correctGuess = true;
+                    break;
+                }
+        }
+
+        allGuessLetters.forEach(v => this.guessedCharactersSet.add(v));
+
+        if (correctGuess) {
+            for (let i = 0; i < this.gameArray.length; i++)
+                if (this.guessedCharactersSet.has(this.wordAnswer[i]))
+                    this.gameArray[i] = this.wordAnswer[i];
+
+            if (this.gameArray.join("") === this.wordAnswer) {
+
+                this.playerGameEnded = true;
+                this.youWin.visible = true;
+                this.youWin.frameIndex = 0;
+            }
+        }
+        else {
+            this.damage();
+            if (this.livingFeatures.length === 0) {
+                this.playerGameEnded = true;
+                this.youWin.visible = true;
+                this.youWin.frameIndex = 1;
+                for (let i = 0; i < this.gameArray.length; i++)
+                    this.gameArray[i] = this.wordAnswer[i];
+            }
+        }
+
+        /*console.log("-------------------------------");
+        console.log(guesses);
+        console.log(allGuessLetters);
+        console.log(this.guessedCharactersSet);
+        console.log(this.gameArray);*/
+    }
+
+    damage() {
         // Delete objects script.
         if (this.livingFeatures.length === 0)
             return;
