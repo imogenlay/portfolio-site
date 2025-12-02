@@ -3,9 +3,11 @@
 @use "./rules/mixins";
 
 disassembly-canvas {
-  border: 1px solid yellowgreen;
+  @include mixins.flex(column, flex-start, center, 0);
 
   canvas {
     image-rendering: pixelated;
+    align-self: center;
+    margin-bottom: 1.5rem;
   }
 }

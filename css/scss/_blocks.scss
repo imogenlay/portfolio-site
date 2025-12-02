@@ -50,5 +50,4 @@ section {
   min-height: 100%;
   flex-grow: 1;
   @include mixins.flex(column, flex-start, stretch, 0);
-  border: 1px solid orange;
 }

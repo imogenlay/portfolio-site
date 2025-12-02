@@ -171,7 +171,6 @@ section {
   justify-content: flex-start;
   align-items: stretch;
   gap: 0;
-  border: 1px solid orange;
 }
 
 @property --clr-animated-main-bg-gradient {
@@ -449,10 +448,16 @@ project-box div p {
 }
 
 disassembly-canvas {
-  border: 1px solid yellowgreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
 }
 disassembly-canvas canvas {
   image-rendering: pixelated;
+  align-self: center;
+  margin-bottom: 1.5rem;
 }
 
 img.flipped {
