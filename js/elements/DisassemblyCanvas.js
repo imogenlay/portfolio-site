@@ -27,6 +27,7 @@ export class DisassemblyCanvas extends HTMLElement {
     wordLink = "";
     guessedCharactersSet = new Set();
     gameArray = [];
+    hyperlink;
 
     // Mouse
     mouseX = 0; mouseY = 0;
@@ -85,12 +86,16 @@ export class DisassemblyCanvas extends HTMLElement {
         super();
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
+
+        this.hyperlink = document.createElement("a");
         const gameDescription = document.createElement("p");
-        gameDescription.textContent = "Welcome to Disassembly! In this game you must correctly guess the name of programming languages or else your farm will suffer ecological collapse!";
+        gameDescription.textContent = "Welcome to Disassembly! In this game you must correctly guess the name of programming " +
+            "languages or else your farm will suffer ecological collapse!";
 
         const gameRules = document.createElement("p");
-        gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong guesses before you lose! The clue button will give you a random option for free.";
-        this.append(this.canvas, gameDescription, gameRules);
+        gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong " +
+            "guesses before you lose! The clue button will give you a random correct letter for free.";
+        this.append(this.canvas, this.hyperlink, gameDescription, gameRules);
 
         const PATH = "./public/disassembly/";
 
@@ -245,8 +250,7 @@ export class DisassemblyCanvas extends HTMLElement {
         this.gameArray = new Array(this.wordAnswer.length).fill("_");
         this.guessedCharactersSet.clear();
 
-        console.log(this.wordAnswer);
-        console.log(this.wordLink);
+        console.log(this.wordAnswer + " --- " + this.wordLink);
 
         // The player starts with the space character already guessed.
         this.makeGuess(" ", true);
@@ -526,22 +530,13 @@ export class DisassemblyCanvas extends HTMLElement {
                 if (this.guessedCharactersSet.has(this.wordAnswer[i]))
                     this.gameArray[i] = this.wordAnswer[i];
 
-            if (this.gameArray.join("") === this.wordAnswer) {
-
-                this.playerGameEnded = true;
-                this.youWin.visible = true;
-                this.youWin.frameIndex = 0;
-            }
+            if (this.gameArray.join("") === this.wordAnswer)
+                this.playerWins(true);
         }
         else {
             this.damage();
-            if (this.livingFeatures.length === 0) {
-                this.playerGameEnded = true;
-                this.youWin.visible = true;
-                this.youWin.frameIndex = 1;
-                for (let i = 0; i < this.gameArray.length; i++)
-                    this.gameArray[i] = this.wordAnswer[i];
-            }
+            if (this.livingFeatures.length === 0)
+                this.playerWins(false);
         }
     }
 
@@ -565,5 +560,19 @@ export class DisassemblyCanvas extends HTMLElement {
         else
             // Everything else.
             item.kill();
+    }
+
+    playerWins(isWinner) {
+        // Make sure answer is given.
+        for (let i = 0; i < this.gameArray.length; i++)
+            this.gameArray[i] = this.wordAnswer[i];
+
+        this.playerGameEnded = true;
+        this.youWin.visible = true;
+        this.youWin.frameIndex = isWinner ? 0 : 1;
+
+
+        this.hyperlink.href = this.wordLink;
+        this.hyperlink.textContent = this.wordLink;
     }
 }

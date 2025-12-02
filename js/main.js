@@ -50,23 +50,3 @@ function update(delta) {
 pageBuilder.initialise();
 
 
-
-export const checkStringPalindrome = (stringOne) => {
-    const half = Math.floor(stringOne.length / 2);
-    for (let i = 0; i < half; i++)
-        if (stringOne[i] !== stringOne[stringOne.length - 1 - i])
-            return false;
-
-    return true;
-};
-
-export const totalNestedScoresArr = (scoresArr) => {
-    return scoresArr.map((arr) => arr.reduce((prev, curr) => prev + Number(curr), 0));
-};
-
-console.log("START");
-console.log(checkStringPalindrome("racecar"));
-console.log(checkStringPalindrome("rrrrrrrrrrrrrrrrrrrrrrrr"));
-console.log(checkStringPalindrome("rrrrrrrrrrrrrrrrrrprrrrr"));
-console.log([[7, 7, 6], [2, 3, 2], [3]]);
-console.log(totalNestedScoresArr([[7, 7, 6], [2, 3, 2], [3]]));

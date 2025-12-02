@@ -457,7 +457,15 @@ disassembly-canvas {
 disassembly-canvas canvas {
   image-rendering: pixelated;
   align-self: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+disassembly-canvas a {
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  min-height: 1.5rem;
+}
+disassembly-canvas a:hover {
+  color: #edfffe;
 }
 
 img.flipped {
