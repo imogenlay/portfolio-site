@@ -61,86 +61,86 @@ export class DisassemblyCanvas extends HTMLElement {
         this.context = this.canvas.getContext("2d");
         this.append(this.canvas);
         // Possible characters: !#'*+-./012345678:@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzπ
+        const PATH = "./public/disassembly/";
 
-        fetch("./disassembly/game_options.txt")
+        fetch(PATH + "game_options.txt")
             .then(r => r.text())
             .then(text => { this.gameOptions = text.split(/\r?\n/).filter(Boolean); });
 
-        // const randomLine = lines[MathG.round(MathG.nextFloat() * lines.length)];
-        console.log("start");
+        // const randomLine = lines[MathG.round(MathG.nextFloat() * lines.length)]; 
 
-        this.backgroundSky = new RenderItem("./disassembly/background_0_sky.png");
-        this.backgroundLand = new RenderItem("./disassembly/background_1_land.png");
+        this.backgroundSky = new RenderItem(PATH + "background_0_sky.png");
+        this.backgroundLand = new RenderItem(PATH + "background_1_land.png");
         for (let i = 0; i < Cloud.COUNT; i++)
-            this.clouds.push(new Cloud("./disassembly/clouds.png", i));
+            this.clouds.push(new Cloud(PATH + "clouds.png", i));
 
-        this.wolf = new RenderItem("./disassembly/wolf.png");
+        this.wolf = new RenderItem(PATH + "wolf.png");
         this.wolf.posX = DisassemblyCanvas.WOLF_HOME_X;
         this.wolf.posY = DisassemblyCanvas.WOLF_HOME_Y;
 
         for (let i = 0; i < Cow.COUNT; i++)
-            this.cows.push(new Cow("./disassembly/cows.png", i));
+            this.cows.push(new Cow(PATH + "cows.png", i));
 
         for (let i = 0; i < Sheep.COUNT; i++)
-            this.sheep.push(new Sheep("./disassembly/sheep.png", i));
+            this.sheep.push(new Sheep(PATH + "sheep.png", i));
 
         for (let i = 0; i < Chicken.COUNT; i++)
-            this.deadChickens.push(new Chicken("./disassembly/chickens.png", i));
+            this.deadChickens.push(new Chicken(PATH + "chickens.png", i));
 
-        this.forest = new Forest("./disassembly/forest.png");
+        this.forest = new Forest(PATH + "forest.png");
 
-        this.lake = new MapFeature("./disassembly/lake.png", 8);
+        this.lake = new MapFeature(PATH + "lake.png", 8);
         this.lake.posX = 17;
         this.lake.posY = 37;
 
-        this.ruins = new MapFeature("./disassembly/ruins.png", 8);
+        this.ruins = new MapFeature(PATH + "ruins.png", 8);
         this.ruins.posX = 28;
         this.ruins.posY = 16;
 
-        this.sunflowers = new MapFeature("./disassembly/sunflowers.png", 24);
+        this.sunflowers = new MapFeature(PATH + "sunflowers.png", 24);
         this.sunflowers.posX = 60;
         this.sunflowers.posY = 32;
 
-        this.well = new MapFeature("./disassembly/well.png", 8);
+        this.well = new MapFeature(PATH + "well.png", 8);
         this.well.posX = 75;
         this.well.posY = 56;
 
-        this.wagon = new MapFeature("./disassembly/wagon.png", 6);
+        this.wagon = new MapFeature(PATH + "wagon.png", 6);
         this.wagon.posX = 44;
         this.wagon.posY = 87;
 
-        this.barn = new MapFeature("./disassembly/barn.png", 8);
+        this.barn = new MapFeature(PATH + "barn.png", 8);
         this.barn.posX = 82;
         this.barn.posY = 70;
 
-        this.house = new MapFeature("./disassembly/house.png", 8);
+        this.house = new MapFeature(PATH + "house.png", 8);
         this.house.posX = 29;
         this.house.posY = 58;
 
         // Buttons.
-        this.wordDisplay = new RenderItem("./disassembly/word_display.png");
+        this.wordDisplay = new RenderItem(PATH + "word_display.png");
         this.wordDisplay.posX = 5;
         this.wordDisplay.posY = 103;
 
-        this.buttonRetry = new RenderButton("./disassembly/button_retry.png", 3);
+        this.buttonRetry = new RenderButton(PATH + "button_retry.png", 3);
         this.buttonRetry.posX = 115;
         this.buttonRetry.posY = 112;
         this.buttonRetry.setAllCrop(1);
         this.buttonRetry.action = (mouseX, mouseY) => { this.restartGame(); };
 
-        this.buttonClue = new RenderButton("./disassembly/button_clue.png", 3);
+        this.buttonClue = new RenderButton(PATH + "button_clue.png", 3);
         this.buttonClue.posX = 44;
         this.buttonClue.posY = 132;
         this.buttonClue.setAllCrop(1);
         this.buttonClue.action = (mouseX, mouseY) => { };
 
-        this.buttonNumbers = new RenderButton("./disassembly/button_numbers.png", 3);
+        this.buttonNumbers = new RenderButton(PATH + "button_numbers.png", 3);
         this.buttonNumbers.posX = 64;
         this.buttonNumbers.posY = 132;
         this.buttonNumbers.setAllCrop(1);
         this.buttonNumbers.action = (mouseX, mouseY) => { };
 
-        this.buttonSymbols = new RenderButton("./disassembly/button_symbols.png", 3);
+        this.buttonSymbols = new RenderButton(PATH + "button_symbols.png", 3);
         this.buttonSymbols.posX = 84;
         this.buttonSymbols.posY = 132;
         this.buttonSymbols.setAllCrop(1);
@@ -153,7 +153,7 @@ export class DisassemblyCanvas extends HTMLElement {
         const LETTER_PX_SIZE = 10;
 
         for (let i = 0; i < LETTER_COUNT; i++) {
-            const buttonLetter = new RenderButton("./disassembly/button_letters.png", 3, LETTER_COUNT);
+            const buttonLetter = new RenderButton(PATH + "button_letters.png", 3, LETTER_COUNT);
             buttonLetter.posX = LETTER_BASE_X + (i % 11) * LETTER_PX_SIZE;
             buttonLetter.posY = LETTER_BASE_Y + MathG.floor(i / 11) * LETTER_PX_SIZE;
             buttonLetter.setAllCrop(1);
