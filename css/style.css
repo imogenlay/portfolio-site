@@ -459,12 +459,19 @@ disassembly-canvas canvas {
   align-self: center;
   margin-bottom: 1rem;
 }
-disassembly-canvas a {
+disassembly-canvas div {
   margin-bottom: 1rem;
+}
+disassembly-canvas div span {
+  font-weight: 700;
+  color: #edfffe;
+  margin-right: 0.5rem;
+}
+disassembly-canvas div a {
   text-decoration: underline;
   min-height: 1.5rem;
 }
-disassembly-canvas a:hover {
+disassembly-canvas div a:hover {
   color: #edfffe;
 }
 

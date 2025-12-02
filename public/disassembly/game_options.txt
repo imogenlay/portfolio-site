@@ -468,7 +468,7 @@ PL/S                      |wikipedia.org/wiki/PL/S
 PL/SQL                    |wikipedia.org/wiki/PL/SQL
 PL360                     |wikipedia.org/wiki/PL360
 PLANC                     |wikipedia.org/wiki/PLANC
-Plankalkel                |wikipedia.org/wiki/Plankalk%C3%BCl
+Plankalkul                |wikipedia.org/wiki/Plankalk%C3%BCl
 Planner                   |wikipedia.org/wiki/Planner_(programming_language)
 PLEX                      |wikipedia.org/wiki/PLEX_(programming_language)
 PLEXIL                    |wikipedia.org/wiki/PLEXIL

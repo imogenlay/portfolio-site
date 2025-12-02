@@ -16,7 +16,7 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 - [x] Make numbers and symbols a single option.
 - [x] Fix bug involving clue and the symbols/numbers.
 - [x] Center display letters with correct spacing.
-- [ ] Show link.
+- [x] Show link.
 - [ ] Consider making text bigger.
 - [x] Center game canvas.
 

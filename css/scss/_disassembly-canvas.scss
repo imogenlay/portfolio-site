@@ -11,13 +11,23 @@ disassembly-canvas {
     margin-bottom: 1rem;
   }
 
-  a {
+  div {
+    //  min-width: 80%;
     margin-bottom: 1rem;
-    text-decoration: underline;
-    min-height: 1.5rem;
 
-    &:hover {
+    span {
+      font-weight: 700;
       color: g.$clr-white;
+      margin-right: 0.5rem;
+    }
+
+    a {
+      text-decoration: underline;
+      min-height: 1.5rem;
+
+      &:hover {
+        color: g.$clr-white;
+      }
     }
   }
 }

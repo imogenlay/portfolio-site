@@ -27,6 +27,8 @@ export class DisassemblyCanvas extends HTMLElement {
     wordLink = "";
     guessedCharactersSet = new Set();
     gameArray = [];
+
+    hyperLinkParent;
     hyperlink;
 
     // Mouse
@@ -87,7 +89,13 @@ export class DisassemblyCanvas extends HTMLElement {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
 
+        this.hyperLinkParent = document.createElement("div");
+        this.hyperLinkParent.style.display = "none";
         this.hyperlink = document.createElement("a");
+        const linkTitle = document.createElement("span");
+        linkTitle.textContent = "Link:"
+        this.hyperLinkParent.append(linkTitle, this.hyperlink);
+
         const gameDescription = document.createElement("p");
         gameDescription.textContent = "Welcome to Disassembly! In this game you must correctly guess the name of programming " +
             "languages or else your farm will suffer ecological collapse!";
@@ -95,7 +103,7 @@ export class DisassemblyCanvas extends HTMLElement {
         const gameRules = document.createElement("p");
         gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong " +
             "guesses before you lose! The clue button will give you a random correct letter for free.";
-        this.append(this.canvas, this.hyperlink, gameDescription, gameRules);
+        this.append(this.canvas, this.hyperLinkParent, gameDescription, gameRules);
 
         const PATH = "./public/disassembly/";
 
@@ -571,8 +579,9 @@ export class DisassemblyCanvas extends HTMLElement {
         this.youWin.visible = true;
         this.youWin.frameIndex = isWinner ? 0 : 1;
 
-
-        this.hyperlink.href = this.wordLink;
+        this.hyperLinkParent.style.display = "block";
+        this.hyperlink.href = "https://" + this.wordLink;
         this.hyperlink.textContent = this.wordLink;
+        console.log(this.wordLink);
     }
 }
