@@ -18,6 +18,13 @@ export class DisassemblyCanvas extends HTMLElement {
     context;
     currentCanvasScale;
 
+    gameOptions;
+
+    // Mouse
+    mouseX = 0; mouseY = 0;
+    mouseState = 0; // 0 = Nothing, 1 = Held down, 2 = On Release Click
+
+    // Game objects
     backgroundSky; backgroundLand; wolf;
     clouds = [];
     cows = [];
@@ -29,19 +36,22 @@ export class DisassemblyCanvas extends HTMLElement {
     livingFeatures = [];
 
     // Buttons
-
-    mouseX = 0; mouseY = 0;
-    mouseReleased = false;
-    mousePressed = false;
+    wordDisplay;
     buttonRetry;
-
-
+    buttonClue;
+    buttonNumbers;
+    buttonSymbols;
+    buttonLetters = [];
 
     // ================================== CONSTANTS ===================================
 
     static CANVAS_SIZE = 144;
     static WOLF_HOME_X = 22;
     static WOLF_HOME_Y = 52;
+
+    static MOUSE_NOTHING = 0;
+    static MOUSE_PRESSED = 1;
+    static MOUSE_CLICKED = 2;
 
     // ================================= CONSTRUCTOR ==================================
 
@@ -50,13 +60,21 @@ export class DisassemblyCanvas extends HTMLElement {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
         this.append(this.canvas);
+        // Possible characters: !#'*+-./012345678:@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzπ
+
+        fetch("./disassembly/game_options.txt")
+            .then(r => r.text())
+            .then(text => { this.gameOptions = text.split(/\r?\n/).filter(Boolean); });
+
+        // const randomLine = lines[MathG.round(MathG.nextFloat() * lines.length)];
+        console.log("start");
 
         this.backgroundSky = new RenderItem("./disassembly/background_0_sky.png");
         this.backgroundLand = new RenderItem("./disassembly/background_1_land.png");
         for (let i = 0; i < Cloud.COUNT; i++)
             this.clouds.push(new Cloud("./disassembly/clouds.png", i));
 
-        this.wolf = new RenderItem("./disassembly/wolf.png")
+        this.wolf = new RenderItem("./disassembly/wolf.png");
         this.wolf.posX = DisassemblyCanvas.WOLF_HOME_X;
         this.wolf.posY = DisassemblyCanvas.WOLF_HOME_Y;
 
@@ -88,7 +106,7 @@ export class DisassemblyCanvas extends HTMLElement {
         this.well.posY = 56;
 
         this.wagon = new MapFeature("./disassembly/wagon.png", 6);
-        this.wagon.posX = 52;
+        this.wagon.posX = 44;
         this.wagon.posY = 87;
 
         this.barn = new MapFeature("./disassembly/barn.png", 8);
@@ -99,21 +117,66 @@ export class DisassemblyCanvas extends HTMLElement {
         this.house.posX = 29;
         this.house.posY = 58;
 
-        this.buttonRetry = new RenderButton("./disassembly/button_retry.png", 3)
+        // Buttons.
+        this.wordDisplay = new RenderItem("./disassembly/word_display.png");
+        this.wordDisplay.posX = 5;
+        this.wordDisplay.posY = 103;
+
+        this.buttonRetry = new RenderButton("./disassembly/button_retry.png", 3);
         this.buttonRetry.posX = 115;
         this.buttonRetry.posY = 112;
-        this.buttonRetry.action = (mouseX, mouseY) => {
-            this.restartGame();
-        };
+        this.buttonRetry.setAllCrop(1);
+        this.buttonRetry.action = (mouseX, mouseY) => { this.restartGame(); };
 
-        this.canvas.addEventListener("mouseup", e => { this.mousePressed = false; })
-        this.canvas.addEventListener("mousedown", e => { this.mousePressed = true; })
-        this.canvas.addEventListener("click", e => { this.mouseReleased = true; });
+        this.buttonClue = new RenderButton("./disassembly/button_clue.png", 3);
+        this.buttonClue.posX = 44;
+        this.buttonClue.posY = 132;
+        this.buttonClue.setAllCrop(1);
+        this.buttonClue.action = (mouseX, mouseY) => { };
+
+        this.buttonNumbers = new RenderButton("./disassembly/button_numbers.png", 3);
+        this.buttonNumbers.posX = 64;
+        this.buttonNumbers.posY = 132;
+        this.buttonNumbers.setAllCrop(1);
+        this.buttonNumbers.action = (mouseX, mouseY) => { };
+
+        this.buttonSymbols = new RenderButton("./disassembly/button_symbols.png", 3);
+        this.buttonSymbols.posX = 84;
+        this.buttonSymbols.posY = 132;
+        this.buttonSymbols.setAllCrop(1);
+        this.buttonSymbols.action = (mouseX, mouseY) => { };
+
+        // Letter buttons.
+        const LETTER_COUNT = 26;
+        const LETTER_BASE_X = 4;
+        const LETTER_BASE_Y = 112;
+        const LETTER_PX_SIZE = 10;
+
+        for (let i = 0; i < LETTER_COUNT; i++) {
+            const buttonLetter = new RenderButton("./disassembly/button_letters.png", 3, LETTER_COUNT);
+            buttonLetter.posX = LETTER_BASE_X + (i % 11) * LETTER_PX_SIZE;
+            buttonLetter.posY = LETTER_BASE_Y + MathG.floor(i / 11) * LETTER_PX_SIZE;
+            buttonLetter.setAllCrop(1);
+            buttonLetter.action = (mouseX, mouseY) => { };
+            buttonLetter.baseFrame = i * 3;
+
+            this.buttonLetters.push(buttonLetter);
+        }
+
+        // Events. 
+
+        this.canvas.addEventListener("mouseup", e => { this.mouseState = DisassemblyCanvas.MOUSE_CLICKED; });
+        this.canvas.addEventListener("mousedown", e => { this.mouseState = DisassemblyCanvas.MOUSE_PRESSED; });
         this.canvas.addEventListener("mousemove", e => {
+            // Get mouse position.
             const rect = this.canvas.getBoundingClientRect();
             this.mouseX = MathG.floor((e.clientX - rect.left) / this.currentCanvasScale);
             this.mouseY = MathG.floor((e.clientY - rect.top) / this.currentCanvasScale);
-        })
+        });
+        this.canvas.addEventListener("mouseleave", () => {
+            this.mouseX = 99999;
+            this.mouseY = 99999;
+        });
 
         this.restartGame();
     }
@@ -175,9 +238,13 @@ export class DisassemblyCanvas extends HTMLElement {
     update(delta) {
         this.resizeAndClearCanvas();
 
-        if (this.mouseReleased) {
-            this.mouseReleased = false;
-            this.click();
+        if (this.mouseState === DisassemblyCanvas.MOUSE_NOTHING)
+            this.onMouseNothing();
+        else if (this.mouseState === DisassemblyCanvas.MOUSE_PRESSED)
+            this.onMousePressed();
+        else if (this.mouseState === DisassemblyCanvas.MOUSE_CLICKED) {
+            this.mouseState = DisassemblyCanvas.MOUSE_NOTHING;
+            this.onMouseClicked();
         }
 
         this.backgroundSky.render(this.context);
@@ -200,32 +267,21 @@ export class DisassemblyCanvas extends HTMLElement {
         this.barn.updateAndRender(delta, this.context);
         this.house.updateAndRender(delta, this.context);
 
-        this.buttonRetry.updateAndRender(delta, this.context, this.mouseX, this.mouseY);
+        this.wordDisplay.updateAndRender(delta, this.context);
+        this.buttonRetry.updateAndRender(delta, this.context);
+        this.buttonClue.updateAndRender(delta, this.context);
+        this.buttonNumbers.updateAndRender(delta, this.context);
+        this.buttonSymbols.updateAndRender(delta, this.context);
+        for (let i = 0; i < this.buttonLetters.length; i++)
+            this.buttonLetters[i].updateAndRender(delta, this.context);
     }
 
-    click() {
-
-        if (this.buttonRetry.onReleased(this.mouseX, this.mouseY))
-            return;
-
-        if (this.livingFeatures.length === 0)
-            return;
-
-        // Get random feature from the array.
-        const featureIndex = MathG.floor(MathG.nextFloat() * this.livingFeatures.length);
-        const item = this.livingFeatures.splice(featureIndex, 1)[0];
-        if (item === this.chickens) {
-            // Chickens array.
-            this.wolf.angry = true;
+    renderArray(renderItemArray, delta) {
+        renderItemArray.sort((a, b) => a.posY - b.posY);
+        for (let i = 0; i < renderItemArray.length; i++) {
+            const item = renderItemArray[i];
+            item.updateAndRender(delta, this.context);
         }
-        else if (Array.isArray(item)) {
-            // Sheep or Cows.
-            for (let i = 0; i < item.length; i++)
-                item[i].kill();
-        }
-        else
-            // Everything else.
-            item.kill();
     }
 
     updateWolf(delta) {
@@ -252,12 +308,71 @@ export class DisassemblyCanvas extends HTMLElement {
         }
     }
 
-    renderArray(renderItemArray, delta) {
-        renderItemArray.sort((a, b) => a.posY - b.posY);
-        for (let i = 0; i < renderItemArray.length; i++) {
-            const item = renderItemArray[i];
-            item.updateAndRender(delta, this.context);
-        }
+    // ================================= MOUSE STATE ==================================
+
+    onMouseNothing() {
+        this.buttonRetry.onNothing(this.mouseX, this.mouseY);
+        this.buttonClue.onNothing(this.mouseX, this.mouseY);
+        this.buttonNumbers.onNothing(this.mouseX, this.mouseY);
+        this.buttonSymbols.onNothing(this.mouseX, this.mouseY);
+        for (let i = 0; i < this.buttonLetters.length; i++)
+            this.buttonLetters[i].onNothing(this.mouseX, this.mouseY);
+
+
     }
 
+    onMousePressed() {
+        let buttonFound = false;
+
+        const press = (button) => {
+            if (buttonFound) {
+                button.onNothing(this.mouseX, this.mouseY);
+                return;
+            }
+
+            if (button.onPressed(this.mouseX, this.mouseY))
+                buttonFound = true;
+        };
+
+        press(this.buttonRetry);
+        press(this.buttonClue);
+        press(this.buttonNumbers);
+        press(this.buttonSymbols);
+        for (let i = 0; i < this.buttonLetters.length; i++)
+            press(this.buttonLetters[i]);
+    }
+
+    onMouseClicked() {
+        if (this.buttonRetry.onClicked(this.mouseX, this.mouseY))
+            return;
+        if (this.buttonClue.onClicked(this.mouseX, this.mouseY))
+            return;
+        if (this.buttonNumbers.onClicked(this.mouseX, this.mouseY))
+            return;
+        if (this.buttonSymbols.onClicked(this.mouseX, this.mouseY))
+            return;
+        for (let i = 0; i < this.buttonLetters.length; i++)
+            if (this.buttonLetters[i].onClicked(this.mouseX, this.mouseY))
+                return;
+
+        // Delete objects script.
+        if (this.livingFeatures.length === 0)
+            return;
+
+        // Get random feature from the array.
+        const featureIndex = MathG.floor(MathG.nextFloat() * this.livingFeatures.length);
+        const item = this.livingFeatures.splice(featureIndex, 1)[0];
+        if (item === this.chickens) {
+            // Chickens array.
+            this.wolf.angry = true;
+        }
+        else if (Array.isArray(item)) {
+            // Sheep or Cows.
+            for (let i = 0; i < item.length; i++)
+                item[i].kill();
+        }
+        else
+            // Everything else.
+            item.kill();
+    }
 }
