@@ -38,6 +38,7 @@ form {
     }
 
     label {
+      padding-top: 0.5rem;
       accent-color: g.$clr-accent;
       @include mixins.flex(row, flex-start, flex-start, 0);
 

@@ -1,6 +1,6 @@
 export class Const {
 
-    static VERSION = "0.0.1.0";
+    static VERSION = "0.0.1.1";
     static CURRENT_PAGE_KEY = "CURRENT_PAGE";
     static LAST_PAGE_VISIT = "LAST_PAGE_VISIT";
     static TITLE_CU_CARTA = "Cú Cárta";
@@ -14,7 +14,7 @@ export class Const {
     static BLENDER = "Blender";
     static CSHARP = "C#";
     static CSS = "CSS";
-    static EXCEL = "Excel";
+    static EXCEL = "Excel (VBA)";
     static GDSCRIPT = "GDScript";
     static GIT = "Git";
     static GITHUB = "GitHub";

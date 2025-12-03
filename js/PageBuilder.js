@@ -69,8 +69,8 @@ export class PageBuilder {
 
 		// Show some things depending on situation.
 		let lastPageVisitTime = Number(localStorage.getItem(Const.LAST_PAGE_VISIT));
-		const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-		let oneWeekAgo = Date.now() - ONE_DAY_IN_MS;
+		const HALF_AN_HOUR = 30 * 60 * 1000;
+		let oneWeekAgo = Date.now() - HALF_AN_HOUR;
 
 		if (lastPageVisitTime < oneWeekAgo) {
 			// This user hasn't visited for a while.
@@ -123,8 +123,7 @@ export class PageBuilder {
 
 		// Create nav bar buttons and section titles.
 		this.navbarElements = [
-			ElementG.createSpecific("button", "nav-button", "About"),
-			ElementG.createSpecific("button", "nav-button", "Skills"),
+			ElementG.createSpecific("button", "nav-button", "Home"),
 			ElementG.createSpecific("button", "nav-button", "Contact"),
 			this.createNavbarDivider("Projects"),
 			ElementG.createSpecific("button", "nav-button", "Mineshaft"),
@@ -138,8 +137,7 @@ export class PageBuilder {
 
 		// Create pages: Have to be in same order as nav buttons. 
 		this.pageElements = [
-			this.generateAboutPage(),
-			this.generateSkillsPage(),
+			this.generateHomePage(),
 			this.generateContactPage(),
 			this.generateMineshaftPage(),
 			this.generateCuCartaPage(),
@@ -260,9 +258,10 @@ export class PageBuilder {
 
 	// =========================== PAGE GENERATOR FUNCTIONS ===========================
 
-	generateAboutPage() {
+	generateHomePage() {
 		const section = document.createElement("section");
-		const title = ElementG.createSpecific("h2", "", "About Me");
+		const title = ElementG.createSpecific("h2", "", "Home");
+		const about = ElementG.createSpecific("h3", "", "About");
 		const textA = ElementG.createParagraph([
 			"A ",
 			"detail-oriented Software Developer",
@@ -282,16 +281,18 @@ export class PageBuilder {
 			"attention to detail."
 		]);
 
-		section.append(title, textA, textB);
+		const projectBox = new ProjectBox();
+		projectBox.addAllSkillsPins();
+		const skills = ElementG.createSpecific("h3", "", "Skills");
+		section.append(projectBox);
+
+		section.append(title, about, textA, textB, skills, projectBox);
 		return section;
 	}
 
 	generateSkillsPage() {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Skills"));
-		const projectBox = new ProjectBox();
-		projectBox.addAllPins();
-		section.append(projectBox);
 		return section;
 	}
 

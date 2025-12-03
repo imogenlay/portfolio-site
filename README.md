@@ -6,10 +6,18 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 
 ## Todo:
 
+### Morse Code Translator
+
+- [ ]
+
 ### Portfolio
 
 - [ ] Move version number to the corner and make a toggle so it can be disabled in builds.
 - [ ] Mobile-specific menu styling
+- [ ] Make Portfolio site actually have information
+- [ ] Add information to Mineshaft and Cu Carta pages.
+- [ ] Fix contact form to actually send data.
+- [x] Fix formatting/centering on contact labels.
 
 ### Hangman
 

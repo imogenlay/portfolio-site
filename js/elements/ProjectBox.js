@@ -32,6 +32,15 @@ export class ProjectBox extends HTMLElement {
 		}
 	}
 
+	addAllSkillsPins() {
+		const skillsPins = ProjectBox.pinsArray.filter((p) =>
+			p.name !== Const.IMOGEN_LAY &&
+			p.name !== Const.MINECRAFT &&
+			p.name !== Const.PHP);
+		for (let i = 0; i < skillsPins.length; i++)
+			this.addPins(skillsPins[i].name);
+	}
+
 	createPin(name) {
 		const pinData = this.getPinData(name);
 		const pin = document.createElement("div");
