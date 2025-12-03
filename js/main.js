@@ -50,3 +50,9 @@ function update(delta) {
 pageBuilder.initialise();
 
 
+console.log((0.0005).toString());
+console.log((0.00005).toString());
+console.log((0.000005).toString());
+console.log((0.0000005).toString());
+console.log(parseInt(0.000005));
+console.log(parseInt(0.0000005));

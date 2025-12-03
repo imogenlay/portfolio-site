@@ -264,13 +264,11 @@ export class PageBuilder {
 		const section = document.createElement("section");
 		const title = ElementG.createSpecific("h2", "", "About Me");
 		const textA = ElementG.createParagraph([
-			"A detail-oriented ",
-			"Software Developer",
+			"A ",
+			"detail-oriented Software Developer",
 			" with 7 years of experience designing and building innovative solutions. Prioritises ",
-			"readable, maintainable",
-			" and ",
-			"performant",
-			" code to maximise usability and manoeuvrability for teams during development."
+			"readable, maintainable and performant code",
+			" to maximise usability and manoeuvrability for teams during development."
 		]);
 
 		const textB = ElementG.createParagraph([
@@ -280,7 +278,8 @@ export class PageBuilder {
 			"independent contributor",
 			" and ",
 			"team player,",
-			" bringing a proven track record of elevating project outcomes through meticulous attention to detail."
+			" bringing a proven track record of elevating project outcomes through meticulous ",
+			"attention to detail."
 		]);
 
 		section.append(title, textA, textB);
@@ -404,9 +403,6 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Portfolio Site"));
-		section.append(ElementG.createSpecific("h3", "", "Heading 3"));
-		section.append(ElementG.createSpecific("h4", "", "Heading 4"));
-		section.append(ElementG.createSpecific("h5", "", "Heading 5"));
 
 		const otherBox = new ProjectBox();
 		otherBox.addPins(
@@ -417,9 +413,7 @@ export class PageBuilder {
 			Const.INKSCAPE,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
-			Const.GITHUB,
-			"Unnamed",
-			null,
+			Const.GITHUB
 		);
 
 		section.append(otherBox);

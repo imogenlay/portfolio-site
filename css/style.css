@@ -119,7 +119,7 @@ body {
 }
 
 header {
-  width: clamp(12rem, 100% - 12vw, 20rem);
+  width: clamp(12rem, 100% - 10vw, 20rem);
 }
 @media screen and (min-width: 768px) {
   header {
@@ -139,7 +139,7 @@ header {
 }
 
 main {
-  width: clamp(12rem, 100% - 12vw, 20rem);
+  width: clamp(12rem, 100% - 10vw, 20rem);
 }
 @media screen and (min-width: 768px) {
   main {
@@ -454,13 +454,15 @@ disassembly-canvas {
   align-items: center;
   gap: 0;
 }
+disassembly-canvas canvas,
+disassembly-canvas div,
+disassembly-canvas img {
+  margin-bottom: 1rem;
+}
 disassembly-canvas canvas {
   image-rendering: pixelated;
   align-self: center;
-  margin-bottom: 1rem;
-}
-disassembly-canvas div {
-  margin-bottom: 1rem;
+  overflow: visible;
 }
 disassembly-canvas div span {
   font-weight: 700;
@@ -473,6 +475,11 @@ disassembly-canvas div a {
 }
 disassembly-canvas div a:hover {
   color: #edfffe;
+}
+disassembly-canvas img {
+  image-rendering: pixelated;
+  width: 100%;
+  height: 10px;
 }
 
 img.flipped {

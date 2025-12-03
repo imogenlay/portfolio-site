@@ -6,6 +6,11 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 
 ## Todo:
 
+### Portfolio
+
+- [ ] Move version number to the corner and make a toggle so it can be disabled in builds.
+- [ ] Mobile-specific menu styling
+
 ### Hangman
 
 - [x] Add crop-edge to button.
@@ -27,7 +32,3 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 - [ ] Music.
 - [ ] SFX.
 - [ ] Add some little people that get more and more panicked based on how badly the player is doing.
-
-### Version Number
-
-Move version number to the corner and make a toggle so it can be disabled in builds.

@@ -5,16 +5,19 @@
 disassembly-canvas {
   @include mixins.flex(column, flex-start, center, 0);
 
-  canvas {
-    image-rendering: pixelated;
-    align-self: center;
+  canvas,
+  div,
+  img {
     margin-bottom: 1rem;
   }
 
-  div {
-    //  min-width: 80%;
-    margin-bottom: 1rem;
+  canvas {
+    image-rendering: pixelated;
+    align-self: center;
+    overflow: visible;
+  }
 
+  div {
     span {
       font-weight: 700;
       color: g.$clr-white;
@@ -29,5 +32,11 @@ disassembly-canvas {
         color: g.$clr-white;
       }
     }
+  }
+
+  img {
+    image-rendering: pixelated;
+    width: 100%;
+    height: 10px;
   }
 }

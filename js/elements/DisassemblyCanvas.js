@@ -28,7 +28,7 @@ export class DisassemblyCanvas extends HTMLElement {
     guessedCharactersSet = new Set();
     gameArray = [];
 
-    hyperLinkParent;
+    hyperlinkParent;
     hyperlink;
 
     // Mouse
@@ -89,12 +89,13 @@ export class DisassemblyCanvas extends HTMLElement {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
 
-        this.hyperLinkParent = document.createElement("div");
-        this.hyperLinkParent.style.display = "none";
+        this.hyperlinkParent = document.createElement("div");
+        this.hyperlinkParent.style.display = "none";
         this.hyperlink = document.createElement("a");
+        this.hyperlink.target = "_blank";
         const linkTitle = document.createElement("span");
         linkTitle.textContent = "Link:"
-        this.hyperLinkParent.append(linkTitle, this.hyperlink);
+        this.hyperlinkParent.append(linkTitle, this.hyperlink);
 
         const gameDescription = document.createElement("p");
         gameDescription.textContent = "Welcome to Disassembly! In this game you must correctly guess the name of programming " +
@@ -103,7 +104,11 @@ export class DisassemblyCanvas extends HTMLElement {
         const gameRules = document.createElement("p");
         gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong " +
             "guesses before you lose! The clue button will give you a random correct letter for free.";
-        this.append(this.canvas, this.hyperLinkParent, gameDescription, gameRules);
+
+
+        const paletteDivider = document.createElement("img");
+        paletteDivider.src = "./public/disassembly/palette.png";
+        this.append(this.canvas, this.hyperlinkParent, paletteDivider, gameDescription, gameRules);
 
         const PATH = "./public/disassembly/";
 
@@ -171,7 +176,6 @@ export class DisassemblyCanvas extends HTMLElement {
         this.wordDisplay.posY = DISPLAY_BASE_Y;
 
         const MAX_DISPLAY_LETTERS = 26;
-        const DISPLAY_LETTER_PX_SIZE = 5;
         for (let i = 0; i < MAX_DISPLAY_LETTERS; i++) {
             const displayLetter = new RenderItem(PATH + "text.png", 13, 6);
 
@@ -579,9 +583,8 @@ export class DisassemblyCanvas extends HTMLElement {
         this.youWin.visible = true;
         this.youWin.frameIndex = isWinner ? 0 : 1;
 
-        this.hyperLinkParent.style.display = "block";
+        this.hyperlinkParent.style.display = "block";
         this.hyperlink.href = "https://" + this.wordLink;
-        this.hyperlink.textContent = this.wordLink;
-        console.log(this.wordLink);
+        this.hyperlink.textContent = this.wordAnswer;
     }
 }
