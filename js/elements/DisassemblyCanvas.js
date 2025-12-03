@@ -61,7 +61,7 @@ export class DisassemblyCanvas extends HTMLElement {
     ];
     letterWide2 = "i!'.:";
     letterWide3 = "jl";
-    letterWide6 = "MmWw#@π_";
+    letterWide6 = "MmWw#@π";
     symbolsGuess = "0123456789!#'*+-./:@π";
 
     // Buttons
@@ -165,7 +165,7 @@ export class DisassemblyCanvas extends HTMLElement {
         // Word display.
 
         const DISPLAY_BASE_X = 5;
-        const DISPLAY_BASE_Y = 103;
+        const DISPLAY_BASE_Y = 102;
         this.wordDisplay = new RenderItem(PATH + "word_display.png");
         this.wordDisplay.posX = DISPLAY_BASE_X;
         this.wordDisplay.posY = DISPLAY_BASE_Y;
@@ -175,7 +175,7 @@ export class DisassemblyCanvas extends HTMLElement {
         for (let i = 0; i < MAX_DISPLAY_LETTERS; i++) {
             const displayLetter = new RenderItem(PATH + "text.png", 13, 6);
 
-            displayLetter.posY = DISPLAY_BASE_Y + 1;
+            displayLetter.posY = DISPLAY_BASE_Y + 2;
 
             this.letterDisplays.push(displayLetter);
         }

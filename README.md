@@ -19,7 +19,7 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 - [x] Show link.
 - [x] Center game canvas.
 
-- [ ] Consider making text bigger.
+- [x] Consider making text bigger.
 - [ ] Add smoke particles to chimney.
 - [ ] Add destruction particles to collapsing house.
 - [ ] Chickens run from wolf.
