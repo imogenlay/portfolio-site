@@ -14,9 +14,7 @@ export class DisassemblyCanvas extends HTMLElement {
 
     // ==================================== FIELDS ====================================
 
-    canvas;
-    context;
-    currentCanvasScale;
+    canvas; context; currentCanvasScale;
 
     gameOptions;
     gameOptionsHaveLoaded = false;
@@ -28,8 +26,7 @@ export class DisassemblyCanvas extends HTMLElement {
     guessedCharactersSet = new Set();
     gameArray = [];
 
-    hyperlinkParent;
-    hyperlink;
+    hyperlinkParent; hyperlink;
 
     // Mouse
     mouseX = 0; mouseY = 0;
@@ -37,19 +34,13 @@ export class DisassemblyCanvas extends HTMLElement {
 
     // Game objects
     backgroundSky; backgroundLand; wolf;
-    clouds = [];
-    cows = [];
-    sheep = [];
-    chickens = [];
-    deadChickens = [];
+    clouds = []; cows = []; sheep = []; chickens = []; deadChickens = [];
 
     forest; lake; ruins; sunflowers; well; wagon;
     livingFeatures = [];
 
     // Display
-    wordDisplay;
-    youWin;
-    letterDisplays = [];
+    wordDisplay; letterDisplays = []; youWin;
     displayLetterLookup = [
         // Check text.png for order.
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
@@ -59,16 +50,11 @@ export class DisassemblyCanvas extends HTMLElement {
         "!", "#", "'", "*", "+", "-", ".", "/", ":", "@", "π", " ", " ",
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "_", " ", " "
     ];
-    letterWide2 = "i!'.:";
-    letterWide3 = "jl";
-    letterWide6 = "MmWw#@π";
+    letterWide2 = "i!'.:"; letterWide3 = "jl"; letterWide6 = "MmWw#@π";
     symbolsGuess = "0123456789!#'*+-./:@π";
 
     // Buttons
-    buttonRetry;
-    buttonClue;
-    buttonSymbols;
-    buttonLetters = [];
+    buttonRetry; buttonClue; buttonSymbols; buttonLetters = [];
 
     // ================================== CONSTANTS ===================================
 
@@ -86,6 +72,17 @@ export class DisassemblyCanvas extends HTMLElement {
 
     constructor() {
         super();
+        const PATH = "./public/disassembly/";
+        this.createCanvasAndGameDescription();
+        this.fetchGameOptions(PATH);
+        this.createGameObjects(PATH);
+        this.createGameUI(PATH);
+        this.assignEvents();
+
+        this.restartRequested = true;
+    }
+
+    createCanvasAndGameDescription() {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
 
@@ -109,16 +106,18 @@ export class DisassemblyCanvas extends HTMLElement {
         const paletteDivider = document.createElement("img");
         paletteDivider.src = "./public/disassembly/palette.png";
         this.append(this.canvas, this.hyperlinkParent, paletteDivider, gameDescription, gameRules);
+    }
 
-        const PATH = "./public/disassembly/";
-
+    fetchGameOptions(PATH) {
         fetch(PATH + "game_options.txt")
             .then(r => r.text())
             .then(text => {
                 this.gameOptions = text.split(/\r?\n/).filter(Boolean);
                 this.gameOptionsHaveLoaded = true;
             });
+    }
 
+    createGameObjects(PATH) {
         this.backgroundSky = new RenderItem(PATH + "background_0_sky.png");
         this.backgroundLand = new RenderItem(PATH + "background_1_land.png");
         for (let i = 0; i < Cloud.COUNT; i++)
@@ -166,9 +165,11 @@ export class DisassemblyCanvas extends HTMLElement {
         this.house = new MapFeature(PATH + "house.png", 8);
         this.house.posX = 29;
         this.house.posY = 58;
+    }
+
+    createGameUI(PATH) {
 
         // Word display.
-
         const DISPLAY_BASE_X = 5;
         const DISPLAY_BASE_Y = 102;
         this.wordDisplay = new RenderItem(PATH + "word_display.png");
@@ -230,8 +231,9 @@ export class DisassemblyCanvas extends HTMLElement {
             this.buttonLetters.push(buttonLetter);
         }
 
-        // Events. 
+    }
 
+    assignEvents() {
         this.canvas.addEventListener("mouseup", e => { this.mouseState = DisassemblyCanvas.MOUSE_CLICKED; });
         this.canvas.addEventListener("mousedown", e => { this.mouseState = DisassemblyCanvas.MOUSE_PRESSED; });
         this.canvas.addEventListener("mousemove", e => {
@@ -244,76 +246,6 @@ export class DisassemblyCanvas extends HTMLElement {
             this.mouseX = 99999;
             this.mouseY = 99999;
         });
-
-        this.restartRequested = true;
-    }
-
-    restartGame() {
-        let i = 0;
-        console.log("Restart Disassembly");
-
-        this.playerGameEnded = false;
-        this.youWin.visible = false;
-
-        // Set word.
-        const selectedGame = (this.gameOptions[MathG.floor(MathG.nextFloat() * this.gameOptions.length)]).split("|");
-        this.wordAnswer = selectedGame[0].trim();;
-        this.wordLink = selectedGame[1].trim();
-        this.gameArray = new Array(this.wordAnswer.length).fill("_");
-        this.guessedCharactersSet.clear();
-
-        console.log(this.wordAnswer + " --- " + this.wordLink);
-
-        // The player starts with the space character already guessed.
-        this.makeGuess(" ", true);
-
-        // Restart features.
-        this.livingFeatures = [];
-        this.livingFeatures.push(this.forest, this.forest, this.forest);
-        this.livingFeatures.push(this.cows, this.sheep, this.chickens);
-        this.livingFeatures.push(this.lake, this.ruins, this.sunflowers, this.well, this.wagon, this.barn, this.house);
-
-        this.forest.restart();
-        this.lake.restart();
-        this.ruins.restart();
-        this.sunflowers.restart();
-        this.well.restart();
-        this.wagon.restart();
-        this.barn.restart();
-        this.house.restart();
-
-        // Restart chickens.
-        this.wolf.angry = false;
-
-        for (i = 0; i < this.deadChickens.length; i++)
-            this.deadChickens[i].spawnAtHouse();
-
-        this.chickens.push(...this.deadChickens);
-        this.deadChickens = [];
-        for (i = 0; i < this.chickens.length; i++)
-            this.chickens[i].restart();
-
-        // Restart other animals.
-        for (i = 0; i < this.cows.length; i++)
-            this.cows[i].restart();
-        for (i = 0; i < this.sheep.length; i++)
-            this.sheep[i].restart();
-    }
-
-    // ==================================== RESIZE ====================================
-
-    resizeAndClearCanvas() {
-        let maxSize = this.offsetWidth;
-        this.currentCanvasScale = MathG.max(2, MathG.floor(maxSize / DisassemblyCanvas.CANVAS_SIZE));
-        const newSize = this.currentCanvasScale * DisassemblyCanvas.CANVAS_SIZE;
-
-        this.canvas.width = DisassemblyCanvas.CANVAS_SIZE;
-        this.canvas.height = DisassemblyCanvas.CANVAS_SIZE;
-        this.canvas.style.width = newSize + "px";
-        this.canvas.style.height = newSize + "px";
-
-        this.context.fillStyle = "#2e93e6";
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     // ==================================== UPDATE ====================================
@@ -370,6 +302,20 @@ export class DisassemblyCanvas extends HTMLElement {
             for (let i = 0; i < this.buttonLetters.length; i++)
                 this.buttonLetters[i].updateAndRender(delta, this.context);
         }
+    }
+
+    resizeAndClearCanvas() {
+        let maxSize = this.offsetWidth;
+        this.currentCanvasScale = MathG.max(2, MathG.floor(maxSize / DisassemblyCanvas.CANVAS_SIZE));
+        const newSize = this.currentCanvasScale * DisassemblyCanvas.CANVAS_SIZE;
+
+        this.canvas.width = DisassemblyCanvas.CANVAS_SIZE;
+        this.canvas.height = DisassemblyCanvas.CANVAS_SIZE;
+        this.canvas.style.width = newSize + "px";
+        this.canvas.style.height = newSize + "px";
+
+        this.context.fillStyle = "#2e93e6";
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     renderArray(renderItemArray, delta) {
@@ -505,6 +451,58 @@ export class DisassemblyCanvas extends HTMLElement {
     }
 
     // ================================== GAME LOGIC ==================================
+
+    restartGame() {
+        let i = 0;
+        console.log("Restart Disassembly");
+
+        this.playerGameEnded = false;
+        this.youWin.visible = false;
+
+        // Set word.
+        const selectedGame = (this.gameOptions[MathG.floor(MathG.nextFloat() * this.gameOptions.length)]).split("|");
+        this.wordAnswer = selectedGame[0].trim();;
+        this.wordLink = selectedGame[1].trim();
+        this.gameArray = new Array(this.wordAnswer.length).fill("_");
+        this.guessedCharactersSet.clear();
+
+        console.log(this.wordAnswer + " --- " + this.wordLink);
+
+        // The player starts with the space character already guessed.
+        this.makeGuess(" ", true);
+
+        // Restart features.
+        this.livingFeatures = [];
+        this.livingFeatures.push(this.forest, this.forest, this.forest);
+        this.livingFeatures.push(this.cows, this.sheep, this.chickens);
+        this.livingFeatures.push(this.lake, this.ruins, this.sunflowers, this.well, this.wagon, this.barn, this.house);
+
+        this.forest.restart();
+        this.lake.restart();
+        this.ruins.restart();
+        this.sunflowers.restart();
+        this.well.restart();
+        this.wagon.restart();
+        this.barn.restart();
+        this.house.restart();
+
+        // Restart chickens.
+        this.wolf.angry = false;
+
+        for (i = 0; i < this.deadChickens.length; i++)
+            this.deadChickens[i].spawnAtHouse();
+
+        this.chickens.push(...this.deadChickens);
+        this.deadChickens = [];
+        for (i = 0; i < this.chickens.length; i++)
+            this.chickens[i].restart();
+
+        // Restart other animals.
+        for (i = 0; i < this.cows.length; i++)
+            this.cows[i].restart();
+        for (i = 0; i < this.sheep.length; i++)
+            this.sheep[i].restart();
+    }
 
     getClue() {
         let clue = [];
