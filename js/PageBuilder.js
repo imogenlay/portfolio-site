@@ -1,9 +1,8 @@
-import { ProjectBox } from "./elements/ProjectBox.js";
 import { Const } from "./constants/Const.js";
+import { ProjectBox } from "./elements/ProjectBox.js";
+import { DisassemblyCanvas } from "./elements/DisassemblyCanvas.js";
 import * as ElementG from "./lib/ElementG.js";
 import * as MathG from "./lib/MathG.js";
-import * as CheckG from "./lib/CheckG.js";
-import { DisassemblyCanvas } from "./elements/DisassemblyCanvas.js";
 
 export class PageBuilder {
 
@@ -19,7 +18,6 @@ export class PageBuilder {
 
 	isFloatingTitleVisible = true;
 
-	// disassemblyCanvas
 	disassemblyCanvas;
 
 	// ================================= CONSTRUCTOR ==================================
@@ -84,7 +82,6 @@ export class PageBuilder {
 			this.isFloatingTitleVisible = false;
 		}
 
-
 		// Add floating title click.
 		this.floatingTitleButton.onclick = () => {
 			this.isFloatingTitleVisible = false;
@@ -115,12 +112,6 @@ export class PageBuilder {
 
 	createNavbarElementsAndPageElementsArrays() {
 
-		let version = "Ver " + Const.VERSION;
-		if (CheckG.isSafari())
-			version += " (Safari)";
-		else
-			version += " (Not Safari)";
-
 		// Create nav bar buttons and section titles.
 		this.navbarElements = [
 			ElementG.createSpecific("button", "nav-button", "Home"),
@@ -132,7 +123,7 @@ export class PageBuilder {
 			ElementG.createSpecific("button", "nav-button", "Disassembly"),
 			this.createNavbarDivider("Other"),
 			ElementG.createSpecific("button", "nav-button", "Subheading Generator"),
-			this.createNavbarDivider(version),
+			this.createNavbarDivider("Ver " + Const.VERSION),
 		];
 
 		// Create pages: Have to be in same order as nav buttons. 
@@ -262,15 +253,15 @@ export class PageBuilder {
 		const section = document.createElement("section");
 		const title = ElementG.createSpecific("h2", "", "Home");
 		const about = ElementG.createSpecific("h3", "", "About");
-		const textA = ElementG.createParagraph([
+		const textA = ElementG.createParagraph(
 			"A ",
 			"detail-oriented Software Developer",
 			" with 7 years of experience designing and building innovative solutions. Prioritises ",
 			"readable, maintainable and performant code",
 			" to maximise usability and manoeuvrability for teams during development."
-		]);
+		);
 
-		const textB = ElementG.createParagraph([
+		const textB = ElementG.createParagraph(
 			"Demonstrated adaptability across ",
 			"multiple frameworks and languages,",
 			" consistently delivering robust applications. Thrives both as an ",
@@ -279,7 +270,7 @@ export class PageBuilder {
 			"team player,",
 			" bringing a proven track record of elevating project outcomes through meticulous ",
 			"attention to detail."
-		]);
+		);
 
 		const projectBox = new ProjectBox();
 		projectBox.addAllSkillsPins();
@@ -404,21 +395,22 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Portfolio Site"));
+		const paragraph = ElementG.createParagraph("This is my portfolio website.");
 
 		const otherBox = new ProjectBox();
 		otherBox.addPins(
 			Const.HTML,
 			Const.CSS,
 			Const.SASS,
-			Const.JAVASCRIPT,
+			Const.ASEPRITE,
 			Const.INKSCAPE,
+			Const.JAVASCRIPT,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB
 		);
 
-		section.append(otherBox);
-		section.append(ElementG.createSpecific("p", "", "You're looking at it"));
+		section.append(paragraph, otherBox);
 		return section;
 	}
 

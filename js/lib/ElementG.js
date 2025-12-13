@@ -43,7 +43,7 @@ export function createSpecific(type, className, textContent) {
 	return newElement;
 }
 
-export function createParagraph(textComponents) {
+export function createParagraph(...textComponents) {
 	if (!CheckG.isArrayWithItems(textComponents)) {
 		CheckG.error("When creating paragraph, text components must be passed via an array.");
 		return createSpecific("p", "", "failed paragraph");
