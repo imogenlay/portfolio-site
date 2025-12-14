@@ -6,6 +6,10 @@ $clr-dark-grey: #27282b;
 
 $clr-accent: #009aff;
 
+$clr-button-a: #ffffff44;
+$clr-button-b: #ffffff66;
+$clr-button-c: #ffffff88;
+
 * {
   /* UI Debug Border
   box-shadow: inset 0px 0px 0px 1px red;
@@ -39,9 +43,9 @@ $clr-accent: #009aff;
 button {
   cursor: pointer;
   border: none;
-  background-color: #ffffff44;
+  background-color: $clr-button-a;
   &:hover {
-    background-color: #ffffff66;
+    background-color: $clr-button-b;
   }
 }
 

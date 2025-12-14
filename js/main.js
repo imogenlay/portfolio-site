@@ -1,9 +1,11 @@
 import { PageBuilder } from './PageBuilder.js';
 import { DisassemblyCanvas } from './elements/DisassemblyCanvas.js';
+import { PopoutElement } from './elements/PopoutElement.js';
 import { ProjectBox } from './elements/ProjectBox.js';
 
 // ============================ DEFINE CUSTOM ELEMENTS ============================
 customElements.define('disassembly-canvas', DisassemblyCanvas);
+customElements.define('popout-element', PopoutElement);
 customElements.define('project-box', ProjectBox);
 
 // ================================= GET ELEMENTS =================================

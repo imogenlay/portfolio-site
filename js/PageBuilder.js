@@ -3,6 +3,7 @@ import { ProjectBox } from "./elements/ProjectBox.js";
 import { DisassemblyCanvas } from "./elements/DisassemblyCanvas.js";
 import * as ElementG from "./lib/ElementG.js";
 import * as MathG from "./lib/MathG.js";
+import { PopoutElement } from "./elements/PopoutElement.js";
 
 export class PageBuilder {
 
@@ -424,10 +425,23 @@ export class PageBuilder {
 			Const.HTML,
 			Const.JAVASCRIPT,
 			Const.ASEPRITE,
-			Const.VISUAL_STUDIO_CODE,
+			Const.VISUAL_STUDIO_CODE
 		);
 
-		section.append(this.disassemblyCanvas, otherBox);
+		const paletteDivider = ElementG.createImg("./public/disassembly/palette.png", "palette");
+		paletteDivider.classList.add("disassembly-divider");
+		const gameDescription = document.createElement("p");
+		gameDescription.textContent = "Welcome to Disassembly! In this game you must correctly guess the name of programming " +
+			"languages or else your farm will suffer ecological collapse!";
+
+		const gameRules = document.createElement("p");
+		gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong " +
+			"guesses before you lose! The clue button will give you a random correct letter for free.";
+
+
+		const newButton = new PopoutElement(this.disassemblyCanvas);
+
+		section.append(newButton, paletteDivider, gameDescription, gameRules, otherBox);
 
 		return section;
 	}

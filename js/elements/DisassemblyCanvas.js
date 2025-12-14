@@ -1,5 +1,6 @@
 
 import * as MathG from '../lib/MathG.js';
+import * as ElementG from '../lib/ElementG.js';
 import { RenderButton } from '../lib/RenderButton.js';
 import { RenderItem } from '../lib/RenderItem.js';
 import { Chicken } from './disassembly/Chicken.js';
@@ -26,7 +27,7 @@ export class DisassemblyCanvas extends HTMLElement {
     guessedCharactersSet = new Set();
     gameArray = [];
 
-    hyperlinkParent; hyperlink;
+    hyperlinkParent; linkTitle; hyperlink;
 
     // Mouse
     mouseX = 0; mouseY = 0;
@@ -87,25 +88,13 @@ export class DisassemblyCanvas extends HTMLElement {
         this.context = this.canvas.getContext("2d");
 
         this.hyperlinkParent = document.createElement("div");
-        this.hyperlinkParent.style.display = "none";
+        //this.hyperlinkParent.style.display = "none";
         this.hyperlink = document.createElement("a");
         this.hyperlink.target = "_blank";
-        const linkTitle = document.createElement("span");
-        linkTitle.textContent = "Link:"
-        this.hyperlinkParent.append(linkTitle, this.hyperlink);
+        this.linkTitle = document.createElement("span");
+        this.hyperlinkParent.append(this.linkTitle, this.hyperlink);
 
-        const gameDescription = document.createElement("p");
-        gameDescription.textContent = "Welcome to Disassembly! In this game you must correctly guess the name of programming " +
-            "languages or else your farm will suffer ecological collapse!";
-
-        const gameRules = document.createElement("p");
-        gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong " +
-            "guesses before you lose! The clue button will give you a random correct letter for free.";
-
-
-        const paletteDivider = document.createElement("img");
-        paletteDivider.src = "./public/disassembly/palette.png";
-        this.append(this.canvas, this.hyperlinkParent, paletteDivider, gameDescription, gameRules);
+        this.append(this.canvas, this.hyperlinkParent);
     }
 
     fetchGameOptions(PATH) {
@@ -306,7 +295,7 @@ export class DisassemblyCanvas extends HTMLElement {
 
     resizeAndClearCanvas() {
         let maxSize = this.offsetWidth;
-        this.currentCanvasScale = MathG.max(2, MathG.floor(maxSize / DisassemblyCanvas.CANVAS_SIZE));
+        this.currentCanvasScale = MathG.floor(MathG.clamp(maxSize / DisassemblyCanvas.CANVAS_SIZE, 1, 5));
         const newSize = this.currentCanvasScale * DisassemblyCanvas.CANVAS_SIZE;
 
         this.canvas.width = DisassemblyCanvas.CANVAS_SIZE;
@@ -453,8 +442,6 @@ export class DisassemblyCanvas extends HTMLElement {
     // ================================== GAME LOGIC ==================================
 
     restartGame() {
-        let i = 0;
-        console.log("Restart Disassembly");
 
         this.playerGameEnded = false;
         this.youWin.visible = false;
@@ -466,7 +453,7 @@ export class DisassemblyCanvas extends HTMLElement {
         this.gameArray = new Array(this.wordAnswer.length).fill("_");
         this.guessedCharactersSet.clear();
 
-        console.log(this.wordAnswer + " --- " + this.wordLink);
+        console.log("Restart Disassembly: " + this.wordAnswer.padEnd(26) + " -> " + this.wordLink);
 
         // The player starts with the space character already guessed.
         this.makeGuess(" ", true);
@@ -489,6 +476,7 @@ export class DisassemblyCanvas extends HTMLElement {
         // Restart chickens.
         this.wolf.angry = false;
 
+        let i = 0;
         for (i = 0; i < this.deadChickens.length; i++)
             this.deadChickens[i].spawnAtHouse();
 
@@ -581,7 +569,8 @@ export class DisassemblyCanvas extends HTMLElement {
         this.youWin.visible = true;
         this.youWin.frameIndex = isWinner ? 0 : 1;
 
-        this.hyperlinkParent.style.display = "block";
+        //this.hyperlinkParent.style.display = "block";
+        this.linkTitle.textContent = "Link:"
         this.hyperlink.href = "https://" + this.wordLink;
         this.hyperlink.textContent = this.wordAnswer;
     }
