@@ -473,31 +473,45 @@ img.disassembly-divider {
   margin-bottom: 1rem;
 }
 
-popout-element .popout-placeholder,
-popout-element .popout-parent.popout-hover {
+popout-element {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+popout-element::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  transition: box-shadow calc(var(--default-animation-speed) * 200ms) ease-in-out;
+  box-shadow: inset 0 0 0px 0px #009aff;
+}
+popout-element.popout-hover::after {
+  box-shadow: inset 0 0 5px 2px #009aff;
+}
+popout-element .popout-placeholder {
   box-shadow: inset 0 0 5px 2px #009aff;
 }
 popout-element .popout-parent {
   position: relative;
-  transition: box-shadow calc(var(--default-animation-speed) * 200ms) ease-in-out;
-  box-shadow: inset 0 0 0px 0px #009aff;
+  overflow: hidden;
 }
 popout-element .popout-parent.popped {
   --popped-width: max(96vw, calc(100vw - 40px));
   --popped-height: max(96vh, calc(100vh - 40px));
   width: var(--popped-width);
-  min-height: var(--popped-height);
+  height: var(--popped-height);
   padding: 8px;
   position: fixed;
-  top: 10px;
   left: calc(var(--popped-width) * -0.5 + 50%);
+  top: calc(var(--popped-height) * -0.5 + 50%);
   box-shadow: 0 0 10px 0px #009aff, inset 0 0 5px 0px #009aff;
   background-color: rgba(8, 15, 96, 0.9333333333);
   z-index: 1;
 }
 popout-element .popout-parent button {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   background-color: rgba(255, 255, 255, 0.2666666667);
   overflow: hidden;
   position: absolute;
@@ -517,6 +531,17 @@ popout-element .popout-parent button:hover {
 }
 popout-element .popout-parent button:active {
   background-color: rgba(255, 255, 255, 0.5333333333);
+}
+popout-element .popout-parent.popped button {
+  top: 8px;
+  right: 8px;
+}
+
+.popout-contain {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 img.flipped {

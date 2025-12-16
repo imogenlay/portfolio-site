@@ -6,49 +6,34 @@ export class PopoutElement extends HTMLElement {
     popoutParent
     popoutChild;
     popoutButton;
-    svg;
     popoutPlaceholder;
+    svg; svgPathA; svgPathB;
 
-    constructor(_child, _widthSetting) {
+    static pathExpandA;
+    static pathExpandB;
+    static pathShrinkA;
+    static pathShrinkB;
+
+    constructor(_child) {
         super();
+        this.buildStaticPaths();
 
         this.popoutChild = _child;
+
+        // Create SVG elements.
         const NS = "http://www.w3.org/2000/svg";
         this.svg = document.createElementNS(NS, "svg");
         this.svg.setAttribute("viewBox", "0 0 100 100");
-        const path0 = document.createElementNS(NS, "path");
-        const path1 = document.createElementNS(NS, "path");
+        this.svgPathA = document.createElementNS(NS, "path");
+        this.svgPathB = document.createElementNS(NS, "path");
 
-        const L = 16.66667
-
-        const path0Array = [
-            "M", 50, 0,
-            "L", 100, 0,
-            "L", 100, 50,
-            "L", L * 5, L * 2,
-            "L", L * 4, L * 3,
-            "L", L * 3, L * 2,
-            "L", L * 4, L,
-            "Z"];
-
-        const path1Array = [
-            "M", 0, 50,
-            "L", 0, 100,
-            "L", 50, 100,
-            "L", L * 2, L * 5,
-            "L", L * 3, L * 4,
-            "L", L * 2, L * 3,
-            "L", L, L * 4,
-            "Z"];
-
-        path0.setAttribute("d", path0Array.join(" "));
-        path1.setAttribute("d", path1Array.join(" "));
+        this.setIconToExpand(true);
         this.popoutPlaceholder = document.createElement("div");
         this.popoutParent = document.createElement("div");
         this.popoutPlaceholder.style.display = "none";
 
         this.popoutButton = document.createElement("button");
-        this.svg.append(path0, path1);
+        this.svg.append(this.svgPathA, this.svgPathB);
         this.popoutButton.append(this.svg);
         this.popoutParent.append(this.popoutChild, this.popoutButton);
 
@@ -57,7 +42,7 @@ export class PopoutElement extends HTMLElement {
         this.popoutParent.classList.add("popout-parent");
         this.popoutPlaceholder.classList.add("popout-placeholder");
 
-        this.popoutButton.addEventListener("mouseenter", () => { this.popoutParent.classList.add("popout-hover"); });
+        this.popoutButton.addEventListener("mouseenter", () => { this.classList.add("popout-hover"); });
         this.popoutButton.addEventListener("mouseleave", () => { this.killQuery("popout-hover"); });
 
         this.popoutButton.addEventListener("click", () => {
@@ -68,10 +53,14 @@ export class PopoutElement extends HTMLElement {
                 this.popoutPlaceholder.style.width = this.popoutParent.offsetWidth + "px";
                 this.popoutPlaceholder.style.height = this.popoutParent.offsetHeight + "px";
                 this.popoutPlaceholder.style.display = "block";
+                document.documentElement.style.overflowY = "hidden";
+                this.setIconToExpand(false);
             }
             else {
 
+                document.documentElement.style.overflowY = "visible";
                 this.popoutPlaceholder.style.display = "none";
+                this.setIconToExpand(true);
             }
 
             this.killQuery("popped");
@@ -85,5 +74,66 @@ export class PopoutElement extends HTMLElement {
         const popouts = document.querySelectorAll("." + className);
         for (let i = 0; i < popouts.length; i++)
             popouts[i].classList.remove(className);
+    }
+
+    setIconToExpand(expand) {
+
+        let a, b;
+        if (expand) {
+            a = PopoutElement.pathExpandA;
+            b = PopoutElement.pathExpandB;
+        } else {
+            a = PopoutElement.pathShrinkA;
+            b = PopoutElement.pathShrinkB;
+        }
+
+        this.svgPathA.setAttribute("d", a.join(" "));
+        this.svgPathB.setAttribute("d", b.join(" "));
+    }
+
+    buildStaticPaths() {
+        if (!this.pathExpandA) {
+            const L = 16.66667
+
+            PopoutElement.pathExpandA = [
+                "M", L * 3, L * 0,
+                "L", L * 6, L * 0,
+                "L", L * 6, L * 3,
+                "L", L * 5, L * 2,
+                "L", L * 4, L * 3,
+                "L", L * 3, L * 2,
+                "L", L * 4, L * 1,
+                "Z"];
+
+            PopoutElement.pathExpandB = [
+                "M", L * 0, L * 3,
+                "L", L * 0, L * 6,
+                "L", L * 3, L * 6,
+                "L", L * 2, L * 5,
+                "L", L * 3, L * 4,
+                "L", L * 2, L * 3,
+                "L", L * 1, L * 4,
+                "Z"];
+
+            PopoutElement.pathShrinkA = [
+                "M", L * 3, L * 0,
+                "L", L * 4, L * 1,
+                "L", L * 5, L * 0,
+                "L", L * 6, L * 1,
+                "L", L * 5, L * 2,
+                "L", L * 6, L * 3,
+                "L", L * 3, L * 3,
+                "Z"];
+
+            PopoutElement.pathShrinkB = [
+                "M", L * 0, L * 3,
+                "L", L * 1, L * 4,
+                "L", L * 0, L * 5,
+                "L", L * 1, L * 6,
+                "L", L * 2, L * 5,
+                "L", L * 3, L * 6,
+                "L", L * 3, L * 3,
+                "Z"];
+        }
     }
 }

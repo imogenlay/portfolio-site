@@ -361,10 +361,10 @@ export class PageBuilder {
 			Const.GITHUB);
 
 		section.append(codeBox);
-		section.append(ElementG.createImg("./public/img/mineshaft_00.png", "mineshaft_00"));
-		section.append(ElementG.createImg("./public/img/mineshaft_01.png", "mineshaft_01"));
-		section.append(ElementG.createImg("./public/img/mineshaft_02.png", "mineshaft_02"));
-		section.append(ElementG.createImg("./public/img/mineshaft_03.png", "mineshaft_03"));
+		section.append(this.createImgInPopout("./public/img/mineshaft_00.png", "mineshaft_00"));
+		section.append(this.createImgInPopout("./public/img/mineshaft_02.png", "mineshaft_02"));
+		section.append(this.createImgInPopout("./public/img/mineshaft_03.png", "mineshaft_03"));
+		section.append(this.createImgInPopout("./public/img/mineshaft_01.png", "mineshaft_01"));
 		return section;
 	}
 
@@ -540,5 +540,11 @@ export class PageBuilder {
 
 		p.textContent = output;
 		navigator.clipboard.writeText(output);
+	}
+
+	createImgInPopout(src, alt) {
+		const newImage = ElementG.createImg(src, alt);
+		newImage.classList.add("popout-contain")
+		return new PopoutElement(newImage);
 	}
 }

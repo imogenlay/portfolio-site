@@ -294,7 +294,7 @@ export class DisassemblyCanvas extends HTMLElement {
     }
 
     resizeAndClearCanvas() {
-        let maxSize = this.offsetWidth;
+        const maxSize = this.offsetWidth;
         this.currentCanvasScale = MathG.floor(MathG.clamp(maxSize / DisassemblyCanvas.CANVAS_SIZE, 1, 5));
         const newSize = this.currentCanvasScale * DisassemblyCanvas.CANVAS_SIZE;
 
