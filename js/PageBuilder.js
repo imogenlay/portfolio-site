@@ -385,10 +385,10 @@ export class PageBuilder {
 			Const.GITHUB);
 
 		section.append(codeBox);
-		section.append(ElementG.createImg("./public/img/cu_carta_00.png", "cu_carta_00"));
-		section.append(ElementG.createImg("./public/img/cu_carta_01.png", "cu_carta_01"));
-		section.append(ElementG.createImg("./public/img/cu_carta_02.png", "cu_carta_02"));
-		section.append(ElementG.createImg("./public/img/cu_carta_03.png", "cu_carta_03"));
+		section.append(this.createImgInPopout("./public/img/cu_carta_00.png", "cu_carta_00"));
+		section.append(this.createImgInPopout("./public/img/cu_carta_01.png", "cu_carta_01"));
+		section.append(this.createImgInPopout("./public/img/cu_carta_02.png", "cu_carta_02"));
+		section.append(this.createImgInPopout("./public/img/cu_carta_03.png", "cu_carta_03"));
 		return section;
 	}
 

@@ -3,3 +3,9 @@
     @content;
   }
 }
+
+@mixin using_mouse {
+  @media (pointer: fine) {
+    @content;
+  }
+}

@@ -4,8 +4,6 @@
 
 popout-element {
   position: relative;
-  padding: 0;
-  margin: 0;
 
   &::after {
     content: "";
@@ -78,6 +76,17 @@ popout-element {
     &.popped button {
       top: 8px;
       right: 8px;
+    }
+
+    @include q.using_mouse {
+      button {
+        transition: opacity calc(var(--default-animation-speed) * 300ms)
+          ease-in-out;
+        opacity: 0;
+      }
+      &:hover button {
+        opacity: 1;
+      }
     }
   }
 }

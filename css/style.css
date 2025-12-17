@@ -475,8 +475,6 @@ img.disassembly-divider {
 
 popout-element {
   position: relative;
-  padding: 0;
-  margin: 0;
 }
 popout-element::after {
   content: "";
@@ -535,6 +533,15 @@ popout-element .popout-parent button:active {
 popout-element .popout-parent.popped button {
   top: 8px;
   right: 8px;
+}
+@media (pointer: fine) {
+  popout-element .popout-parent button {
+    transition: opacity calc(var(--default-animation-speed) * 300ms) ease-in-out;
+    opacity: 0;
+  }
+  popout-element .popout-parent:hover button {
+    opacity: 1;
+  }
 }
 
 .popout-contain {

@@ -1,6 +1,4 @@
-
 import * as MathG from '../lib/MathG.js';
-import * as ElementG from '../lib/ElementG.js';
 import { RenderButton } from '../lib/RenderButton.js';
 import { RenderItem } from '../lib/RenderItem.js';
 import { Chicken } from './disassembly/Chicken.js';
