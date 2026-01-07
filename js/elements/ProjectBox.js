@@ -49,8 +49,8 @@ export class ProjectBox extends HTMLElement {
 			img = ElementG.createImg("./public/svg/" + pinData.img + ".svg", pinData.img);
 		else
 			img = document.createElement("figure");
-		img.style.width = "2rem";
-		img.style.height = "2rem";
+		img.style.width = "32px";
+		img.style.height = "32px";
 
 		const p = ElementG.createSpecific("p", "", pinData.name);
 
@@ -121,7 +121,7 @@ export class ProjectBox extends HTMLElement {
 				},
 				{
 					name: Const.BASE_LIFT_ENGINE,
-					img: "base-lift-engine",
+					img: "base_lift_engine",
 					hue: 180,
 					sat: -1,
 					light: 40,
@@ -212,7 +212,7 @@ export class ProjectBox extends HTMLElement {
 				},
 				{
 					name: Const.INTELLIJ,
-					img: "intellij-idea",
+					img: "intellij_idea",
 					hue: 0,
 					sat: -1,
 					light: -1,
@@ -232,6 +232,13 @@ export class ProjectBox extends HTMLElement {
 					light: -1,
 				},
 				{
+					name: Const.JEST,
+					img: "jest",
+					hue: 350,
+					sat: 60,
+					light: 30,
+				},
+				{
 					name: Const.KRITA,
 					img: "krita",
 					hue: 320,
@@ -244,6 +251,13 @@ export class ProjectBox extends HTMLElement {
 					hue: 80,
 					sat: -1,
 					light: -1,
+				},
+				{
+					name: Const.NODE_JS,
+					img: "node_js",
+					hue: 120,
+					sat: 40,
+					light: 40,
 				},
 				{
 					name: Const.OCULUS,
@@ -302,15 +316,22 @@ export class ProjectBox extends HTMLElement {
 					light: 80,
 				},
 				{
+					name: Const.VISUAL_BASIC,
+					img: "visual_basic",
+					hue: 220,
+					sat: 30,
+					light: -1,
+				},
+				{
 					name: Const.VISUAL_STUDIO_CODE,
-					img: "visual-studio-code",
+					img: "visual_studio_code",
 					hue: 200,
 					sat: -1,
 					light: -1,
 				},
 				{
 					name: Const.VISUAL_STUDIO,
-					img: "visual-studio",
+					img: "visual_studio",
 					hue: 270,
 					sat: -1,
 					light: -1,

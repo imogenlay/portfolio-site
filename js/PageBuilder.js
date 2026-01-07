@@ -120,12 +120,15 @@ export class PageBuilder {
 			this.createNavbarDivider("Projects"),
 			ElementG.createSpecific("button", "nav-button", "Mineshaft"),
 			ElementG.createSpecific("button", "nav-button", Const.TITLE_CU_CARTA),
-			ElementG.createSpecific("button", "nav-button", "Portfolio"),
 			ElementG.createSpecific("button", "nav-button", "Disassembly"),
-			this.createNavbarDivider("Other"),
-			ElementG.createSpecific("button", "nav-button", "Subheading Generator"),
-			this.createNavbarDivider("Ver " + Const.VERSION),
+			ElementG.createSpecific("button", "nav-button", "Portfolio"),
 		];
+
+		if (!Const.DEPLOYMENT_VERSION)
+			this.navbarElements.push(
+				this.createNavbarDivider("Ver " + Const.VERSION),
+				ElementG.createSpecific("button", "nav-button", "Subheadings"),
+			);
 
 		// Create pages: Have to be in same order as nav buttons. 
 		this.pageElements = [
@@ -133,10 +136,12 @@ export class PageBuilder {
 			this.generateContactPage(),
 			this.generateMineshaftPage(),
 			this.generateCuCartaPage(),
-			this.generatePortfolioPage(),
 			this.generateDisassemblyPage(),
-			this.generateSubHeadingGenerator(),
+			this.generatePortfolioPage(),
 		];
+
+		if (!Const.DEPLOYMENT_VERSION)
+			this.pageElements.push(this.generateSubHeadingGenerator());
 	}
 
 	appendNavbarAndPageElementsArray() {
@@ -251,6 +256,7 @@ export class PageBuilder {
 	// =========================== PAGE GENERATOR FUNCTIONS ===========================
 
 	generateHomePage() {
+		// Text and skills.
 		const section = document.createElement("section");
 		const title = ElementG.createSpecific("h2", "", "Home");
 		const about = ElementG.createSpecific("h3", "", "About");
@@ -279,20 +285,13 @@ export class PageBuilder {
 		section.append(projectBox);
 
 		section.append(title, about, textA, textB, skills, projectBox);
-		return section;
-	}
 
-	generateSkillsPage() {
-		const section = document.createElement("section");
-		section.append(ElementG.createSpecific("h2", "", "Skills"));
 		return section;
 	}
 
 	generateContactPage() {
 		const section = document.createElement("section");
 		const form = document.createElement("form");
-		section.append(ElementG.createSpecific("h2", "", "Contact"));
-		section.append(document.createElement("p"));
 
 		form.action = "./sent.html";
 
@@ -313,21 +312,21 @@ export class PageBuilder {
 			maxlength: "50",
 			required: ""
 		}));
-
-		const fieldSet = document.createElement("fieldset");
-		form.append(fieldSet);
-		fieldSet.append(ElementG.createInputAlternate("Option A", {
-			type: "radio",
-			name: "category",
-			value: "option-a",
-			checked: true
-		}));
-		fieldSet.append(ElementG.createInputAlternate("Option B", {
-			type: "radio",
-			name: "category",
-			value: "option-b"
-		}));
-
+		/*
+				const fieldSet = document.createElement("fieldset");
+				form.append(fieldSet);
+				fieldSet.append(ElementG.createInputAlternate("Option A", {
+					type: "radio",
+					name: "category",
+					value: "option-a",
+					checked: true
+				}));
+				fieldSet.append(ElementG.createInputAlternate("Option B", {
+					type: "radio",
+					name: "category",
+					value: "option-b"
+				}));
+		*/
 		form.append(ElementG.createTextArea("Message", {
 			name: "message",
 			minlength: "10",
@@ -340,7 +339,9 @@ export class PageBuilder {
 			value: "Send",
 		}));
 
+		section.append(ElementG.createSpecific("h2", "", "Contact"));
 		section.append(form);
+
 		return section;
 	}
 
@@ -353,6 +354,7 @@ export class PageBuilder {
 			Const.BASE_LIFT_ENGINE,
 			Const.OPEN_GL,
 			Const.GLSL,
+			Const.MINECRAFT,
 			Const.VISUAL_STUDIO,
 			Const.VISUAL_STUDIO_CODE,
 			Const.ASEPRITE,
@@ -449,7 +451,7 @@ export class PageBuilder {
 	generateSubHeadingGenerator() {
 
 		const section = document.createElement("section");
-		const title = ElementG.createSpecific("h2", "", "Subheading Generator");
+		const title = ElementG.createSpecific("h2", "", "Subheadings");
 		const inputTextParent = ElementG.createInput("Text");
 		const inputCountParent = ElementG.createInput("Length");
 

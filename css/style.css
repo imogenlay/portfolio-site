@@ -47,9 +47,18 @@ h6 {
   color: #edfffe;
   text-wrap: nowrap;
   line-height: 1.25;
-  padding-bottom: 1rem;
   font-size: 1rem;
   font-weight: 400;
+  padding-bottom: 1rem;
+}
+h1.padded,
+h2.padded,
+h3.padded,
+h4.padded,
+h5.padded,
+h6.padded {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 h1 {
@@ -260,16 +269,16 @@ hr.title {
 }
 
 nav {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 0;
+  gap: 2px;
 }
 nav button {
   user-select: none;
-  width: 100%;
+  width: calc(100% - 0.5rem);
   text-align: left;
   font-size: 1.25rem;
   /* prettier-ignore */
@@ -277,19 +286,19 @@ nav button {
   font-weight: 400;
   background-color: transparent;
   color: #edfffe;
-  padding: 0.25rem 0.25rem 0.25rem 1.25rem;
+  padding: 0.1rem 0 0.1rem 1.25rem;
 }
 nav button:hover, nav button.selected, nav button.recently-selected {
   background-color: rgba(237, 244, 255, 0.1568627451);
   font-weight: 600;
-  padding: 0.25rem 0.25rem 0.25rem 2.5rem;
+  padding-left: 2.5rem;
 }
 nav button:hover {
   background-color: rgba(229, 227, 255, 0.2039215686);
 }
 nav button.recently-selected {
   transition: background-color 0s ease-in-out, font-weight calc(var(--default-animation-speed) * 200ms) ease-in-out, padding calc(var(--default-animation-speed) * 200ms) ease-in-out;
-  padding: 0.25rem 0.25rem 0.25rem 2.5rem;
+  padding-left: 2.5rem;
   background-color: rgba(222, 220, 255, 0.3411764706);
 }
 nav .nav-divider {
@@ -299,18 +308,21 @@ nav .nav-divider {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  margin: 0.25rem;
+  overflow: visible;
 }
 nav .nav-divider p {
   flex-shrink: 0;
-  padding: 0;
   color: #edfffe;
   user-select: none;
 }
 nav .nav-divider hr {
   border-top: 1px solid #d8d2fb;
-  margin: 0;
   width: 100%;
+}
+nav .nav-divider p,
+nav .nav-divider hr {
+  margin: 0;
+  padding: 0;
 }
 
 label {
@@ -397,7 +409,7 @@ form div textarea:focus {
   background-color: rgba(249, 251, 255, 0.1568627451);
 }
 form div textarea {
-  min-height: 12rem;
+  min-height: 20rem;
   resize: none;
 }
 
@@ -422,8 +434,6 @@ project-box div {
 }
 project-box div figure,
 project-box div img {
-  width: 2rem;
-  height: 2rem;
   flex-shrink: 0;
   filter: drop-shadow(2px 2px 6px #27282b);
 }
@@ -558,6 +568,10 @@ img.flipped {
 button.heading-generator {
   width: 200px;
   height: 40px;
+}
+
+div {
+  color: #92e77f;
 }
 
 /*# sourceMappingURL=style.css.map */

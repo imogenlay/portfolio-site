@@ -12,9 +12,14 @@ h6 {
   color: g.$clr-white;
   text-wrap: nowrap;
   line-height: 1.25;
-  padding-bottom: 1rem;
   font-size: 1rem;
   font-weight: 400;
+  padding-bottom: 1rem;
+
+  &.padded {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 
 h1 {

@@ -4,6 +4,7 @@ export class Const {
     static CURRENT_PAGE_KEY = "CURRENT_PAGE";
     static LAST_PAGE_VISIT = "LAST_PAGE_VISIT";
     static TITLE_CU_CARTA = "Cú Cárta";
+    static DEPLOYMENT_VERSION = true;
 
     static DEFAULT_SATURATION = 60;
     static DEFAULT_LIGHT = 50;
@@ -14,7 +15,7 @@ export class Const {
     static BLENDER = "Blender";
     static CSHARP = "C#";
     static CSS = "CSS";
-    static EXCEL = "Excel (VBA)";
+    static EXCEL = "Excel";
     static GDSCRIPT = "GDScript";
     static GIT = "Git";
     static GITHUB = "GitHub";
@@ -26,8 +27,10 @@ export class Const {
     static INTELLIJ = "IntelliJ IDEA";
     static JAVA = "Java";
     static JAVASCRIPT = "JavaScript";
+    static JEST = "Jest";
     static KRITA = "Krita";
     static MINECRAFT = "Minecraft";
+    static NODE_JS = "Node JS";
     static OCULUS = "Oculus";
     static OPEN_GL = "OpenGL";
     static PHOTOSHOP = "PhotoShop";
@@ -36,6 +39,7 @@ export class Const {
     static SASS = "SASS";
     static TYPESCRIPT = "TypeScript";
     static UNITY = "Unity";
+    static VISUAL_BASIC = "Visual Basic";
     static VISUAL_STUDIO_CODE = "Visual Studio Code";
     static VISUAL_STUDIO = "Visual Studio";
     static WYSCI = "Wysci";

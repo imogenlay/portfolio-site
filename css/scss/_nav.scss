@@ -13,13 +13,13 @@ hr.title {
 }
 
 nav {
-  margin-top: 1rem;
-  @include mixins.flex(column, flex-start, center, 0);
+  margin-top: 0.75rem;
+  @include mixins.flex(column, flex-start, center, 2px);
 
   button {
     user-select: none;
 
-    width: 100%;
+    width: calc(100% - 0.5rem);
     text-align: left;
     font-size: 1.25rem;
     /* prettier-ignore */
@@ -32,14 +32,15 @@ nav {
 
     background-color: transparent;
     color: g.$clr-white;
-    padding: 0.25rem 0.25rem 0.25rem 1.25rem;
+
+    padding: 0.1rem 0 0.1rem 1.25rem;
 
     &:hover,
     &.selected,
     &.recently-selected {
       background-color: $clr-nav-button-background-a;
       font-weight: 600;
-      padding: 0.25rem 0.25rem 0.25rem 2.5rem;
+      padding-left: 2.5rem;
     }
 
     &:hover {
@@ -50,7 +51,8 @@ nav {
       transition: background-color 0s ease-in-out,
         font-weight calc(var(--default-animation-speed) * 200ms) ease-in-out,
         padding calc(var(--default-animation-speed) * 200ms) ease-in-out;
-      padding: 0.25rem 0.25rem 0.25rem 2.5rem;
+
+      padding-left: 2.5rem;
       background-color: $clr-nav-button-background-c;
     }
   }
@@ -58,19 +60,23 @@ nav {
   .nav-divider {
     @include mixins.flex(row, flex-start, center, 0.5rem);
     width: 100%;
-    margin: 0.25rem;
+    overflow: visible;
 
     p {
       flex-shrink: 0;
-      padding: 0;
       color: g.$clr-white;
       user-select: none;
     }
 
     hr {
       border-top: 1px solid g.$clr-off-white;
-      margin: 0;
       width: 100%;
+    }
+
+    p,
+    hr {
+      margin: 0;
+      padding: 0;
     }
   }
 }
