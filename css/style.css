@@ -112,7 +112,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 0;
     padding-top: 4rem;
   }
@@ -535,6 +535,7 @@ easy-project article .details-easy-project a {
   font-weight: 500;
 }
 easy-project article .details-easy-project a:hover {
+  text-decoration: underline;
   color: #edfffe;
 }
 easy-project article .details-easy-project a img {

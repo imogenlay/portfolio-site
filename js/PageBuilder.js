@@ -416,12 +416,12 @@ export class PageBuilder {
 			Const.GITHUB,
 		);
 		googleBooksProject.addDescription("A React application that allows for user interaction with the publicly accessible Google Books API. " +
-			"Employing asynchronous programming and state creating a seemless communication with an external source of information.");
+			"Employing asynchronous programming and React state, creating seemless communication with external data.");
 		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
 		googleBooksProject.addLink("Github", "https://github.com/imogenlay/google-books-api");
 
 		// MORSE CODE
-		const morseCodeProject = new EasyProject("Morse Code Project");
+		const morseCodeProject = new EasyProject("Morse Code");
 		morseCodeProject.addPins(
 			Const.JAVASCRIPT,
 			Const.JEST,
@@ -432,7 +432,7 @@ export class PageBuilder {
 			Const.GITHUB);
 		morseCodeProject.addDescription("This page translates user text back and forth between English and Morse Code. " +
 			"The algorithm facilitates per-line translation from either language. Additionally, " +
-			"all non-DOM functions have unit tests using Jest ensuring development safety.");
+			"all non-DOM functions have Jest unit tests, ensuring development safety.");
 		morseCodeProject.addLink("View", "https://imogenlay.com/projects/morse");
 		morseCodeProject.addLink("Github", "https://github.com/imogenlay/morse-code");
 

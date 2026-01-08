@@ -46,6 +46,7 @@ easy-project {
         font-weight: 500;
 
         &:hover {
+          text-decoration: underline;
           color: g.$clr-white;
         }
 
