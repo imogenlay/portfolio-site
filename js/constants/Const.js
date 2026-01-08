@@ -17,6 +17,7 @@ export class Const {
     static CSS = "CSS";
     static EXCEL = "Excel";
     static GDSCRIPT = "GDScript";
+    static GDSHADER = "GDShader";
     static GIT = "Git";
     static GITHUB = "GitHub";
     static GODOT = "Godot";
@@ -42,5 +43,6 @@ export class Const {
     static VISUAL_BASIC = "Visual Basic";
     static VISUAL_STUDIO_CODE = "Visual Studio Code";
     static VISUAL_STUDIO = "Visual Studio";
+    static VITE = "Vite";
     static WYSCI = "Wysci";
 }

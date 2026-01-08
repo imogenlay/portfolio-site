@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   height="800px"
+   width="800px"
+   version="1.1"
+   id="_x36_"
+   viewBox="0 0 512 512"
+   xml:space="preserve"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs4"><linearGradient
+     id="linearGradient6"><stop
+       style="stop-color:#00f5ee;stop-opacity:1;"
+       offset="0.08201893"
+       id="stop6" /><stop
+       style="stop-color:#a900b7;stop-opacity:1;"
+       offset="1"
+       id="stop7" /></linearGradient><rect
+     x="202.06376"
+     y="342.67035"
+     width="434.85612"
+     height="320.32228"
+     id="rect4" /><radialGradient
+     xlink:href="#linearGradient6"
+     id="radialGradient7"
+     cx="156.96568"
+     cy="145.66129"
+     fx="156.96568"
+     fy="145.66129"
+     r="246.62703"
+     gradientTransform="matrix(1.700637,-0.00218772,0.00269223,2.0928214,-103.01036,-168.74215)"
+     gradientUnits="userSpaceOnUse" /></defs>
+
+<circle
+   style="fill:url(#radialGradient7);fill-opacity:1;stroke:none;stroke-width:19.4583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+   id="path5"
+   cx="256"
+   cy="256"
+   r="256" /><path
+   id="rect7"
+   style="fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:14.96832;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+   d="M 112 128 L 112 192 L 240 192 L 240 128 L 112 128 z M 112 192 L 48 192 L 48 320 L 112 320 L 112 192 z M 112 320 L 112 384 L 240 384 L 240 320 L 240 256 L 176 256 L 176 320 L 112 320 z M 272 128 L 272 384 L 336 384 L 400 384 L 400 320 L 336 320 L 336 192 L 400 192 L 400 128 L 336 128 L 272 128 z M 400 192 L 400 320 L 464 320 L 464 192 L 400 192 z " /></svg>

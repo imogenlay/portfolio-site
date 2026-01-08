@@ -259,7 +259,6 @@ export class PageBuilder {
 		// Text and skills.
 		const section = document.createElement("section");
 		const title = ElementG.createSpecific("h2", "", "Home");
-		const about = ElementG.createSpecific("h3", "", "About");
 		const textA = ElementG.createParagraph(
 			"A ",
 			"detail-oriented Software Developer",
@@ -276,7 +275,7 @@ export class PageBuilder {
 			" and ",
 			"team player,",
 			" bringing a proven track record of elevating project outcomes through meticulous ",
-			"attention to detail."
+			"precision."
 		);
 
 		const projectBox = new ProjectBox();
@@ -284,7 +283,7 @@ export class PageBuilder {
 		const skills = ElementG.createSpecific("h3", "", "Skills");
 		section.append(projectBox);
 
-		section.append(title, about, textA, textB, skills, projectBox);
+		section.append(title, textA, textB, skills, projectBox);
 
 		return section;
 	}
@@ -293,7 +292,8 @@ export class PageBuilder {
 		const section = document.createElement("section");
 		const form = document.createElement("form");
 
-		form.action = "./sent.html";
+		form.action = "https://formspree.io/f/xojvgkre";
+		form.method = "POST";
 
 		// Name
 		form.append(ElementG.createInput("Name", {
@@ -377,6 +377,7 @@ export class PageBuilder {
 		codeBox.addPins(
 			Const.CSHARP,
 			Const.GDSCRIPT,
+			Const.GDSHADER,
 			Const.GODOT,
 			Const.WYSCI,
 			Const.VISUAL_STUDIO,
@@ -388,16 +389,17 @@ export class PageBuilder {
 
 		section.append(codeBox);
 		section.append(this.createImgInPopout("./public/img/cu_carta_00.png", "cu_carta_00"));
+		section.append(this.createImgInPopout("./public/img/cu_carta_04.png", "cu_carta_04"));
+		section.append(this.createImgInPopout("./public/img/cu_carta_03.png", "cu_carta_03"));
 		section.append(this.createImgInPopout("./public/img/cu_carta_01.png", "cu_carta_01"));
 		section.append(this.createImgInPopout("./public/img/cu_carta_02.png", "cu_carta_02"));
-		section.append(this.createImgInPopout("./public/img/cu_carta_03.png", "cu_carta_03"));
 		return section;
 	}
 
 	generatePortfolioPage() {
 
 		const section = document.createElement("section");
-		section.append(ElementG.createSpecific("h2", "", "Portfolio Site"));
+		section.append(ElementG.createSpecific("h2", "", "Portfolio"));
 		const paragraph = ElementG.createParagraph("This is my portfolio website.");
 
 		const otherBox = new ProjectBox();
@@ -413,7 +415,43 @@ export class PageBuilder {
 			Const.GITHUB
 		);
 
-		section.append(paragraph, otherBox);
+		const linkToMorse = ElementG.createLink("Morse Code", "https://imogenlay.com/projects/morse");
+		const linkToCoffeeCorner = ElementG.createLink("Pixel Perfect Cafe", "https://imogenlay.com/projects/coffee-corner");
+		const googleBooks = ElementG.createLink("Google Books", "https://imogenlay.com/projects/google-books");
+
+		const morseCodeBox = new ProjectBox();
+		morseCodeBox.addPins(
+			Const.JAVASCRIPT,
+			Const.JEST,
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GITHUB,
+		);
+
+		const coffeeCodeBox = new ProjectBox();
+		coffeeCodeBox.addPins(
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GITHUB,
+		);
+
+		const googleBooksCodeBox = new ProjectBox();
+		googleBooksCodeBox.addPins(
+			Const.REACT,
+			Const.VITE,
+			Const.JAVASCRIPT,
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GIT,
+			Const.GITHUB,
+		);
+		section.append(paragraph, otherBox, linkToMorse, morseCodeBox, linkToCoffeeCorner, coffeeCodeBox, googleBooks, googleBooksCodeBox);
 		return section;
 	}
 

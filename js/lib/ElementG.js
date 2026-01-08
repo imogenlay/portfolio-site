@@ -67,6 +67,13 @@ export function createImg(src, alt) {
 	return img;
 }
 
+export function createLink(text, href) {
+	const a = document.createElement('a');
+	a.append(text);
+	a.href = href;
+	return a;
+}
+
 function genericCreateFormField(textFieldTag, labelText, attributes) {
 	if (attributes == null)
 		attributes = [];

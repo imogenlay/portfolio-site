@@ -162,6 +162,13 @@ export class ProjectBox extends HTMLElement {
 					light: -1,
 				},
 				{
+					name: Const.GDSHADER,
+					img: "gdshader",
+					hue: 250,
+					sat: -1,
+					light: -1,
+				},
+				{
 					name: Const.GIT,
 					img: "git",
 					hue: 340,
@@ -335,6 +342,13 @@ export class ProjectBox extends HTMLElement {
 					hue: 270,
 					sat: -1,
 					light: -1,
+				},
+				{
+					name: Const.VITE,
+					img: "vite",
+					hue: 270,
+					sat: 80,
+					light: 60,
 				},
 				{
 					name: Const.WYSCI,

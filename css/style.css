@@ -523,8 +523,8 @@ popout-element .popout-parent button {
   background-color: rgba(255, 255, 255, 0.2666666667);
   overflow: hidden;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 8px;
+  right: 8px;
 }
 popout-element .popout-parent button svg {
   padding: 0.25rem;
