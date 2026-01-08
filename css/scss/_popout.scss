@@ -47,7 +47,7 @@ popout-element {
     button {
       width: 3rem;
       height: 3rem;
-      background-color: g.$clr-button-a;
+      background-color: rgb(g.$clr-white, 0.25);
       overflow: hidden;
 
       position: absolute;
@@ -65,10 +65,10 @@ popout-element {
       }
 
       &:hover {
-        background-color: g.$clr-button-b;
+        background-color: rgb(g.$clr-white, 0.4);
       }
       &:active {
-        background-color: g.$clr-button-c;
+        background-color: rgb(g.$clr-white, 0.55);
       }
     }
 

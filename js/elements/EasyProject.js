@@ -10,7 +10,6 @@ export class EasyProject extends HTMLElement {
     article;
     details; description;
     pinsBox;
-    dropdown;
     isOpened = false;
 
     constructor(_title) {
@@ -24,7 +23,7 @@ export class EasyProject extends HTMLElement {
 
         const heading = ElementG.createSpecific("h3", "", this.title);
         this.article = document.createElement("article");
-        this.details = ElementG.createSpecific("div", "details", "");
+        this.details = ElementG.createSpecific("div", "details-easy-project", "");
         this.description = ElementG.createSpecific("p", "", "No description.");
         this.pinsBox = new ProjectBox();
 
@@ -34,36 +33,25 @@ export class EasyProject extends HTMLElement {
     }
 
     createDropdown() {
-        this.dropdown = ElementG.createImg("./public/svg/dropdown_a.svg");
-        this.dropdown.classList.add("dropdown");
-        this.append(this.dropdown);
+        const dropdown = ElementG.createSpecific("div", "dropdown", "");
+        const img = ElementG.createImg("./public/svg/dropdown_a.svg");
 
-        const forceOpen = () => {
-            this.classList.add("expand");
-            this.dropdown.src = "./public/svg/dropdown_b.svg";
-            this.isOpened = true;
-        }
+        this.append(dropdown);
+        dropdown.append(img);
 
-        this.dropdown.onclick = () => {
+        dropdown.onclick = () => {
             if (this.isOpened) {
 
-                console.log("close  dropdown ", this.isOpened);
-                this.classList.remove("expand");
-                this.dropdown.src = "./public/svg/dropdown_a.svg";
+                this.classList.remove("expand-easy-project");
+                img.src = "./public/svg/dropdown_a.svg";
                 this.isOpened = false;
             }
             else {
-                console.log("open dropdown ", this.isOpened);
-                forceOpen();
+                this.classList.add("expand-easy-project");
+                img.src = "./public/svg/dropdown_b.svg";
+                this.isOpened = true;
             }
         }
-
-        /*this.onclick = () => {
-            if (!this.isOpened) {
-                console.log("open whole");
-                forceOpen();
-            }
-        }*/
     }
 
     addDescription(text) {
@@ -75,7 +63,7 @@ export class EasyProject extends HTMLElement {
     }
 
     addLink(text, href) {
-        const link = document.createElement("a");
+        const link = ElementG.createSpecific("a", "", "");
         link.href = href;
 
         // Create GitHub Icon 
@@ -93,5 +81,4 @@ export class EasyProject extends HTMLElement {
         link.append(text);
         this.details.append(link);
     }
-
 }

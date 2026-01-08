@@ -269,8 +269,8 @@ export class PageBuilder {
 		);
 
 		const textB = ElementG.createParagraph(
-			"Demonstrated adaptability across ",
-			"multiple languages, engines, frameworks and libraries,",
+			"Demonstrated ",
+			"adaptability across multiple languages, engines, frameworks and libraries,",
 			" consistently delivering robust applications. Thrives both as an ",
 			"independent contributor",
 			" and ",
@@ -415,10 +415,10 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB,
 		);
-		googleBooksProject.addDescription("ggogooel book");
+		googleBooksProject.addDescription("A React application that allows for user interaction with the publicly accessible Google Books API. " +
+			"Employing asynchronous programming and state creating a seemless communication with an external source of information.");
 		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
 		googleBooksProject.addLink("Github", "https://github.com/imogenlay/google-books-api");
-
 
 		// MORSE CODE
 		const morseCodeProject = new EasyProject("Morse Code Project");
@@ -430,7 +430,9 @@ export class PageBuilder {
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GITHUB);
-		morseCodeProject.addDescription("Morse Code project");
+		morseCodeProject.addDescription("This page translates user text back and forth between English and Morse Code. " +
+			"The algorithm facilitates per-line translation from either language. Additionally, " +
+			"all non-DOM functions have unit tests using Jest ensuring development safety.");
 		morseCodeProject.addLink("View", "https://imogenlay.com/projects/morse");
 		morseCodeProject.addLink("Github", "https://github.com/imogenlay/morse-code");
 
@@ -446,27 +448,25 @@ export class PageBuilder {
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB);
-		portfolioSite.addDescription("The site you are currently looking at was built from scratch to be" +
+		portfolioSite.addDescription("The site you are currently looking at was built from scratch to be " +
 			"a versatile and maintainable archive of all my work. Inspired by React, " +
-			"the site utilises a tailored solution to single page applications, integrating custom elements for resuability.");
+			"the site utilises a tailored solution to single page applications, integrating custom elements for reusability and performance.");
 		portfolioSite.addLink("Github", "https://github.com/imogenlay/portfolio-site");
 
 		// COFFEE CORNER
-		const coffeeCornerProject = new EasyProject("Pixel Perfect Website");
+		const coffeeCornerProject = new EasyProject("Pixel Perfect Design");
 		coffeeCornerProject.addPins(
 			Const.HTML,
 			Const.SASS,
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GITHUB);
-		coffeeCornerProject.addDescription("Morse Code project");
+		coffeeCornerProject.addDescription("A pixel-perfect recreation of a Canva design making extensive use of SASS and the " +
+			"Block, Element, Modifier (BEM) methodology.");
 		coffeeCornerProject.addLink("View", "https://imogenlay.com/projects/coffee-corner");
 		coffeeCornerProject.addLink("Github", "https://github.com/imogenlay/nology-precourse");
 
-
-
 		section.append(googleBooksProject, morseCodeProject, portfolioSite, coffeeCornerProject);
-
 
 		return section;
 	}

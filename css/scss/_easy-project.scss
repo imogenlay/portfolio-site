@@ -11,26 +11,31 @@ easy-project {
   position: relative;
 
   max-height: 2.75rem;
-  transition: max-height calc(var(--anim-speed) * 400ms) ease;
+  transition: max-height calc(var(--anim-speed) * 300ms) ease;
   overflow: hidden;
 
-  &.expand {
+  &.expand-easy-project {
     max-height: 30rem;
   }
 
-  img.dropdown {
+  .dropdown {
     position: absolute;
     top: 0.4rem;
     right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
+    left: 0.4rem;
+    @include mixins.flex(row, flex-end, flex-start, 0);
+
+    img {
+      width: 2rem;
+      height: 2rem;
+      cursor: pointer;
+    }
   }
 
   article {
     @include mixins.flex(column, stretch, stretch, 0);
 
-    .details {
+    .details-easy-project {
       @include mixins.flex(column, flex-start, flex-start, 0);
       padding-bottom: 0.5rem;
 
@@ -41,7 +46,7 @@ easy-project {
         font-weight: 500;
 
         &:hover {
-          color: g.$clr-off-white;
+          color: g.$clr-white;
         }
 
         img {

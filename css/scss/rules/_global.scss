@@ -1,14 +1,10 @@
 @use "./media-queries" as q;
 
 $clr-white: #edfffe;
-$clr-off-white: #d8d2fb;
+$clr-off-white: #e2ddff;
 $clr-dark-grey: #27282b;
 
 $clr-accent: #009aff;
-
-$clr-button-a: #ffffff44;
-$clr-button-b: #ffffff66;
-$clr-button-c: #ffffff88;
 
 $clr-background-static-a: #2d0860;
 $clr-background-static-b: #040117;
@@ -46,9 +42,9 @@ $clr-background-static-b: #040117;
 button {
   cursor: pointer;
   border: none;
-  background-color: $clr-button-a;
+  background-color: rgb($clr-white, 0.25);
   &:hover {
-    background-color: $clr-button-b;
+    background-color: rgb($clr-white, 0.4);
   }
 }
 
