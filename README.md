@@ -8,10 +8,9 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 
 ### Portfolio
 
-- [ ] Give popout ability to scroll to next/previous image. 
+- [ ] Give popout ability to scroll to next/previous image.
 - [ ] Mobile-specific menu styling
 - [ ] Add information to Portfolio, Mineshaft and Cu Carta pages.
-- [ ] Fix contact form to actually send data.
 
 ### Hangman
 

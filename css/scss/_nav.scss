@@ -24,9 +24,9 @@ nav {
     font-size: 1.25rem;
     /* prettier-ignore */
     transition:
-      background-color calc(var(--default-animation-speed) * 200ms) ease-in-out,
-      font-weight calc(var(--default-animation-speed) * 200ms) ease-in-out,
-      padding calc(var(--default-animation-speed) * 200ms) ease-in-out;
+      background-color calc(var(--anim-speed) * 200ms) ease-in-out,
+      font-weight calc(var(--anim-speed) * 200ms) ease-in-out,
+      padding calc(var(--anim-speed) * 200ms) ease-in-out;
 
     font-weight: 400;
 
@@ -49,8 +49,8 @@ nav {
 
     &.recently-selected {
       transition: background-color 0s ease-in-out,
-        font-weight calc(var(--default-animation-speed) * 200ms) ease-in-out,
-        padding calc(var(--default-animation-speed) * 200ms) ease-in-out;
+        font-weight calc(var(--anim-speed) * 200ms) ease-in-out,
+        padding calc(var(--anim-speed) * 200ms) ease-in-out;
 
       padding-left: 2.5rem;
       background-color: $clr-nav-button-background-c;

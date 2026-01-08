@@ -4,6 +4,7 @@ import { DisassemblyCanvas } from "./elements/DisassemblyCanvas.js";
 import * as ElementG from "./lib/ElementG.js";
 import * as MathG from "./lib/MathG.js";
 import { PopoutElement } from "./elements/PopoutElement.js";
+import { EasyProject } from "./elements/EasyProject.js";
 
 export class PageBuilder {
 
@@ -269,13 +270,13 @@ export class PageBuilder {
 
 		const textB = ElementG.createParagraph(
 			"Demonstrated adaptability across ",
-			"multiple frameworks and languages,",
+			"multiple languages, engines, frameworks and libraries,",
 			" consistently delivering robust applications. Thrives both as an ",
 			"independent contributor",
 			" and ",
 			"team player,",
-			" bringing a proven track record of elevating project outcomes through meticulous ",
-			"precision."
+			" bringing a proven track record of elevating project outcomes through ",
+			"meticulous precision."
 		);
 
 		const projectBox = new ProjectBox();
@@ -400,47 +401,10 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Portfolio"));
-		const paragraph = ElementG.createParagraph("This is my portfolio website.");
 
-		const otherBox = new ProjectBox();
-		otherBox.addPins(
-			Const.HTML,
-			Const.CSS,
-			Const.SASS,
-			Const.ASEPRITE,
-			Const.INKSCAPE,
-			Const.JAVASCRIPT,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GIT,
-			Const.GITHUB
-		);
-
-		const linkToMorse = ElementG.createLink("Morse Code", "https://imogenlay.com/projects/morse");
-		const linkToCoffeeCorner = ElementG.createLink("Pixel Perfect Cafe", "https://imogenlay.com/projects/coffee-corner");
-		const googleBooks = ElementG.createLink("Google Books", "https://imogenlay.com/projects/google-books");
-
-		const morseCodeBox = new ProjectBox();
-		morseCodeBox.addPins(
-			Const.JAVASCRIPT,
-			Const.JEST,
-			Const.HTML,
-			Const.SASS,
-			Const.CSS,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GITHUB,
-		);
-
-		const coffeeCodeBox = new ProjectBox();
-		coffeeCodeBox.addPins(
-			Const.HTML,
-			Const.SASS,
-			Const.CSS,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GITHUB,
-		);
-
-		const googleBooksCodeBox = new ProjectBox();
-		googleBooksCodeBox.addPins(
+		// GOOGLE BOOKS 
+		const googleBooksProject = new EasyProject("Google Books API");
+		googleBooksProject.addPins(
 			Const.REACT,
 			Const.VITE,
 			Const.JAVASCRIPT,
@@ -451,7 +415,59 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB,
 		);
-		section.append(paragraph, otherBox, linkToMorse, morseCodeBox, linkToCoffeeCorner, coffeeCodeBox, googleBooks, googleBooksCodeBox);
+		googleBooksProject.addDescription("ggogooel book");
+		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
+		googleBooksProject.addLink("Github", "https://github.com/imogenlay/google-books-api");
+
+
+		// MORSE CODE
+		const morseCodeProject = new EasyProject("Morse Code Project");
+		morseCodeProject.addPins(
+			Const.JAVASCRIPT,
+			Const.JEST,
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GITHUB);
+		morseCodeProject.addDescription("Morse Code project");
+		morseCodeProject.addLink("View", "https://imogenlay.com/projects/morse");
+		morseCodeProject.addLink("Github", "https://github.com/imogenlay/morse-code");
+
+		// PORTFOLIO SITE
+		const portfolioSite = new EasyProject("Portfolio Site");
+		portfolioSite.addPins(
+			Const.HTML,
+			Const.CSS,
+			Const.SASS,
+			Const.ASEPRITE,
+			Const.INKSCAPE,
+			Const.JAVASCRIPT,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GIT,
+			Const.GITHUB);
+		portfolioSite.addDescription("The site you are currently looking at was built from scratch to be" +
+			"a versatile and maintainable archive of all my work. Inspired by React, " +
+			"the site utilises a tailored solution to single page applications, integrating custom elements for resuability.");
+		portfolioSite.addLink("Github", "https://github.com/imogenlay/portfolio-site");
+
+		// COFFEE CORNER
+		const coffeeCornerProject = new EasyProject("Pixel Perfect Website");
+		coffeeCornerProject.addPins(
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GITHUB);
+		coffeeCornerProject.addDescription("Morse Code project");
+		coffeeCornerProject.addLink("View", "https://imogenlay.com/projects/coffee-corner");
+		coffeeCornerProject.addLink("Github", "https://github.com/imogenlay/nology-precourse");
+
+
+
+		section.append(googleBooksProject, morseCodeProject, portfolioSite, coffeeCornerProject);
+
+
 		return section;
 	}
 

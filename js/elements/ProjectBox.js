@@ -21,6 +21,12 @@ export class ProjectBox extends HTMLElement {
 	// =========================== INITIALISATION FUNCTIONS ===========================
 
 	addPins(...names) {
+		if (names.length === 0)
+			return;
+
+		if (Array.isArray(names[0]))
+			names = names[0];
+
 		for (let i = 0; i < names.length; i++)
 			this.append(this.createPin(names[i]));
 	}

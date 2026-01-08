@@ -1,0 +1,54 @@
+@use "./rules/media-queries" as q;
+@use "./rules/global" as g;
+@use "./rules/mixins";
+
+easy-project {
+  border: 1px solid g.$clr-off-white;
+  background-color: rgb(g.$clr-accent, 0.125);
+  padding: 0.5rem;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+  position: relative;
+
+  max-height: 2.75rem;
+  transition: max-height calc(var(--anim-speed) * 400ms) ease;
+  overflow: hidden;
+
+  &.expand {
+    max-height: 30rem;
+  }
+
+  img.dropdown {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+  }
+
+  article {
+    @include mixins.flex(column, stretch, stretch, 0);
+
+    .details {
+      @include mixins.flex(column, flex-start, flex-start, 0);
+      padding-bottom: 0.5rem;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+
+        &:hover {
+          color: g.$clr-off-white;
+        }
+
+        img {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }
+  }
+}

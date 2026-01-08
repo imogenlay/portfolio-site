@@ -2,9 +2,6 @@
 @use "./rules/global" as g;
 @use "./rules/mixins";
 
-$clr-background-static-a: #2d0860;
-$clr-background-static-b: #040117;
-
 @property --clr-animated-main-bg-gradient {
   syntax: "<color>";
   inherits: true;
@@ -19,8 +16,8 @@ html {
   background-size: 100% 100%;
   background: linear-gradient(
     125deg,
-    $clr-background-static-a 5%,
-    $clr-background-static-b 95%
+    g.$clr-background-static-a 5%,
+    g.$clr-background-static-b 95%
   );
 }
 
@@ -38,10 +35,10 @@ html {
 
   // Animation/Background.
   /* prettier-ignore */
-  animation: mainBackgroundGradient calc(var(--default-animation-speed) * 14s) ease-in-out infinite;
+  animation: mainBackgroundGradient calc(var(--anim-speed) * 14s) ease-in-out infinite;
   transition: --clr-animated-main-bg-gradient 2s linear;
   /* prettier-ignore */
-  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, $clr-background-static-b 110%);
+  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, g.$clr-background-static-b 110%);
 }
 
 #foreground {
@@ -89,7 +86,7 @@ html {
     top: 5rem;
     left: 50vw;
     top: calc(var(--floating-title-size) + 35%);
-    background-color: g.$clr-button-a;
+    background-color: rgb(g.$clr-white, 0.25);
 
     transform: translateX(-50%);
 

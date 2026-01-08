@@ -10,6 +10,9 @@ $clr-button-a: #ffffff44;
 $clr-button-b: #ffffff66;
 $clr-button-c: #ffffff88;
 
+$clr-background-static-a: #2d0860;
+$clr-background-static-b: #040117;
+
 * {
   /* UI Debug Border
   box-shadow: inset 0px 0px 0px 1px red;
@@ -37,7 +40,7 @@ $clr-button-c: #ffffff88;
 }
 
 :root {
-  --default-animation-speed: 1;
+  --anim-speed: 1;
 }
 
 button {
