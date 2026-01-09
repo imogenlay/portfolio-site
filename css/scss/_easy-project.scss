@@ -15,7 +15,10 @@ easy-project {
   overflow: hidden;
 
   &.expand-easy-project {
-    max-height: 30rem;
+    max-height: 50rem;
+    @include q.desktop {
+      max-height: 30rem;
+    }
   }
 
   .dropdown {
