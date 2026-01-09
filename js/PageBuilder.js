@@ -354,7 +354,7 @@ export class PageBuilder {
 			"integrates OpenGL and C# allowing for efficient transfer of chunk data to flexible shaders."
 		);
 		const paragraphB = ElementG.createSpecific("p", "", "Currently in early development, future updates to Mineshaft will include Multiplayer, " +
-			"accessibility features, particle collisions, chunk optomisations for maximum performance benefits and more."
+			"accessibility features, particle collisions, chunk optimisations for maximum performance and more."
 		);
 		section.append(paragraphA, paragraphB);
 
@@ -385,7 +385,7 @@ export class PageBuilder {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", Const.TITLE_CU_CARTA));
 
-		const paragraphA = ElementG.createSpecific("p", "", Const.TITLE_CU_CARTA + "is a game set in medieval Donegal in Ireland where a young " +
+		const paragraphA = ElementG.createSpecific("p", "", Const.TITLE_CU_CARTA + " is a game set in medieval Donegal in Ireland where a young " +
 			"adventurer must unite the Kingdom against the many forces that seek domination. Collect magically empowered pets to fight off " +
 			"evil colonial threats!"
 		);
@@ -438,7 +438,7 @@ export class PageBuilder {
 			Const.GITHUB,
 		);
 		googleBooksProject.addDescription("A React application that allows for user interaction with the publicly accessible Google Books API. " +
-			"Employing asynchronous programming and React state, creating seemless communication with external data.");
+			"Employing asynchronous programming and React state, creating seamless communication with external data.");
 		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
 		googleBooksProject.addLink("Github", "https://github.com/imogenlay/google-books-api");
 
