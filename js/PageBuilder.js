@@ -349,6 +349,15 @@ export class PageBuilder {
 	generateMineshaftPage() {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Mineshaft"));
+		const paragraphA = ElementG.createSpecific("p", "", "Mineshaft is a from-scratch recreation of the game Minecraft, utilising a custom game-engine " +
+			"specifically designed for the challenges of a voxel-based, procedurally generated game. The Base Lift Engine, also created by me, " +
+			"integrates OpenGL and C# allowing for efficient transfer of chunk data to flexible shaders."
+		);
+		const paragraphB = ElementG.createSpecific("p", "", "Currently in early development, future updates to Mineshaft will include Multiplayer, " +
+			"accessibility features, particle collisions, chunk optomisations for maximum performance benefits and more."
+		);
+		section.append(paragraphA, paragraphB);
+
 		const codeBox = new ProjectBox();
 		codeBox.addPins(
 			Const.CSHARP,
@@ -363,11 +372,11 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB);
 
-		section.append(codeBox);
+		section.append(codeBox, ElementG.createParagraph("In game ", "Screenshots:"));
+		section.append(this.createImgInPopout("./public/img/mineshaft_01.png", "mineshaft_01"));
 		section.append(this.createImgInPopout("./public/img/mineshaft_00.png", "mineshaft_00"));
 		section.append(this.createImgInPopout("./public/img/mineshaft_02.png", "mineshaft_02"));
 		section.append(this.createImgInPopout("./public/img/mineshaft_03.png", "mineshaft_03"));
-		section.append(this.createImgInPopout("./public/img/mineshaft_01.png", "mineshaft_01"));
 		return section;
 	}
 
