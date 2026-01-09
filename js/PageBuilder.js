@@ -370,7 +370,8 @@ export class PageBuilder {
 			Const.ASEPRITE,
 			Const.BLENDER,
 			Const.GIT,
-			Const.GITHUB);
+			Const.GITHUB
+		);
 
 		section.append(codeBox, ElementG.createParagraph("In game ", "Screenshots:"));
 		section.append(this.createImgInPopout("./public/img/mineshaft_01.png", "mineshaft_01"));
@@ -383,6 +384,17 @@ export class PageBuilder {
 	generateCuCartaPage() {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", Const.TITLE_CU_CARTA));
+
+		const paragraphA = ElementG.createSpecific("p", "", Const.TITLE_CU_CARTA + "is a game set in medieval Donegal in Ireland where a young " +
+			"adventurer must unite the Kingdom against the many forces that seek domination. Collect magically empowered pets to fight off " +
+			"evil colonial threats!"
+		);
+		const paragraphB = ElementG.createSpecific("p", "", "This game is built using the Godot game engine, but " +
+			"will be ported over to the Base Lift Engine once the Mineshaft project is complete!"
+		);
+		section.append(paragraphA, paragraphB);
+
+
 		const codeBox = new ProjectBox();
 		codeBox.addPins(
 			Const.CSHARP,
@@ -395,7 +407,8 @@ export class PageBuilder {
 			Const.KRITA,
 			Const.BLENDER,
 			Const.GIT,
-			Const.GITHUB);
+			Const.GITHUB
+		);
 
 		section.append(codeBox);
 		section.append(this.createImgInPopout("./public/img/cu_carta_00.png", "cu_carta_00"));
