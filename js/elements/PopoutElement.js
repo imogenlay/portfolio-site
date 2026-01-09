@@ -50,16 +50,19 @@ export class PopoutElement extends HTMLElement {
             const isPopped = this.popoutParent.classList.contains("popped");
 
             if (!isPopped) {
+                // Activate pop out!
                 this.popoutPlaceholder.style.width = this.popoutParent.offsetWidth + "px";
                 this.popoutPlaceholder.style.height = this.popoutParent.offsetHeight + "px";
                 this.popoutPlaceholder.style.display = "block";
                 document.documentElement.style.overflowY = "hidden";
+                this.popoutChild.classList.add("popped-child");
                 this.setIconToExpand(false);
             }
             else {
-
-                document.documentElement.style.overflowY = "visible";
+                // Get smaller.
                 this.popoutPlaceholder.style.display = "none";
+                document.documentElement.style.overflowY = "visible";
+                this.popoutChild.classList.remove("popped-child");
                 this.setIconToExpand(true);
             }
 

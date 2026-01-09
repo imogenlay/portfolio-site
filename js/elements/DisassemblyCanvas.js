@@ -292,7 +292,9 @@ export class DisassemblyCanvas extends HTMLElement {
     }
 
     resizeAndClearCanvas() {
-        const maxSize = this.offsetWidth;
+        const maxWidth = this.offsetWidth;
+        const maxHeight = this.classList.contains("popped-child") ? this.parentNode.offsetHeight : maxWidth;
+        const maxSize = MathG.min(maxWidth, maxHeight);
         this.currentCanvasScale = MathG.floor(MathG.clamp(maxSize / DisassemblyCanvas.CANVAS_SIZE, 1, 5));
         const newSize = this.currentCanvasScale * DisassemblyCanvas.CANVAS_SIZE;
 
