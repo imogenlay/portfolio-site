@@ -86,7 +86,6 @@ export class DisassemblyCanvas extends HTMLElement {
         this.context = this.canvas.getContext("2d");
 
         this.hyperlinkParent = document.createElement("div");
-        //this.hyperlinkParent.style.display = "none";
         this.hyperlink = document.createElement("a");
         this.hyperlink.target = "_blank";
         this.linkTitle = document.createElement("span");
