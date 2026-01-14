@@ -3,6 +3,7 @@ export class Const {
     static VERSION = "1.0.0.0";
     static CURRENT_PAGE_KEY = "CURRENT_PAGE";
     static LAST_PAGE_VISIT = "LAST_PAGE_VISIT";
+    static PROJECT_INTERACT = "PROJECT_INTERACT";
     static TITLE_CU_CARTA = "Cú Cárta";
     static DEPLOYMENT_VERSION = true;
 

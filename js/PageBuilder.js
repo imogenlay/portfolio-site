@@ -419,80 +419,6 @@ export class PageBuilder {
 		return section;
 	}
 
-	generatePortfolioPage() {
-
-		const section = document.createElement("section");
-		section.append(ElementG.createSpecific("h2", "", "Portfolio"));
-
-		// GOOGLE BOOKS 
-		const googleBooksProject = new EasyProject("Google Books API");
-		googleBooksProject.addPins(
-			Const.REACT,
-			Const.VITE,
-			Const.JAVASCRIPT,
-			Const.HTML,
-			Const.SASS,
-			Const.CSS,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GIT,
-			Const.GITHUB,
-		);
-		googleBooksProject.addDescription("A React application that allows for user interaction with the publicly accessible Google Books API. " +
-			"Employing asynchronous programming and React state, creating seamless communication with external data.");
-		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
-		googleBooksProject.addLink("Github", "https://github.com/imogenlay/google-books-api");
-
-		// MORSE CODE
-		const morseCodeProject = new EasyProject("Morse Code");
-		morseCodeProject.addPins(
-			Const.JAVASCRIPT,
-			Const.JEST,
-			Const.HTML,
-			Const.SASS,
-			Const.CSS,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GITHUB);
-		morseCodeProject.addDescription("This page translates user text back and forth between English and Morse Code. " +
-			"The algorithm facilitates per-line translation from either language. Additionally, " +
-			"all non-DOM functions have Jest unit tests, ensuring development safety.");
-		morseCodeProject.addLink("View", "https://imogenlay.com/projects/morse");
-		morseCodeProject.addLink("Github", "https://github.com/imogenlay/morse-code");
-
-		// PORTFOLIO SITE
-		const portfolioSite = new EasyProject("Portfolio Site");
-		portfolioSite.addPins(
-			Const.HTML,
-			Const.CSS,
-			Const.SASS,
-			Const.ASEPRITE,
-			Const.INKSCAPE,
-			Const.JAVASCRIPT,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GIT,
-			Const.GITHUB);
-		portfolioSite.addDescription("The site you are currently looking at was built from scratch to be " +
-			"a versatile and maintainable archive of all my work. Inspired by React, " +
-			"the site utilises a tailored solution to single page applications, integrating custom elements for reusability and performance.");
-		portfolioSite.addLink("Github", "https://github.com/imogenlay/portfolio-site");
-
-		// COFFEE CORNER
-		const coffeeCornerProject = new EasyProject("Pixel Perfect Design");
-		coffeeCornerProject.addPins(
-			Const.HTML,
-			Const.SASS,
-			Const.CSS,
-			Const.VISUAL_STUDIO_CODE,
-			Const.GITHUB);
-		coffeeCornerProject.addDescription("A pixel-perfect recreation of a Canva design making extensive use of SASS and the " +
-			"Block, Element, Modifier (BEM) methodology.");
-		coffeeCornerProject.addLink("View", "https://imogenlay.com/projects/coffee-corner");
-		coffeeCornerProject.addLink("Github", "https://github.com/imogenlay/nology-precourse");
-
-		section.append(googleBooksProject, morseCodeProject, portfolioSite, coffeeCornerProject);
-
-		return section;
-	}
-
 	generateDisassemblyPage() {
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Disassembly"));
@@ -516,10 +442,103 @@ export class PageBuilder {
 		gameRules.textContent = "This game is very difficult so don't worry about winning too much! You are permitted 13 wrong " +
 			"guesses before you lose! The clue button will give you a random correct letter for free.";
 
+		const githubLink = ElementG.createSpecific("a", "easy-project-link", "");
+		githubLink.href = "https://github.com/imogenlay/portfolio-site/blob/main/js/elements/DisassemblyCanvas.js";
+		const linkIcon = ElementG.createImg("./public/svg/github_link.svg", "github");
+		githubLink.append(linkIcon, "GitHub");
+		githubLink.style.marginBottom = "0.5rem";
 
 		const newButton = new PopoutElement(this.disassemblyCanvas);
 
-		section.append(newButton, paletteDivider, gameDescription, gameRules, otherBox);
+		section.append(newButton, paletteDivider, githubLink, gameDescription, gameRules, otherBox);
+
+		return section;
+	}
+
+	generatePortfolioPage() {
+
+		const section = document.createElement("section");
+		section.append(ElementG.createSpecific("h2", "", "Portfolio"));
+
+		// GOOGLE BOOKS 
+		const googleBooksProject = new EasyProject("Google Books API");
+		googleBooksProject.addPins(
+			Const.REACT,
+			Const.VITE,
+			Const.JAVASCRIPT,
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GIT,
+			Const.GITHUB,
+		);
+		googleBooksProject.addDescription("A React application that allows for user interaction with the " +
+			"publicly accessible Google Books API. Employing asynchronous programming " +
+			"and React state, creating seamless communication with external data.");
+		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
+		googleBooksProject.addLink("GitHub", "https://github.com/imogenlay/google-books-api");
+
+		// GODOT MAGNIFY
+		const godotMagnifyProject = new EasyProject("Godot Magnify");
+		godotMagnifyProject.addPins(
+			Const.GODOT,
+			Const.GDSCRIPT,
+			Const.GDSHADER,
+			Const.ASEPRITE,
+			Const.GITHUB,
+		);
+		godotMagnifyProject.addDescription("A custom plugin for Godot 4.0+ that works as a " +
+			"magnification tool for assistance with sight-impaired users utilising screen space shaders.");
+		godotMagnifyProject.addLink("GitHub", "https://github.com/imogenlay/godot-magnify");
+
+		// MORSE CODE
+		const morseCodeProject = new EasyProject("Morse Code");
+		morseCodeProject.addPins(
+			Const.JAVASCRIPT,
+			Const.JEST,
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GITHUB);
+		morseCodeProject.addDescription("This page translates user text back and forth between English and Morse Code. " +
+			"The algorithm facilitates per-line translation from either language. Additionally, " +
+			"all non-DOM functions have Jest unit tests, ensuring development safety.");
+		morseCodeProject.addLink("View", "https://imogenlay.com/projects/morse");
+		morseCodeProject.addLink("GitHub", "https://github.com/imogenlay/morse-code");
+
+		// PORTFOLIO SITE
+		const portfolioSite = new EasyProject("Portfolio Site");
+		portfolioSite.addPins(
+			Const.HTML,
+			Const.CSS,
+			Const.SASS,
+			Const.ASEPRITE,
+			Const.INKSCAPE,
+			Const.JAVASCRIPT,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GIT,
+			Const.GITHUB);
+		portfolioSite.addDescription("The site you are currently looking at was built from scratch to be " +
+			"a versatile and maintainable archive of all my work. Inspired by React, " +
+			"the site utilises a tailored solution to single page applications, integrating custom elements for reusability and performance.");
+		portfolioSite.addLink("GitHub", "https://github.com/imogenlay/portfolio-site");
+
+		// COFFEE CORNER
+		const coffeeCornerProject = new EasyProject("Pixel Perfect Design");
+		coffeeCornerProject.addPins(
+			Const.HTML,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GITHUB);
+		coffeeCornerProject.addDescription("A pixel-perfect recreation of a Canva design making extensive use of SASS and the " +
+			"Block, Element, Modifier (BEM) methodology.");
+		coffeeCornerProject.addLink("View", "https://imogenlay.com/projects/coffee-corner");
+		coffeeCornerProject.addLink("GitHub", "https://github.com/imogenlay/nology-precourse");
+
+		section.append(googleBooksProject, godotMagnifyProject, morseCodeProject, portfolioSite, coffeeCornerProject);
 
 		return section;
 	}

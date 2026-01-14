@@ -548,6 +548,24 @@ easy-project article .details-easy-project a img {
   height: 1rem;
 }
 
+a.easy-project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+a.easy-project-link:hover {
+  text-decoration: underline;
+  color: #edfffe;
+}
+a.easy-project-link img {
+  width: 1rem;
+  height: 1rem;
+}
+a.easy-project-link {
+  align-self: flex-start;
+}
+
 popout-element {
   position: relative;
 }

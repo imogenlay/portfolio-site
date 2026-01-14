@@ -11,6 +11,7 @@ export class EasyProject extends HTMLElement {
     details; description;
     pinsBox;
     isOpened = false;
+    dropdownIcon;
 
     constructor(_title) {
         super();
@@ -34,24 +35,30 @@ export class EasyProject extends HTMLElement {
 
     createDropdown() {
         const dropdown = ElementG.createSpecific("div", "dropdown", "");
-        const img = ElementG.createImg("./public/svg/dropdown_a.svg");
+        this.dropdownIcon = ElementG.createImg("./public/svg/dropdown_a.svg");
 
         this.append(dropdown);
-        dropdown.append(img);
+        dropdown.append(this.dropdownIcon);
 
         dropdown.onclick = () => {
             if (this.isOpened) {
-
                 this.classList.remove("expand-easy-project");
-                img.src = "./public/svg/dropdown_a.svg";
+                this.dropdownIcon.src = "./public/svg/dropdown_a.svg";
                 this.isOpened = false;
             }
-            else {
-                this.classList.add("expand-easy-project");
-                img.src = "./public/svg/dropdown_b.svg";
-                this.isOpened = true;
-            }
+            else
+                this.forceOpen();
         }
+
+        if (this.title === localStorage.getItem(Const.PROJECT_INTERACT))
+            this.forceOpen();
+    }
+
+    forceOpen() {
+        this.classList.add("expand-easy-project");
+        this.dropdownIcon.src = "./public/svg/dropdown_b.svg";
+        this.isOpened = true;
+        localStorage.setItem(Const.PROJECT_INTERACT, this.title);
     }
 
     addDescription(text) {
