@@ -17,6 +17,7 @@ export class Const {
     static CSHARP = "C#";
     static CSS = "CSS";
     static EXCEL = "Excel";
+    static FIREBASE = "Firebase";
     static GDSCRIPT = "GDScript";
     static GDSHADER = "GDShader";
     static GIT = "Git";

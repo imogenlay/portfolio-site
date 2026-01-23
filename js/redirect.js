@@ -6,7 +6,9 @@ function redirect(location, storage) {
     window.location.href = location;
 }
 
+// Redirect base on URL.
 const mainURL = "https://www.imogenlay.com";
+
 if (window.location.href.includes("disassembly"))
     redirect(mainURL, 4);
 else if (window.location.href.includes("projects"))

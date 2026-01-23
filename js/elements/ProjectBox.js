@@ -154,6 +154,13 @@ export class ProjectBox extends HTMLElement {
 					light: 60,
 				},
 				{
+					name: Const.FIREBASE,
+					img: "firebase",
+					hue: 10,
+					sat: -1,
+					light: -1,
+				},
+				{
 					name: Const.EXCEL,
 					img: "excel",
 					hue: 100,

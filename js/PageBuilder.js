@@ -28,6 +28,7 @@ export class PageBuilder {
 		this.main = _main;
 		this.foreground = _foreground;
 		this.background = _background;
+		console.log("Version: ", Const.VERSION);
 	}
 
 	// =========================== INITIALISATION FUNCTIONS ===========================
@@ -459,10 +460,33 @@ export class PageBuilder {
 
 		const section = document.createElement("section");
 		section.append(ElementG.createSpecific("h2", "", "Portfolio"));
+		const projectList = []
+		let i = 0;
 
-		// GOOGLE BOOKS 
-		const googleBooksProject = new EasyProject("Google Books API");
-		googleBooksProject.addPins(
+		// REACT E-COMMERCE USING FIREBASE 
+		i++;
+		projectList[i] = new EasyProject("React E-Commerce using Firebase");
+		projectList[i].addPins(
+			Const.REACT,
+			Const.FIREBASE,
+			Const.TYPESCRIPT,
+			Const.VITE,
+			Const.SASS,
+			Const.CSS,
+			Const.VISUAL_STUDIO_CODE,
+			Const.GIT,
+			Const.GITHUB,
+		);
+		projectList[i].addDescription("A React e-commerce store utilising interaction with a " +
+			"firebase document-database. The application stores both items and user cart contents " +
+			"in the cloud.");
+		projectList[i].addLink("View", "https://imogenlay.com/projects/react-e-commerce");
+		projectList[i].addLink("GitHub", "https://github.com/imogenlay/react-e-commerce");
+
+		// GOOGLE BOOKS
+		i++;
+		projectList[i] = new EasyProject("Google Books API");
+		projectList[i].addPins(
 			Const.REACT,
 			Const.VITE,
 			Const.JAVASCRIPT,
@@ -473,28 +497,30 @@ export class PageBuilder {
 			Const.GIT,
 			Const.GITHUB,
 		);
-		googleBooksProject.addDescription("A React application that allows for user interaction with the " +
+		projectList[i].addDescription("A React application that allows for user interaction with the " +
 			"publicly accessible Google Books API. Employing asynchronous programming " +
 			"and React state, creating seamless communication with external data.");
-		googleBooksProject.addLink("View", "https://imogenlay.com/projects/google-books");
-		googleBooksProject.addLink("GitHub", "https://github.com/imogenlay/google-books-api");
+		projectList[i].addLink("View", "https://imogenlay.com/projects/google-books");
+		projectList[i].addLink("GitHub", "https://github.com/imogenlay/google-books-api");
 
 		// GODOT MAGNIFY
-		const godotMagnifyProject = new EasyProject("Godot Magnify");
-		godotMagnifyProject.addPins(
+		i++;
+		projectList[i] = new EasyProject("Godot Magnify");
+		projectList[i].addPins(
 			Const.GODOT,
 			Const.GDSCRIPT,
 			Const.GDSHADER,
 			Const.ASEPRITE,
 			Const.GITHUB,
 		);
-		godotMagnifyProject.addDescription("A custom plugin for Godot 4.0+ that works as a " +
+		projectList[i].addDescription("A custom plugin for Godot 4.0+ that works as a " +
 			"magnification tool for assistance with sight-impaired users utilising screen space shaders.");
-		godotMagnifyProject.addLink("GitHub", "https://github.com/imogenlay/godot-magnify");
+		projectList[i].addLink("GitHub", "https://github.com/imogenlay/godot-magnify");
 
 		// MORSE CODE
-		const morseCodeProject = new EasyProject("Morse Code");
-		morseCodeProject.addPins(
+		i++;
+		projectList[i] = new EasyProject("Morse Code");
+		projectList[i].addPins(
 			Const.JAVASCRIPT,
 			Const.JEST,
 			Const.HTML,
@@ -502,15 +528,16 @@ export class PageBuilder {
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GITHUB);
-		morseCodeProject.addDescription("This page translates user text back and forth between English and Morse Code. " +
+		projectList[i].addDescription("This page translates user text back and forth between English and Morse Code. " +
 			"The algorithm facilitates per-line translation from either language. Additionally, " +
 			"all non-DOM functions have Jest unit tests, ensuring development safety.");
-		morseCodeProject.addLink("View", "https://imogenlay.com/projects/morse");
-		morseCodeProject.addLink("GitHub", "https://github.com/imogenlay/morse-code");
+		projectList[i].addLink("View", "https://imogenlay.com/projects/morse");
+		projectList[i].addLink("GitHub", "https://github.com/imogenlay/morse-code");
 
 		// PORTFOLIO SITE
-		const portfolioSite = new EasyProject("Portfolio Site");
-		portfolioSite.addPins(
+		i++;
+		projectList[i] = new EasyProject("Portfolio Site");
+		projectList[i].addPins(
 			Const.HTML,
 			Const.CSS,
 			Const.SASS,
@@ -520,26 +547,26 @@ export class PageBuilder {
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB);
-		portfolioSite.addDescription("The site you are currently looking at was built from scratch to be " +
+		projectList[i].addDescription("The site you are currently looking at was built from scratch to be " +
 			"a versatile and maintainable archive of all my work. Inspired by React, " +
 			"the site utilises a tailored solution to single page applications, integrating custom elements for reusability and performance.");
-		portfolioSite.addLink("GitHub", "https://github.com/imogenlay/portfolio-site");
+		projectList[i].addLink("GitHub", "https://github.com/imogenlay/portfolio-site");
 
 		// COFFEE CORNER
-		const coffeeCornerProject = new EasyProject("Pixel Perfect Design");
-		coffeeCornerProject.addPins(
+		i++;
+		projectList[i] = new EasyProject("Pixel Perfect Design");
+		projectList[i].addPins(
 			Const.HTML,
 			Const.SASS,
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GITHUB);
-		coffeeCornerProject.addDescription("A pixel-perfect recreation of a Canva design making extensive use of SASS and the " +
+		projectList[i].addDescription("A pixel-perfect recreation of a Canva design making extensive use of SASS and the " +
 			"Block, Element, Modifier (BEM) methodology.");
-		coffeeCornerProject.addLink("View", "https://imogenlay.com/projects/coffee-corner");
-		coffeeCornerProject.addLink("GitHub", "https://github.com/imogenlay/nology-precourse");
+		projectList[i].addLink("View", "https://imogenlay.com/projects/coffee-corner");
+		projectList[i].addLink("GitHub", "https://github.com/imogenlay/nology-precourse");
 
-		section.append(googleBooksProject, godotMagnifyProject, morseCodeProject, portfolioSite, coffeeCornerProject);
-
+		projectList.forEach((proj) => section.append(proj));
 		return section;
 	}
 
