@@ -46,5 +46,6 @@ export class Const {
     static VISUAL_STUDIO_CODE = "Visual Studio Code";
     static VISUAL_STUDIO = "Visual Studio";
     static VITE = "Vite";
+    static VITEST = "Vitest";
     static WYSCI = "Wysci";
 }

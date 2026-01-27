@@ -30,7 +30,7 @@ header {
   flex-shrink: 0;
 
   @include q.desktop {
-    width: min(9vw, 7rem);
+    width: min(6vw, 5rem);
   }
 }
 

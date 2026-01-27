@@ -465,23 +465,51 @@ export class PageBuilder {
 
 		// REACT E-COMMERCE USING FIREBASE 
 		i++;
-		projectList[i] = new EasyProject("React E-Commerce using Firebase");
+		projectList[i] = new EasyProject("E-Commerce Storefront");
 		projectList[i].addPins(
 			Const.REACT,
 			Const.FIREBASE,
 			Const.TYPESCRIPT,
 			Const.VITE,
+			Const.VITEST,
 			Const.SASS,
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB,
 		);
+		projectList[i].addTitlePins(
+			Const.REACT,
+			Const.FIREBASE,
+			Const.TYPESCRIPT,
+		);
 		projectList[i].addDescription("A React e-commerce store utilising interaction with a " +
 			"firebase document-database. The application stores both items and user cart contents " +
 			"in the cloud.");
 		projectList[i].addLink("View", "https://imogenlay.com/projects/react-e-commerce");
 		projectList[i].addLink("GitHub", "https://github.com/imogenlay/react-e-commerce");
+
+		// JAVA CLI MINESWEEPER
+		i++;
+		projectList[i] = new EasyProject("Java CLI Minesweeper");
+		projectList[i].addPins(
+			Const.JAVA,
+			Const.INTELLIJ,
+			Const.GODOT,
+			Const.GDSCRIPT,
+			Const.GITHUB,
+		);
+		projectList[i].addTitlePins(
+			Const.JAVA,
+			Const.GODOT,
+		);
+		projectList[i].addDescription("A command line interface implementation of the game minesweeper. " +
+			"Utilising classes, byte arrays and recursive functions, this project allows players to test " +
+			"their ability to locate mines. Additionally, there is a Godot version of the game " +
+			"that can be played in the browser.");
+		projectList[i].addLink("View", "https://imogenlay.com/projects/minesweeper");
+		projectList[i].addLink("Java GitHub", "https://github.com/imogenlay/java-minesweeper");
+		projectList[i].addLink("Godot GitHub", "https://github.com/imogenlay/godot-minesweeper");
 
 		// GOOGLE BOOKS
 		i++;
@@ -496,6 +524,10 @@ export class PageBuilder {
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB,
+		);
+		projectList[i].addTitlePins(
+			Const.REACT,
+			Const.JAVASCRIPT,
 		);
 		projectList[i].addDescription("A React application that allows for user interaction with the " +
 			"publicly accessible Google Books API. Employing asynchronous programming " +
@@ -513,6 +545,11 @@ export class PageBuilder {
 			Const.ASEPRITE,
 			Const.GITHUB,
 		);
+		projectList[i].addTitlePins(
+			Const.GODOT,
+			Const.GDSCRIPT,
+			Const.GDSHADER,
+		);
 		projectList[i].addDescription("A custom plugin for Godot 4.0+ that works as a " +
 			"magnification tool for assistance with sight-impaired users utilising screen space shaders.");
 		projectList[i].addLink("GitHub", "https://github.com/imogenlay/godot-magnify");
@@ -528,6 +565,10 @@ export class PageBuilder {
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GITHUB);
+		projectList[i].addTitlePins(
+			Const.JAVASCRIPT,
+			Const.JEST,
+		);
 		projectList[i].addDescription("This page translates user text back and forth between English and Morse Code. " +
 			"The algorithm facilitates per-line translation from either language. Additionally, " +
 			"all non-DOM functions have Jest unit tests, ensuring development safety.");
@@ -538,15 +579,19 @@ export class PageBuilder {
 		i++;
 		projectList[i] = new EasyProject("Portfolio Site");
 		projectList[i].addPins(
+			Const.JAVASCRIPT,
 			Const.HTML,
 			Const.CSS,
 			Const.SASS,
 			Const.ASEPRITE,
 			Const.INKSCAPE,
-			Const.JAVASCRIPT,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GIT,
 			Const.GITHUB);
+		projectList[i].addTitlePins(
+			Const.JAVASCRIPT,
+			Const.SASS,
+		);
 		projectList[i].addDescription("The site you are currently looking at was built from scratch to be " +
 			"a versatile and maintainable archive of all my work. Inspired by React, " +
 			"the site utilises a tailored solution to single page applications, integrating custom elements for reusability and performance.");
@@ -561,6 +606,10 @@ export class PageBuilder {
 			Const.CSS,
 			Const.VISUAL_STUDIO_CODE,
 			Const.GITHUB);
+		projectList[i].addTitlePins(
+			Const.HTML,
+			Const.CSS,
+		);
 		projectList[i].addDescription("A pixel-perfect recreation of a Canva design making extensive use of SASS and the " +
 			"Block, Element, Modifier (BEM) methodology.");
 		projectList[i].addLink("View", "https://imogenlay.com/projects/coffee-corner");

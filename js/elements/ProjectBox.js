@@ -15,7 +15,7 @@ export class ProjectBox extends HTMLElement {
 	constructor() {
 		super();
 		// Generate the pins array if it doesn't already exist.
-		this.initialiseStaticPinsArray();
+		ProjectBox.initialiseStaticPinsArray();
 	}
 
 	// =========================== INITIALISATION FUNCTIONS ===========================
@@ -55,8 +55,8 @@ export class ProjectBox extends HTMLElement {
 			img = ElementG.createImg("./public/svg/" + pinData.img + ".svg", pinData.img);
 		else
 			img = document.createElement("figure");
-		img.style.width = "32px";
-		img.style.height = "32px";
+		/*img.style.width = "32px";
+		img.style.height = "32px";*/
 
 		const p = ElementG.createSpecific("p", "", pinData.name);
 
@@ -108,7 +108,16 @@ export class ProjectBox extends HTMLElement {
 		return pin;
 	}
 
-	initialiseStaticPinsArray() {
+	static getPinSource(name) {
+		ProjectBox.initialiseStaticPinsArray();
+		for (let i = 0; i < ProjectBox.pinsArray.length; i++)
+			if (ProjectBox.pinsArray[i].name === name)
+				return ProjectBox.pinsArray[i];
+
+		return null;
+	}
+
+	static initialiseStaticPinsArray() {
 		if (ProjectBox.pinsArray === null)
 			ProjectBox.pinsArray = [
 				{
@@ -362,6 +371,13 @@ export class ProjectBox extends HTMLElement {
 					hue: 270,
 					sat: 80,
 					light: 60,
+				},
+				{
+					name: Const.VITEST,
+					img: "vitest",
+					hue: 90,
+					sat: -1,
+					light: 30,
 				},
 				{
 					name: Const.WYSCI,

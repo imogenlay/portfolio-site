@@ -134,7 +134,7 @@ header {
 }
 @media screen and (min-width: 768px) {
   #gap {
-    width: min(9vw, 7rem);
+    width: min(6vw, 5rem);
   }
 }
 
@@ -436,6 +436,8 @@ project-box div figure,
 project-box div img {
   flex-shrink: 0;
   filter: drop-shadow(2px 2px 6px #27282b);
+  width: 32px;
+  height: 32px;
 }
 project-box div figure {
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2039215686);
@@ -485,22 +487,69 @@ img.disassembly-divider {
 
 easy-project {
   border: 1px solid #e2ddff;
-  background-color: rgba(0, 154, 255, 0.125);
+  background-color: rgba(0, 154, 255, 0.1);
   padding: 0.5rem;
   padding-bottom: 0;
   margin-bottom: 1rem;
   position: relative;
-  max-height: 2.75rem;
-  transition: max-height calc(var(--anim-speed) * 300ms) ease;
+  max-height: 5.1rem;
+  transition: all calc(var(--anim-speed) * 300ms) ease;
   overflow: hidden;
 }
+easy-project hgroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+  transition: padding calc(var(--anim-speed) * 300ms) ease;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+easy-project hgroup div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+easy-project hgroup div.title-text img {
+  cursor: pointer;
+}
+easy-project hgroup div.title-pins {
+  flex-direction: row;
+}
+easy-project hgroup div h3 {
+  font-size: clamp(1rem, 6vw, 1.25rem);
+  font-weight: 400;
+  flex: 1;
+  padding: 0;
+}
+easy-project hgroup div img {
+  user-select: none;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+  transition: all calc(var(--anim-speed) * 300ms) ease;
+}
 easy-project.expand-easy-project {
-  max-height: 50rem;
+  max-height: 60rem;
 }
 @media screen and (min-width: 768px) {
   easy-project.expand-easy-project {
-    max-height: 30rem;
+    max-height: 50rem;
   }
+}
+easy-project.expand-easy-project {
+  background-color: rgba(0, 154, 255, 0.2);
+}
+easy-project.expand-easy-project hgroup {
+  padding: 0;
+}
+easy-project.expand-easy-project .title-pins img {
+  height: 0px;
+  opacity: 0;
 }
 easy-project .dropdown {
   position: absolute;
@@ -512,11 +561,7 @@ easy-project .dropdown {
   justify-content: flex-end;
   align-items: flex-start;
   gap: 0;
-}
-easy-project .dropdown img {
-  width: 2rem;
   height: 2rem;
-  cursor: pointer;
 }
 easy-project article {
   display: flex;
@@ -544,8 +589,8 @@ easy-project article .details-easy-project a:hover {
   color: #edfffe;
 }
 easy-project article .details-easy-project a img {
-  width: 1rem;
-  height: 1rem;
+  width: 20px;
+  height: 20px;
 }
 
 a.easy-project-link {
@@ -559,8 +604,8 @@ a.easy-project-link:hover {
   color: #edfffe;
 }
 a.easy-project-link img {
-  width: 1rem;
-  height: 1rem;
+  width: 20px;
+  height: 20px;
 }
 a.easy-project-link {
   align-self: flex-start;

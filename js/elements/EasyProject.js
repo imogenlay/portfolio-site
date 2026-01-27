@@ -7,58 +7,65 @@ import { Const } from '../constants/Const.js';
 export class EasyProject extends HTMLElement {
 
     title;
-    article;
     details; description;
     pinsBox;
     isOpened = false;
-    dropdownIcon;
+    titlePins;
 
     constructor(_title) {
         super();
         this.title = _title;
         this.createLayout();
-        this.createDropdown();
     }
 
     createLayout() {
+        // Create heading.
+        const hgroup = document.createElement("hgroup");
+        const hgroupTitle = ElementG.createSpecific("div", "title-text", "");
+        this.titlePins = ElementG.createSpecific("div", "title-pins", "");
+        hgroup.append(hgroupTitle, this.titlePins);
 
         const heading = ElementG.createSpecific("h3", "", this.title);
-        this.article = document.createElement("article");
+        this.id = this.title.toLowerCase().replaceAll(" ", "-");
+        const dropdownIcon = ElementG.createImg("./public/svg/dropdown_a.svg", "dropdown");
+        hgroupTitle.append(heading, dropdownIcon);
+
+        // Create article.
+        const article = document.createElement("article");
         this.details = ElementG.createSpecific("div", "details-easy-project", "");
         this.description = ElementG.createSpecific("p", "", "No description.");
         this.pinsBox = new ProjectBox();
 
-        this.append(this.article);
-        this.article.append(heading, this.details, this.pinsBox);
+        this.append(article);
+        article.append(hgroup, this.details, this.pinsBox);
         this.details.append(this.description);
-    }
 
-    createDropdown() {
-        const dropdown = ElementG.createSpecific("div", "dropdown", "");
-        this.dropdownIcon = ElementG.createImg("./public/svg/dropdown_a.svg");
+        // Attach dropdown behaviour.
+        const forceOpen = () => {
+            localStorage.setItem(Const.PROJECT_INTERACT, this.title);
 
-        this.append(dropdown);
-        dropdown.append(this.dropdownIcon);
+            this.classList.add("expand-easy-project");
+            dropdownIcon.src = "./public/svg/dropdown_b.svg";
+            this.isOpened = true;
+        }
 
-        dropdown.onclick = () => {
-            if (this.isOpened) {
-                this.classList.remove("expand-easy-project");
-                this.dropdownIcon.src = "./public/svg/dropdown_a.svg";
-                this.isOpened = false;
-            }
+        const forceClose = () => {
+            this.classList.remove("expand-easy-project");
+            dropdownIcon.src = "./public/svg/dropdown_a.svg";
+            this.isOpened = false;
+        }
+
+        hgroupTitle.onclick = () => {
+            if (this.isOpened)
+                forceClose();
             else
-                this.forceOpen();
+                forceOpen();
         }
 
         if (this.title === localStorage.getItem(Const.PROJECT_INTERACT))
-            this.forceOpen();
-    }
-
-    forceOpen() {
-        this.classList.add("expand-easy-project");
-        this.dropdownIcon.src = "./public/svg/dropdown_b.svg";
-        this.isOpened = true;
-        localStorage.setItem(Const.PROJECT_INTERACT, this.title);
+            forceOpen();
+        else
+            forceClose();
     }
 
     addDescription(text) {
@@ -67,6 +74,17 @@ export class EasyProject extends HTMLElement {
 
     addPins(...names) {
         this.pinsBox.addPins(names);
+    }
+
+    addTitlePins(...names) {
+        for (let i = 0; i < names.length; i++) {
+            const image = ProjectBox.getPinSource(names[i]).img;
+
+            if (image) {
+                const img = ElementG.createImg("./public/svg/" + image + ".svg", image);
+                this.titlePins.append(img);
+            }
+        }
     }
 
     addLink(text, href) {
