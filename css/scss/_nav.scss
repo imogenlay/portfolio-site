@@ -20,19 +20,22 @@ header {
     margin-top: clamp(0rem, 5vw, 0.5rem);
   }
 
+  // DESKTOP ONLY
   @include q.desktop {
-    // DESKTOP ONLY
     nav {
       margin-top: 0.75rem;
       @include mixins.flex(column, flex-start, center, 2px);
+      div {
+        width: 100%;
+        @include mixins.flex(column, flex-start, center, 2px);
+      }
 
-      button {
+      button.nav-button {
         user-select: none;
 
         width: calc(100% - 0.5rem);
         text-align: left;
         font-size: 1.25rem;
-        /* prettier-ignore */
         transition:
           background-color calc(var(--anim-speed) * 200ms) ease-in-out,
           font-weight calc(var(--anim-speed) * 200ms) ease-in-out,
@@ -93,22 +96,76 @@ header {
     }
   }
 
+  // PHONE ONLY
   @include q.phone {
     nav {
-      background-color: green;
+      @include mixins.flex(row, center, center, 10px);
+
       position: fixed;
       bottom: 0;
       left: 0;
+
       margin: 0;
       width: 100vw;
-      @include mixins.flex(row, flex-start, center, 2px);
+      height: 60px;
       z-index: 1;
+      overflow: visible;
+      background-color: g.$clr-background-static-b;
+      --button-width: max(25%, 120px);
 
-      button {
+      button.nav-button,
+      .nav-button-group-parent {
+        width: var(--button-width);
+        height: 50px;
+        background: transparent;
+        color: g.$clr-white;
+        p {
+          color: g.$clr-white;
+        }
+
+        &.selected {
+          font-weight: 600;
+        }
       }
 
-      .nav-divider {
-        display: none;
+      .nav-button-group-parent {
+        @include mixins.flex(column, center, center, 0);
+        cursor: pointer;
+
+        .nav-divider {
+          p {
+            user-select: none;
+            padding: 0;
+          }
+          hr {
+            display: none;
+          }
+        }
+
+        .nav-button-group-child {
+          display: none;
+        }
+
+        &.active-nav-button-group {
+          background-color: $clr-nav-button-background-c;
+          overflow: visible;
+
+          p {
+            font-weight: 600;
+          }
+
+          .nav-button-group-child {
+            @include mixins.flex(column, center, center, 0);
+            position: absolute;
+
+            width: var(--button-width);
+            bottom: 100%;
+            background-color: g.$clr-background-static-a;
+            button.nav-button {
+              width: 100%;
+            }
+          }
+        }
       }
     }
   }

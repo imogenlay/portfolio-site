@@ -33,12 +33,18 @@ form {
     width: 100%;
     @include mixins.flex(row, flex-start, stretch, 0.5rem);
 
+    @include q.phone {
+      @include mixins.flex(column, flex-start, stretch, 0);
+    }
+
     &:has(textarea) {
       flex-grow: 1;
     }
 
     label {
-      padding-top: 0.5rem;
+      @include q.desktop {
+        padding-top: 0.5rem;
+      }
       accent-color: g.$clr-accent;
       @include mixins.flex(row, flex-start, flex-start, 0);
 

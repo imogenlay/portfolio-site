@@ -148,6 +148,9 @@ export class PageBuilder {
 					buttons[i].classList.add("recently-selected");
 			}
 
+			document.querySelectorAll(".active-nav-button-group").forEach(a =>
+				a.classList.remove("active-nav-button-group"));
+
 			const switchToPageUpdate = () => {
 				for (let i = 0; i < buttons.length; i++) {
 					if (buttons[i].classList.contains("recently-selected")) {
@@ -186,8 +189,26 @@ export class PageBuilder {
 		const createGroup = (groupName, ...buttonNames) => {
 			const parent = ElementG.createSpecific("div", "nav-button-group-parent", "");
 			const child = ElementG.createSpecific("div", "nav-button-group-child", "");
-			parent.append(createNavbarDivider(groupName), child);
+			const divider = createNavbarDivider(groupName);
+
+			parent.append(divider, child);
 			buttonNames.forEach((b) => child.append(createNavButton(b)));
+
+			parent.addEventListener("click", () => {
+				const allActive = document.querySelectorAll(".active-nav-button-group");
+				let containsCurrent = false;
+				allActive.forEach(a => {
+					a.classList.remove("active-nav-button-group");
+					if (a === parent)
+						containsCurrent = true;
+				});
+
+				if (!containsCurrent)
+					parent.classList.add("active-nav-button-group");
+			}
+			);
+
+
 			return parent;
 		}
 

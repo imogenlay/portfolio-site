@@ -9,7 +9,6 @@ This website uses vanilla JavaScript for code and SASS for CSS.
 ### Portfolio
 
 - Give popout ability to scroll to next/previous image.
-- Mobile-specific menu styling.
 
 ### Disassembly
 

@@ -281,27 +281,34 @@ header hr.title {
     align-items: center;
     gap: 2px;
   }
-  header nav button {
+  header nav div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+  }
+  header nav button.nav-button {
     user-select: none;
     width: calc(100% - 0.5rem);
     text-align: left;
     font-size: 1.25rem;
-    /* prettier-ignore */
     transition: background-color calc(var(--anim-speed) * 200ms) ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
     font-weight: 400;
     background-color: transparent;
     color: #edfffe;
     padding: 0.1rem 0 0.1rem 1.25rem;
   }
-  header nav button:hover, header nav button.selected, header nav button.recently-selected {
+  header nav button.nav-button:hover, header nav button.nav-button.selected, header nav button.nav-button.recently-selected {
     background-color: rgba(237, 244, 255, 0.1568627451);
     font-weight: 600;
     padding-left: 2.5rem;
   }
-  header nav button:hover {
+  header nav button.nav-button:hover {
     background-color: rgba(229, 227, 255, 0.2039215686);
   }
-  header nav button.recently-selected {
+  header nav button.nav-button.recently-selected {
     transition: background-color 0s ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
     padding-left: 2.5rem;
     background-color: rgba(222, 220, 255, 0.3411764706);
@@ -332,21 +339,75 @@ header hr.title {
 }
 @media screen and (max-width: 767px) {
   header nav {
-    background-color: green;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     position: fixed;
     bottom: 0;
     left: 0;
     margin: 0;
     width: 100vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2px;
+    height: 60px;
     z-index: 1;
+    overflow: visible;
+    background-color: #040117;
+    --button-width: max(25%, 120px);
   }
-  header nav .nav-divider {
+  header nav button.nav-button,
+  header nav .nav-button-group-parent {
+    width: var(--button-width);
+    height: 50px;
+    background: transparent;
+    color: #edfffe;
+  }
+  header nav button.nav-button p,
+  header nav .nav-button-group-parent p {
+    color: #edfffe;
+  }
+  header nav button.nav-button.selected,
+  header nav .nav-button-group-parent.selected {
+    font-weight: 600;
+  }
+  header nav .nav-button-group-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+  }
+  header nav .nav-button-group-parent .nav-divider p {
+    user-select: none;
+    padding: 0;
+  }
+  header nav .nav-button-group-parent .nav-divider hr {
     display: none;
+  }
+  header nav .nav-button-group-parent .nav-button-group-child {
+    display: none;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group {
+    background-color: rgba(222, 220, 255, 0.3411764706);
+    overflow: visible;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group p {
+    font-weight: 600;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group .nav-button-group-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    position: absolute;
+    width: var(--button-width);
+    bottom: 100%;
+    background-color: #2d0860;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group .nav-button-group-child button.nav-button {
+    width: 100%;
   }
 }
 
@@ -394,11 +455,24 @@ form div {
   align-items: stretch;
   gap: 0.5rem;
 }
+@media screen and (max-width: 767px) {
+  form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0;
+  }
+}
 form div:has(textarea) {
   flex-grow: 1;
 }
+@media screen and (min-width: 768px) {
+  form div label {
+    padding-top: 0.5rem;
+  }
+}
 form div label {
-  padding-top: 0.5rem;
   accent-color: #009aff;
   display: flex;
   flex-direction: row;
