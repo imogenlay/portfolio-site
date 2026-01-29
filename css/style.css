@@ -129,7 +129,6 @@ header {
 
 #gap {
   width: 1rem;
-  height: 2rem;
   flex-shrink: 0;
 }
 @media screen and (min-width: 768px) {
@@ -262,67 +261,93 @@ html {
     --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
   }
 }
-hr.title {
+@media screen and (max-width: 767px) {
+  header h1,
+  header hr.title {
+    display: none;
+  }
+}
+header hr.title {
   border-top: 2px solid #009aff;
   width: 100%;
   margin-top: clamp(0rem, 5vw, 0.5rem);
 }
-
-nav {
-  margin-top: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 2px;
+@media screen and (min-width: 768px) {
+  header nav {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+  }
+  header nav button {
+    user-select: none;
+    width: calc(100% - 0.5rem);
+    text-align: left;
+    font-size: 1.25rem;
+    /* prettier-ignore */
+    transition: background-color calc(var(--anim-speed) * 200ms) ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
+    font-weight: 400;
+    background-color: transparent;
+    color: #edfffe;
+    padding: 0.1rem 0 0.1rem 1.25rem;
+  }
+  header nav button:hover, header nav button.selected, header nav button.recently-selected {
+    background-color: rgba(237, 244, 255, 0.1568627451);
+    font-weight: 600;
+    padding-left: 2.5rem;
+  }
+  header nav button:hover {
+    background-color: rgba(229, 227, 255, 0.2039215686);
+  }
+  header nav button.recently-selected {
+    transition: background-color 0s ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
+    padding-left: 2.5rem;
+    background-color: rgba(222, 220, 255, 0.3411764706);
+  }
+  header nav .nav-divider {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    overflow: visible;
+  }
+  header nav .nav-divider p {
+    flex-shrink: 0;
+    color: #edfffe;
+    user-select: none;
+  }
+  header nav .nav-divider hr {
+    border-top: 1px solid #e2ddff;
+    width: 100%;
+  }
+  header nav .nav-divider p,
+  header nav .nav-divider hr {
+    margin: 0;
+    padding: 0;
+  }
 }
-nav button {
-  user-select: none;
-  width: calc(100% - 0.5rem);
-  text-align: left;
-  font-size: 1.25rem;
-  /* prettier-ignore */
-  transition: background-color calc(var(--anim-speed) * 200ms) ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
-  font-weight: 400;
-  background-color: transparent;
-  color: #edfffe;
-  padding: 0.1rem 0 0.1rem 1.25rem;
-}
-nav button:hover, nav button.selected, nav button.recently-selected {
-  background-color: rgba(237, 244, 255, 0.1568627451);
-  font-weight: 600;
-  padding-left: 2.5rem;
-}
-nav button:hover {
-  background-color: rgba(229, 227, 255, 0.2039215686);
-}
-nav button.recently-selected {
-  transition: background-color 0s ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
-  padding-left: 2.5rem;
-  background-color: rgba(222, 220, 255, 0.3411764706);
-}
-nav .nav-divider {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  overflow: visible;
-}
-nav .nav-divider p {
-  flex-shrink: 0;
-  color: #edfffe;
-  user-select: none;
-}
-nav .nav-divider hr {
-  border-top: 1px solid #e2ddff;
-  width: 100%;
-}
-nav .nav-divider p,
-nav .nav-divider hr {
-  margin: 0;
-  padding: 0;
+@media screen and (max-width: 767px) {
+  header nav {
+    background-color: green;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    z-index: 1;
+  }
+  header nav .nav-divider {
+    display: none;
+  }
 }
 
 label {

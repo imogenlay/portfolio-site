@@ -3,6 +3,7 @@ import { ProjectBox } from "./elements/ProjectBox.js";
 import { DisassemblyCanvas } from "./elements/DisassemblyCanvas.js";
 import * as ElementG from "./lib/ElementG.js";
 import * as MathG from "./lib/MathG.js";
+import * as CheckG from "./lib/CheckG.js";
 import { PopoutElement } from "./elements/PopoutElement.js";
 import { EasyProject } from "./elements/EasyProject.js";
 
@@ -13,7 +14,7 @@ export class PageBuilder {
 	header; main; foreground; background;
 	floatingTitleAnimLerp = 0;
 	floatingTitleSpan; floatingTitleUnderlineA; floatingTitleUnderlineB; floatingTitleButton;
-	navbar; navbarElements; pageElements;
+	navbar;
 
 	fadeInElements = [];
 	fadeOutElements = [];
@@ -37,7 +38,6 @@ export class PageBuilder {
 		this.appendFloatingTitleAndUnderline();
 		this.appendTitleElementsAndCreateNavbar();
 		this.createNavbarElementsAndPageElementsArrays();
-		this.appendNavbarAndPageElementsArray();
 	}
 
 	appendFloatingTitleAndUnderline() {
@@ -115,25 +115,8 @@ export class PageBuilder {
 
 	createNavbarElementsAndPageElementsArrays() {
 
-		// Create nav bar buttons and section titles.
-		this.navbarElements = [
-			ElementG.createSpecific("button", "nav-button", "Home"),
-			ElementG.createSpecific("button", "nav-button", "Contact"),
-			this.createNavbarDivider("Projects"),
-			ElementG.createSpecific("button", "nav-button", "Mineshaft"),
-			ElementG.createSpecific("button", "nav-button", Const.TITLE_CU_CARTA),
-			ElementG.createSpecific("button", "nav-button", "Disassembly"),
-			ElementG.createSpecific("button", "nav-button", "Portfolio"),
-		];
-
-		if (!Const.DEPLOYMENT_VERSION)
-			this.navbarElements.push(
-				this.createNavbarDivider("Ver " + Const.VERSION),
-				ElementG.createSpecific("button", "nav-button", "Subheadings"),
-			);
-
 		// Create pages: Have to be in same order as nav buttons. 
-		this.pageElements = [
+		const pages = [
 			this.generateHomePage(),
 			this.generateContactPage(),
 			this.generateMineshaftPage(),
@@ -141,30 +124,91 @@ export class PageBuilder {
 			this.generateDisassemblyPage(),
 			this.generatePortfolioPage(),
 		];
+		const buttons = [];
 
+		// Only add subheading generator if needed.
 		if (!Const.DEPLOYMENT_VERSION)
-			this.pageElements.push(this.generateSubHeadingGenerator());
-	}
+			pages.push(this.generateSubHeadingGenerator());
 
-	appendNavbarAndPageElementsArray() {
+		// Switch to page function.
+		const switchToPage = (pageIndex) => {
 
-		for (let i = 0; i < this.navbarElements.length; i++)
-			this.navbar.append(this.navbarElements[i]);
+			main.innerHTML = "";
+			main.append(pages[pageIndex]);
 
-		// Append nav buttons and add click funtionality.
-		let currentPageIndex = 0;
-		for (let i = 0; i < this.navbarElements.length; i++)
-			if (ElementG.isTag(this.navbarElements[i], "button")) {
-				// This variable must be passed by value to a new variable to save it.
-				let j = currentPageIndex;
-				this.navbarElements[i].addEventListener("click", () => this.switchToPage(j));
-				++currentPageIndex;
+			// Save selected page to local memory.
+			localStorage.setItem(Const.CURRENT_PAGE_KEY, pageIndex);
+			localStorage.setItem(Const.LAST_PAGE_VISIT, Date.now());
+
+			for (let i = 0; i < buttons.length; i++) {
+				buttons[i].classList.remove("recently-selected");
+				buttons[i].classList.remove("selected");
+				if (i === pageIndex)
+					// This button is the selected one.
+					buttons[i].classList.add("recently-selected");
 			}
+
+			const switchToPageUpdate = () => {
+				for (let i = 0; i < buttons.length; i++) {
+					if (buttons[i].classList.contains("recently-selected")) {
+						buttons[i].classList.remove("recently-selected");
+						buttons[i].classList.add("selected");
+					}
+				}
+			}
+
+			setTimeout(() => switchToPageUpdate(), 10);
+		}
+
+		// Function for creating navbar divider.
+		const createNavbarDivider = (name) => {
+			const div = ElementG.createSpecific("div", "nav-divider", "");
+			const hrA = document.createElement("hr");
+			const title = ElementG.createSpecific("p", "", name);
+			const hrB = document.createElement("hr");
+
+			div.append(hrA, title, hrB);
+			div.name = name;
+			return div;
+		}
+
+		// Create a navbar button.
+		let buttonIndex = 0;
+		const createNavButton = (name) => {
+			const button = ElementG.createSpecific("button", "nav-button", name);
+			const index = buttonIndex++;
+			button.addEventListener("click", () => switchToPage(index));
+			buttons.push(button);
+			return button;
+		}
+
+		// Create a navbar button group.
+		const createGroup = (groupName, ...buttonNames) => {
+			const parent = ElementG.createSpecific("div", "nav-button-group-parent", "");
+			const child = ElementG.createSpecific("div", "nav-button-group-child", "");
+			parent.append(createNavbarDivider(groupName), child);
+			buttonNames.forEach((b) => child.append(createNavButton(b)));
+			return parent;
+		}
+
+		this.navbar.append(createNavButton("Home"));
+		this.navbar.append(createNavButton("Contact"));
+		this.navbar.append(createGroup(
+			"Projects",
+			"Mineshaft",
+			Const.TITLE_CU_CARTA,
+			"Disassembly",
+			"Portfolio"));
+
+		if (!Const.DEPLOYMENT_VERSION) {
+			this.navbar.append(createNavbarDivider("Ver " + Const.VERSION));
+			this.navbar.append(createNavButton("Subheadings"));
+		}
 
 		// Lookup the last page visited but just go to home if there is none.
 		let lastPage = localStorage.getItem(Const.CURRENT_PAGE_KEY);
-		lastPage = MathG.clamp(MathG.floorToInt(lastPage), 0, this.pageElements.length - 1);
-		this.switchToPage(lastPage)
+		lastPage = MathG.clamp(MathG.floorToInt(lastPage), 0, pages.length - 1);
+		switchToPage(lastPage)
 	}
 
 	// =============================== ANIMATION UPDATE ===============================
@@ -643,50 +687,6 @@ export class PageBuilder {
 
 	// =============================== OTHER FUNCTIONS ================================
 
-	switchToPage(pageIndex) {
-
-		main.innerHTML = "";
-		main.append(this.pageElements[pageIndex]);
-
-		// Save selected page to local memory.
-		localStorage.setItem(Const.CURRENT_PAGE_KEY, pageIndex);
-		localStorage.setItem(Const.LAST_PAGE_VISIT, Date.now());
-
-		let j = 0;
-		for (let i = 0; i < this.navbarElements.length; i++) {
-			const element = this.navbarElements[i];
-			element.classList.remove("recently-selected");
-			element.classList.remove("selected");
-
-			if (ElementG.isTag(element, "button")) {
-				if (j === pageIndex)
-					element.classList.add("recently-selected");
-				++j;
-			}
-		}
-
-		setTimeout(() => this.switchToPageUpdate(), 10);
-	}
-
-	switchToPageUpdate() {
-		for (let i = 0; i < this.navbarElements.length; i++) {
-			const element = this.navbarElements[i];
-			if (element.classList.contains("recently-selected")) {
-				element.classList.remove("recently-selected");
-				element.classList.add("selected");
-			}
-		}
-	}
-
-	createNavbarDivider(text) {
-		const div = ElementG.createSpecific("div", "nav-divider", "");
-		const hrA = document.createElement("hr");
-		const title = ElementG.createSpecific("p", "", text);
-		const hrB = document.createElement("hr");
-
-		div.append(hrA, title, hrB);
-		return div;
-	}
 
 	createSubHeading(inputText, inputCount, p) {
 		let text = inputText.value.toUpperCase().trim();

@@ -1,6 +1,8 @@
 import * as CheckG from './CheckG.js';
 
 export function isTag(a, tagName) {
+	if (!a)
+		return false;
 	return a.tagName && a.tagName.toLowerCase() === tagName.toLowerCase();
 }
 
