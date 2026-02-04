@@ -1,6 +1,4 @@
 import * as ElementG from '../lib/ElementG.js';
-import * as MathG from '../lib/MathG.js';
-import * as CheckG from '../lib/CheckG.js';
 import { ProjectBox } from './ProjectBox.js';
 import { Const } from '../constants/Const.js';
 
