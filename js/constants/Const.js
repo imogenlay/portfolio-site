@@ -14,6 +14,7 @@ export class Const {
     static ASEPRITE = "Aseprite";
     static AWS = "AWS";
     static BASE_LIFT_ENGINE = "Base Lift Engine";
+    static BLAZOR = "Blazor";
     static BLENDER = "Blender";
     static CSHARP = "C#";
     static CSS = "CSS";

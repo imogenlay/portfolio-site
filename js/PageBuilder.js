@@ -13,7 +13,8 @@ import {
 	createGodotMagnifyProject,
 	createMorseCodeProject,
 	createPortfolioProject,
-	createCoffeeCornerProject
+	createCoffeeCornerProject,
+	createBitCalculatorProject
 } from "./elements/EasyProjectCreator.js";
 
 export class PageBuilder {
@@ -538,6 +539,7 @@ export class PageBuilder {
 		let i = 0;
 
 		projectList[i++] = createEmployeeCreatorProject();
+		projectList[i++] = createBitCalculatorProject();
 		projectList[i++] = createECommerceProject();
 		projectList[i++] = createJavaMinesweeperProject();
 		projectList[i++] = createGoogleBooksProject();

@@ -1,78 +1,16 @@
-*,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 1rem;
-  font-weight: 400;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  padding-bottom: 1rem;
-}
-header,
-main {
-  width: clamp(12rem, 100% - 10vw, 20rem);
-}
-body,
-section {
-  min-height: 100%;
-}
-body,
-main,
-section {
-  display: flex;
-  gap: 0;
-}
-#background,
-#foreground {
-  top: 0;
-  left: 0;
-  position: fixed;
-}
-#foreground button,
-button {
-  background-color: rgba(237, 255, 254, 0.25);
-}
-button,
-hr {
-  border: none;
-}
-button,
-easy-project hgroup div.title-text img {
-  cursor: pointer;
-}
-#foreground span,
-label {
-  user-select: none;
-}
-easy-project,
-easy-project hgroup div img {
-  transition: all calc(var(--anim-speed) * 300ms) ease;
-}
-#foreground button:hover,
-disassembly-canvas div a {
-  text-decoration: underline;
-}
-easy-project,
-popout-element {
-  position: relative;
-}
 * {
+  /* UI Debug Border
+  box-shadow: inset 0px 0px 0px 1px red;
+  */
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
   font-optical-sizing: auto;
+  font-weight: 400;
   font-style: normal;
   font-synthesis: none;
+  font-size: 1rem;
   color: #e2ddff;
   line-height: 1.5;
   text-decoration: none;
@@ -80,16 +18,25 @@ popout-element {
   scroll-behavior: smooth;
   color-scheme: dark;
 }
+
 :root {
   --anim-speed: 1;
 }
-button:hover,
-popout-element .popout-parent button:hover {
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: rgba(237, 255, 254, 0.25);
+}
+button:hover {
   background-color: rgba(237, 255, 254, 0.4);
 }
+
 hr {
+  border: none;
   border-top: 1px solid #edfffe;
 }
+
 h1,
 h2,
 h3,
@@ -100,6 +47,9 @@ h6 {
   color: #edfffe;
   text-wrap: nowrap;
   line-height: 1.25;
+  font-size: 1rem;
+  font-weight: 400;
+  padding-bottom: 1rem;
 }
 h1.padded,
 h2.padded,
@@ -110,56 +60,118 @@ h6.padded {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+
 h1 {
   font-size: clamp(3rem, 17vw, 4rem);
   padding: 0;
   text-align: center;
   font-weight: 200;
 }
+
 h2 {
   font-size: 2rem;
   font-weight: 300;
 }
+
 h3 {
   font-size: 1.25rem;
   font-weight: 400;
 }
+
+p {
+  padding-bottom: 1rem;
+}
+
 b {
   font-weight: 500;
   color: #edfffe;
 }
+
 pre {
   font-family: monospace;
   overflow: auto;
 }
-body,
-html {
-  width: 100vw;
-  box-shadow: inset 0 0 0 0 transparent;
-}
+
+html,
 body {
+  width: 100vw;
+  box-shadow: inset 0px 0px 0px 0px transparent;
+}
+
+body {
+  display: flex;
   flex-direction: column;
   justify-content: stretch;
   align-items: center;
+  gap: 0;
+  min-height: 100%;
   padding-top: 2rem;
 }
+@media screen and (min-width: 768px) {
+  body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    padding-top: 4rem;
+  }
+}
+
+header {
+  width: clamp(12rem, 100% - 10vw, 20rem);
+}
+@media screen and (min-width: 768px) {
+  header {
+    width: 20rem;
+  }
+}
+
 #gap {
   width: 1rem;
   flex-shrink: 0;
 }
+@media screen and (min-width: 768px) {
+  #gap {
+    width: min(6vw, 5rem);
+  }
+}
+
 main {
+  width: clamp(12rem, 100% - 10vw, 20rem);
+}
+@media screen and (min-width: 768px) {
+  main {
+    width: min(32rem, 44vw);
+  }
+}
+main {
+  display: flex;
   flex-direction: column;
   justify-content: stretch;
   align-items: stretch;
+  gap: 0;
   flex-grow: 1;
+}
+@media screen and (min-width: 768px) {
+  main {
+    flex-grow: 0;
+  }
+}
+main {
   padding-bottom: 4rem;
 }
+
 section {
+  min-height: 100%;
   flex-grow: 1;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  gap: 0;
 }
+
 @property --clr-animated-main-bg-gradient {
   syntax: "<color>";
   inherits: true;
@@ -172,20 +184,26 @@ html {
   background-size: 100% 100%;
   background: linear-gradient(125deg, #2d0860 5%, #040117 95%);
 }
+
 #background {
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: -2;
   width: max(100vh, 100vw);
   height: max(100vh, 100vw);
-  animation: mainBackgroundGradient calc(var(--anim-speed) * 14s) ease-in-out
-    infinite;
-  background: radial-gradient(
-    circle at 10% 10%,
-    var(--clr-animated-main-bg-gradient) 10%,
-    #040117 110%
-  );
+  /* prettier-ignore */
+  animation: mainBackgroundGradient calc(var(--anim-speed) * 14s) ease-in-out infinite;
+  transition: --clr-animated-main-bg-gradient 2s linear;
+  /* prettier-ignore */
+  background: radial-gradient(circle at 10% 10%, var(--clr-animated-main-bg-gradient) 10%, #040117 110%);
 }
+
 #foreground {
   --floating-title-size: clamp(2rem, 17vw, 6rem);
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1;
   width: 100vw;
   height: 100vh;
@@ -193,6 +211,7 @@ html {
 }
 #foreground span {
   overflow: visible;
+  user-select: none;
   text-wrap: nowrap;
   color: #edfffe;
   font-size: var(--floating-title-size);
@@ -207,34 +226,45 @@ html {
   top: calc(var(--floating-title-size) * 1.2);
   z-index: -1;
   height: clamp(2px, 0.5vw, 3px);
-  box-shadow: 0 0 10px 1px #009aff;
-  background: linear-gradient(
-    to right,
-    #009aff calc(var(--underline-full-width) - 200px),
-    #edfffe calc(var(--underline-full-width))
-  );
+  box-shadow: 0px 0px 10px 1px #009aff;
+  background: linear-gradient(to right, #009aff calc(var(--underline-full-width) - 200px), #edfffe calc(var(--underline-full-width)));
 }
 #foreground button {
   position: fixed;
   top: 5rem;
   left: 50vw;
   top: calc(var(--floating-title-size) + 35%);
+  background-color: rgba(237, 255, 254, 0.25);
   transform: translateX(-50%);
   width: 8rem;
   height: 2rem;
   pointer-events: auto;
 }
+#foreground button:hover {
+  text-decoration: underline;
+}
+
 @keyframes mainBackgroundGradient {
-  0%,
-  100%,
-  50% {
+  0% {
     --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
   }
   25% {
     --clr-animated-main-bg-gradient: oklab(from hsl(220, 100%, 23%) l a b);
   }
+  50% {
+    --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
+  }
   75% {
     --clr-animated-main-bg-gradient: oklab(from hsl(260, 100%, 23%) l a b);
+  }
+  100% {
+    --clr-animated-main-bg-gradient: oklab(from hsl(250, 100%, 23%) l a b);
+  }
+}
+@media screen and (max-width: 767px) {
+  header h1,
+  header hr.title {
+    display: none;
   }
 }
 header hr.title {
@@ -243,24 +273,6 @@ header hr.title {
   margin-top: clamp(0rem, 5vw, 0.5rem);
 }
 @media screen and (min-width: 768px) {
-  body {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 0;
-    padding-top: 4rem;
-  }
-  header {
-    width: 20rem;
-  }
-  #gap {
-    width: min(6vw, 5rem);
-  }
-  main {
-    width: min(32rem, 44vw);
-    flex-grow: 0;
-  }
   header nav {
     margin-top: 0.75rem;
     display: flex;
@@ -282,18 +294,13 @@ header hr.title {
     width: calc(100% - 0.5rem);
     text-align: left;
     font-size: 1.25rem;
-    transition:
-      background-color calc(var(--anim-speed) * 200ms) ease-in-out,
-      font-weight calc(var(--anim-speed) * 200ms) ease-in-out,
-      padding calc(var(--anim-speed) * 200ms) ease-in-out;
+    transition: background-color calc(var(--anim-speed) * 200ms) ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
     font-weight: 400;
     background-color: transparent;
     color: #edfffe;
     padding: 0.1rem 0 0.1rem 1.25rem;
   }
-  header nav button.nav-button.recently-selected,
-  header nav button.nav-button.selected,
-  header nav button.nav-button:hover {
+  header nav button.nav-button:hover, header nav button.nav-button.selected, header nav button.nav-button.recently-selected {
     background-color: rgba(237, 244, 255, 0.1568627451);
     font-weight: 600;
     padding-left: 2.5rem;
@@ -302,10 +309,7 @@ header hr.title {
     background-color: rgba(229, 227, 255, 0.2039215686);
   }
   header nav button.nav-button.recently-selected {
-    transition:
-      background-color 0s ease-in-out,
-      font-weight calc(var(--anim-speed) * 200ms) ease-in-out,
-      padding calc(var(--anim-speed) * 200ms) ease-in-out;
+    transition: background-color 0s ease-in-out, font-weight calc(var(--anim-speed) * 200ms) ease-in-out, padding calc(var(--anim-speed) * 200ms) ease-in-out;
     padding-left: 2.5rem;
     background-color: rgba(222, 220, 255, 0.3411764706);
   }
@@ -327,20 +331,96 @@ header hr.title {
     border-top: 1px solid #e2ddff;
     width: 100%;
   }
-  header nav .nav-divider hr,
-  header nav .nav-divider p {
+  header nav .nav-divider p,
+  header nav .nav-divider hr {
     margin: 0;
     padding: 0;
   }
-  form div label {
-    padding-top: 0.5rem;
+}
+@media screen and (max-width: 767px) {
+  header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: 100vw;
+    height: 60px;
+    z-index: 1;
+    overflow: visible;
+    background-color: #040117;
+    --button-width: max(25%, 120px);
+  }
+  header nav button.nav-button,
+  header nav .nav-button-group-parent {
+    width: var(--button-width);
+    height: 50px;
+    background: transparent;
+    color: #edfffe;
+  }
+  header nav button.nav-button p,
+  header nav .nav-button-group-parent p {
+    color: #edfffe;
+  }
+  header nav button.nav-button.selected,
+  header nav .nav-button-group-parent.selected {
+    font-weight: 600;
+  }
+  header nav .nav-button-group-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+  }
+  header nav .nav-button-group-parent .nav-divider p {
+    user-select: none;
+    padding: 0;
+  }
+  header nav .nav-button-group-parent .nav-divider hr {
+    display: none;
+  }
+  header nav .nav-button-group-parent .nav-button-group-child {
+    display: none;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group {
+    background-color: rgba(222, 220, 255, 0.3411764706);
+    overflow: visible;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group p {
+    font-weight: 600;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group .nav-button-group-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    position: absolute;
+    width: var(--button-width);
+    bottom: 100%;
+    background-color: #2d0860;
+  }
+  header nav .nav-button-group-parent.active-nav-button-group .nav-button-group-child button.nav-button {
+    width: 100%;
   }
 }
+
+label {
+  user-select: none;
+}
+
 input {
   margin: 0.25rem;
   padding: 0.25rem;
-  background: 0 0;
+  background: none;
 }
+
 form {
   flex-grow: 1;
   display: flex;
@@ -376,82 +456,6 @@ form div {
   gap: 0.5rem;
 }
 @media screen and (max-width: 767px) {
-  header h1,
-  header hr.title,
-  header nav .nav-button-group-parent .nav-button-group-child,
-  header nav .nav-button-group-parent .nav-divider hr {
-    display: none;
-  }
-  header nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-    width: 100vw;
-    height: 60px;
-    z-index: 1;
-    overflow: visible;
-    background-color: #040117;
-    --button-width: max(25%, 120px);
-  }
-  header nav .nav-button-group-parent,
-  header nav button.nav-button {
-    width: var(--button-width);
-    height: 50px;
-    background: 0 0;
-    color: #edfffe;
-  }
-  header nav .nav-button-group-parent p,
-  header nav button.nav-button p {
-    color: #edfffe;
-  }
-  header nav .nav-button-group-parent.active-nav-button-group p,
-  header nav .nav-button-group-parent.selected,
-  header nav button.nav-button.selected {
-    font-weight: 600;
-  }
-  header nav .nav-button-group-parent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    cursor: pointer;
-  }
-  header nav .nav-button-group-parent .nav-divider p {
-    user-select: none;
-    padding: 0;
-  }
-  header nav .nav-button-group-parent.active-nav-button-group {
-    background-color: rgba(222, 220, 255, 0.3411764706);
-    overflow: visible;
-  }
-  header
-    nav
-    .nav-button-group-parent.active-nav-button-group
-    .nav-button-group-child {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    position: absolute;
-    width: var(--button-width);
-    bottom: 100%;
-    background-color: #2d0860;
-  }
-  header
-    nav
-    .nav-button-group-parent.active-nav-button-group
-    .nav-button-group-child
-    button.nav-button {
-    width: 100%;
-  }
   form div {
     display: flex;
     flex-direction: column;
@@ -463,13 +467,15 @@ form div {
 form div:has(textarea) {
   flex-grow: 1;
 }
-form div label,
-project-box {
-  flex-direction: row;
-  display: flex;
+@media screen and (min-width: 768px) {
+  form div label {
+    padding-top: 0.5rem;
+  }
 }
 form div label {
   accent-color: #009aff;
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0;
@@ -486,7 +492,7 @@ form div textarea {
   width: auto;
   margin: 0.25rem;
   padding: 0.25rem;
-  background: 0 0;
+  background: none;
   border: 1px solid #edfffe;
   color: #e2ddff;
   transition: background-color calc(var(--anim-speed) * 100ms) linear;
@@ -494,10 +500,10 @@ form div textarea {
 form div input:hover,
 form div select:hover,
 form div textarea:hover {
-  box-shadow: 0 0 6px 0 #edfffe;
+  box-shadow: 0px 0px 6px 0px #edfffe;
 }
-form div input[type="email"]:focus,
-form div input[type="text"]:focus,
+form div input[type=text]:focus,
+form div input[type=email]:focus,
 form div textarea:focus {
   background-color: rgba(249, 251, 255, 0.1568627451);
 }
@@ -505,7 +511,10 @@ form div textarea {
   min-height: 20rem;
   resize: none;
 }
+
 project-box {
+  display: flex;
+  flex-direction: row;
   justify-content: stretch;
   align-items: stretch;
   gap: 0.5rem;
@@ -530,7 +539,7 @@ project-box div img {
   height: 32px;
 }
 project-box div figure {
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2039215686);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2039215686);
 }
 project-box div p {
   filter: drop-shadow(2px 2px 6px #27282b);
@@ -540,6 +549,7 @@ project-box div p {
   padding: 0;
   flex-shrink: 0;
 }
+
 disassembly-canvas {
   display: flex;
   flex-direction: column;
@@ -560,23 +570,29 @@ disassembly-canvas div span {
   margin-right: 0.5rem;
 }
 disassembly-canvas div a {
+  text-decoration: underline;
   min-height: 1.5rem;
 }
 disassembly-canvas div a:hover {
   color: #edfffe;
 }
+
 img.disassembly-divider {
   image-rendering: pixelated;
   width: 100%;
   height: 10px;
   margin-bottom: 1rem;
 }
+
 easy-project {
   border: 1px solid #e2ddff;
   background-color: rgba(0, 154, 255, 0.1);
-  padding: 0.5rem 0.5rem 0;
+  padding: 0.5rem;
+  padding-bottom: 0;
   margin-bottom: 1rem;
-  max-height: 5.1rem;
+  position: relative;
+  max-height: calc(74px + 1rem);
+  transition: all calc(var(--anim-speed) * 300ms) ease;
   overflow: hidden;
 }
 easy-project hgroup {
@@ -597,6 +613,9 @@ easy-project hgroup div {
   gap: 10px;
   width: 100%;
 }
+easy-project hgroup div.title-text img {
+  cursor: pointer;
+}
 easy-project hgroup div.title-pins {
   flex-direction: row;
 }
@@ -611,21 +630,24 @@ easy-project hgroup div img {
   width: 32px;
   height: 32px;
   opacity: 1;
+  transition: all calc(var(--anim-speed) * 300ms) ease;
 }
 easy-project.expand-easy-project {
   max-height: 60rem;
-  background-color: rgba(0, 154, 255, 0.2);
 }
 @media screen and (min-width: 768px) {
   easy-project.expand-easy-project {
     max-height: 50rem;
   }
 }
+easy-project.expand-easy-project {
+  background-color: rgba(0, 154, 255, 0.2);
+}
 easy-project.expand-easy-project hgroup {
   padding: 0;
 }
 easy-project.expand-easy-project .title-pins img {
-  height: 0;
+  height: 0px;
   opacity: 0;
 }
 easy-project .dropdown {
@@ -661,22 +683,35 @@ easy-project article .details-easy-project a {
   gap: 0.5rem;
   font-weight: 500;
 }
-a.easy-project-link:hover,
 easy-project article .details-easy-project a:hover {
   text-decoration: underline;
   color: #edfffe;
 }
-a.easy-project-link img,
 easy-project article .details-easy-project a img {
   width: 20px;
   height: 20px;
 }
+
 a.easy-project-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: 500;
+}
+a.easy-project-link:hover {
+  text-decoration: underline;
+  color: #edfffe;
+}
+a.easy-project-link img {
+  width: 20px;
+  height: 20px;
+}
+a.easy-project-link {
   align-self: flex-start;
+}
+
+popout-element {
+  position: relative;
 }
 popout-element::after {
   content: "";
@@ -684,10 +719,12 @@ popout-element::after {
   position: absolute;
   inset: 0;
   transition: box-shadow calc(var(--anim-speed) * 200ms) ease-in-out;
-  box-shadow: inset 0 0 0 0 #009aff;
+  box-shadow: inset 0 0 0px 0px #009aff;
 }
-popout-element .popout-placeholder,
 popout-element.popout-hover::after {
+  box-shadow: inset 0 0 5px 2px #009aff;
+}
+popout-element .popout-placeholder {
   box-shadow: inset 0 0 5px 2px #009aff;
 }
 popout-element .popout-parent {
@@ -703,9 +740,7 @@ popout-element .popout-parent.popped {
   position: fixed;
   left: calc(var(--popped-width) * -0.5 + 50%);
   top: calc(var(--popped-height) * -0.5 + 50%);
-  box-shadow:
-    0 0 10px 0 #009aff,
-    inset 0 0 5px 0 #009aff;
+  box-shadow: 0 0 10px 0px #009aff, inset 0 0 5px 0px #009aff;
   background-color: rgba(8, 15, 96, 0.9333333333);
   z-index: 1;
 }
@@ -726,6 +761,9 @@ popout-element .popout-parent button svg {
 popout-element .popout-parent button svg path {
   fill: #edfffe;
 }
+popout-element .popout-parent button:hover {
+  background-color: rgba(237, 255, 254, 0.4);
+}
 popout-element .popout-parent button:active {
   background-color: rgba(237, 255, 254, 0.55);
 }
@@ -742,16 +780,21 @@ popout-element .popout-parent.popped button {
     opacity: 1;
   }
 }
+
 .popout-contain {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
+
 img.flipped {
-  transform: scale(-1, 1);
+  transform: scale(-1, 1); /* Flip SVG horizontally */
 }
+
 button.heading-generator {
   width: 200px;
   height: 40px;
 }
+
+/*# sourceMappingURL=style.css.map */

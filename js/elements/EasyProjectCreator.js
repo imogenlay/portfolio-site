@@ -1,6 +1,26 @@
 import { Const } from "../constants/Const.js";
 import { EasyProject } from "./EasyProject.js";
 
+export function createBitCalculatorProject() {
+    const proj = new EasyProject("Blazor Bit Calculator");
+    proj.addPins(
+        Const.BLAZOR,
+        Const.CSHARP,
+        Const.CSS,
+        Const.VISUAL_STUDIO,
+        Const.GITHUB,
+    );
+    proj.addTitlePins(
+        Const.BLAZOR,
+        Const.CSHARP,
+    );
+    proj.addDescription("A complete bit calculator for programming purposes. Includes all bitwise operators.");
+    proj.addLink("View", "https://imogenlay.com/projects/bit-calculator");
+    proj.addLink("GitHub", "https://github.com/imogenlay/blazor-bit-calculator");
+
+    return proj;
+}
+
 export function createEmployeeCreatorProject() {
     const proj = new EasyProject("Full-Stack Employee Creator");
     proj.addPins(
@@ -17,7 +37,6 @@ export function createEmployeeCreatorProject() {
         Const.INTELLIJ,
         Const.GIT,
         Const.GITHUB,
-        "JUnit + RestAssured"
     );
     proj.addTitlePins(
         Const.REACT,
@@ -27,8 +46,8 @@ export function createEmployeeCreatorProject() {
         Const.AWS,
     );
     proj.addDescription("A full-stack employee management tool, exposes a RESTful API, enabling full CRUD " +
-        "interactions with a MySQL database. Paired with a React/Typescript frontend. Includes a chat box" +
-        "that allows interactions with an AI agent. Previously deployed on AWS.");
+        "interactions with a MySQL database. Paired with a React/Typescript frontend. Includes a chat box " +
+        "that allows for interactions with an AI agent. Deployed on AWS.");
     proj.addLink("GitHub Frontend", "https://github.com/imogenlay/employee-creator-frontend");
     proj.addLink("GitHub Backend", "https://github.com/imogenlay/employee-creator-backend");
 
@@ -91,7 +110,6 @@ export function createGoogleBooksProject() {
         Const.REACT,
         Const.VITE,
         Const.JAVASCRIPT,
-        Const.HTML,
         Const.SASS,
         Const.CSS,
         Const.VISUAL_STUDIO_CODE,

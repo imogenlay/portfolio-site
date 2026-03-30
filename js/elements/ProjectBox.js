@@ -149,6 +149,13 @@ export class ProjectBox extends HTMLElement {
 					light: 40,
 				},
 				{
+					name: Const.BLAZOR,
+					img: "blazor",
+					hue: 260,
+					sat: -1,
+					light: -1,
+				},
+				{
 					name: Const.BLENDER,
 					img: "blender",
 					hue: 20,

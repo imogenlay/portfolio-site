@@ -27,7 +27,8 @@ easy-project {
   margin-bottom: 1rem;
   position: relative;
 
-  max-height: 5.1rem;
+  // Max height has to be adjusted for different font sizes.
+  max-height: calc(32px + 32px + 10px + 1rem);
   transition: all calc(var(--anim-speed) * 300ms) ease;
   overflow: hidden;
 
