@@ -1,6 +1,40 @@
 import { Const } from "../constants/Const.js";
 import { EasyProject } from "./EasyProject.js";
 
+export function createEmployeeCreatorProject() {
+    const proj = new EasyProject("Full-Stack Employee Creator");
+    proj.addPins(
+        Const.REACT,
+        Const.TYPESCRIPT,
+        Const.JAVA,
+        Const.SPRING_BOOT,
+        Const.SQL,
+        Const.AWS,
+        Const.VITE,
+        Const.SASS,
+        Const.CSS,
+        Const.VISUAL_STUDIO_CODE,
+        Const.INTELLIJ,
+        Const.GIT,
+        Const.GITHUB,
+        "JUnit + RestAssured"
+    );
+    proj.addTitlePins(
+        Const.REACT,
+        Const.JAVA,
+        Const.SPRING_BOOT,
+        Const.SQL,
+        Const.AWS,
+    );
+    proj.addDescription("A full-stack employee management tool, exposes a RESTful API, enabling full CRUD " +
+        "interactions with a MySQL database. Paired with a React/Typescript frontend. Includes a chat box" +
+        "that allows interactions with an AI agent. Previously deployed on AWS.");
+    proj.addLink("GitHub Frontend", "https://github.com/imogenlay/employee-creator-frontend");
+    proj.addLink("GitHub Backend", "https://github.com/imogenlay/employee-creator-backend");
+
+    return proj;
+}
+
 export function createECommerceProject() {
     const proj = new EasyProject("E-Commerce Storefront");
     proj.addPins(
@@ -8,12 +42,10 @@ export function createECommerceProject() {
         Const.FIREBASE,
         Const.TYPESCRIPT,
         Const.VITE,
-        //Const.VITEST,
         Const.SASS,
         Const.CSS,
         Const.VISUAL_STUDIO_CODE,
         Const.GIT,
-        Const.GITHUB,
     );
     proj.addTitlePins(
         Const.REACT,
@@ -36,7 +68,7 @@ export function createJavaMinesweeperProject() {
         Const.INTELLIJ,
         Const.GODOT,
         Const.GDSCRIPT,
-        Const.GITHUB,
+        Const.GIT,
     );
     proj.addTitlePins(
         Const.JAVA,

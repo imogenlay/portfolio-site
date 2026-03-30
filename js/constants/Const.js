@@ -12,6 +12,7 @@ export class Const {
 
     static ANDROID = "Android";
     static ASEPRITE = "Aseprite";
+    static AWS = "AWS";
     static BASE_LIFT_ENGINE = "Base Lift Engine";
     static BLENDER = "Blender";
     static CSHARP = "C#";
@@ -40,6 +41,8 @@ export class Const {
     static PHP = "PHP";
     static REACT = "React";
     static SASS = "SASS";
+    static SPRING_BOOT = "Spring Boot";
+    static SQL = "SQL";
     static TYPESCRIPT = "TypeScript";
     static UNITY = "Unity";
     static VISUAL_BASIC = "Visual Basic";

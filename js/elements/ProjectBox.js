@@ -135,6 +135,13 @@ export class ProjectBox extends HTMLElement {
 					light: 85,
 				},
 				{
+					name: Const.AWS,
+					img: "aws",
+					hue: 30,
+					sat: -1,
+					light: -1,
+				},
+				{
 					name: Const.BASE_LIFT_ENGINE,
 					img: "base_lift_engine",
 					hue: 180,
@@ -249,9 +256,9 @@ export class ProjectBox extends HTMLElement {
 				{
 					name: Const.JAVA,
 					img: "java",
-					hue: 190,
-					sat: 50,
-					light: 30,
+					hue: 210,
+					sat: -1,
+					light: 40,
 				},
 				{
 					name: Const.JAVASCRIPT,
@@ -297,7 +304,7 @@ export class ProjectBox extends HTMLElement {
 				},
 				{
 					name: Const.OPEN_GL,
-					img: "open-gl",
+					img: "open_gl",
 					hue: 210,
 					sat: -1,
 					light: 30,
@@ -329,6 +336,20 @@ export class ProjectBox extends HTMLElement {
 					hue: 310,
 					sat: 50,
 					light: 40,
+				},
+				{
+					name: Const.SPRING_BOOT,
+					img: "spring_boot",
+					hue: 90,
+					sat: 70,
+					light: 30,
+				},
+				{
+					name: Const.SQL,
+					img: "sql",
+					hue: 50,
+					sat: -1,
+					light: -1,
 				},
 				{
 					name: Const.TYPESCRIPT,

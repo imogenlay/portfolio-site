@@ -6,6 +6,7 @@ import * as MathG from "./lib/MathG.js";
 import * as CheckG from "./lib/CheckG.js";
 import { PopoutElement } from "./elements/PopoutElement.js";
 import {
+	createEmployeeCreatorProject,
 	createECommerceProject,
 	createJavaMinesweeperProject,
 	createGoogleBooksProject,
@@ -536,6 +537,7 @@ export class PageBuilder {
 		const projectList = [];
 		let i = 0;
 
+		projectList[i++] = createEmployeeCreatorProject();
 		projectList[i++] = createECommerceProject();
 		projectList[i++] = createJavaMinesweeperProject();
 		projectList[i++] = createGoogleBooksProject();
